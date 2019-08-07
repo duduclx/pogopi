@@ -1,0 +1,50 @@
+<?php
+
+$mel = [
+    [
+        "id" => 808,
+        "name_fr" => "Meltan",
+        "pc_max" => 1068,
+        "pv_max" => 113,
+        "attack_max" => 118,
+        "defense_max" => 99,
+        "stamina_max" => 130,
+        "height" => 0.2,
+        "weight" => 8,
+        "capture_rate" => 30,
+        "escape_rate" => 0,
+        "buddy_walk" => 20,
+        "fast_move_1" => 50,
+        "fast_move_2" => null,
+        "fast_move_3" => null,
+        "main_move_1" => 49,
+        "main_move_2" => 30,
+        "main_move_3" => null,
+        "main_move_4" => null,
+        "scream" => "pv808.wav",
+        "image" => "808.png"
+    ],
+    [
+        "id" => 809,
+        "name_fr" => "Melmetal",
+        "pc_max" => 3599,
+        "pv_max" => 218,
+        "attack_max" => 226,
+        "defense_max" => 190,
+        "stamina_max" => 264,
+        "height" => 2.5,
+        "weight" => 800,
+        "capture_rate" => 30,
+        "escape_rate" => 0,
+        "buddy_walk" => 20,
+        "fast_move_1" => 50,
+        "fast_move_2" => null,
+        "fast_move_3" => null,
+        "main_move_1" => 56,
+        "main_move_2" => 49,
+        "main_move_3" => 30,
+        "main_move_4" => 19,
+        "scream" => "pv809.wav",
+        "image" => "809.png"
+    ]
+];

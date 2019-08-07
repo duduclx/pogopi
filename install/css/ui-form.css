@@ -1,0 +1,53 @@
+/*
+ * Styles des formulaires
+ */
+
+.generic-form input[type="password"],
+.generic-form input[type="text"]
+{
+    /* structure */
+    padding: 2px;
+
+    /* presentation */
+    border: 1px solid grey;
+    transition: background-color 0.33s;
+}
+.generic-form input[type="password"],
+.generic-form input[type="text"]
+{
+    width: 20em;
+}
+.generic-form input[type="password"]:focus,
+.generic-form input[type="text"]:focus
+{
+    background-color: #D0FFFF;
+}
+
+.generic-form ul {
+    list-style: none;
+}
+
+.generic-form > ul:last-child
+{
+    margin-top: 2em;
+}
+.generic-form ul li
+{
+    margin: 1em 0;
+}
+.generic-form ul li label
+{
+    display: inline-block;
+}
+.generic-form ul li label.textarea
+{
+    vertical-align: top;
+}
+.generic-form ul li label:not(.no-width)
+{
+    width: 175px;
+}
+.generic-form ul li label.full-width
+{
+    width: 100%;
+}
