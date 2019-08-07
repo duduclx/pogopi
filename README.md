@@ -3,7 +3,7 @@
 Yet Another Pokemon Go Api.
 
 Why ??
-well, none is open sourced, and i need one for
+well, none is open sourced and/or allow cross-origin, and i need one for
 the pokemon go javascript mini game.
 
 So, I do my own ...
@@ -19,7 +19,7 @@ there's more than needed for the original project !
 
 ## Where to find images, sound and more ?
 
-[ressource files](https://drive.google.com/open?id=1KDQCaqa3PZGC7zQHEeVUHQzciWeND1Hc)
+[resources](https://drive.google.com/open?id=1yUNuqhACrMinaOeew9dz4uegWW-sYgwg)
 
 ## License
 
