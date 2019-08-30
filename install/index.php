@@ -36,7 +36,7 @@ if (isset($_GET['step']) && $_GET['step'] === '2') {
         $deploy->insertFastMoves($fastMoves);
         $deploy->insertMainMoves($mainMoves);
         $deploy->insertPokemons($pokemons);
-        $deploy->version(1);
+        $deploy->version(2);
 
         $message = "Tables populated successfully. <br>
                     Please check api/Controller/config.php and delete mysql root user/password ! <br>

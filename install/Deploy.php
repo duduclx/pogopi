@@ -24,7 +24,7 @@ class Deploy
                 ':id' => $abilitie['id'],
                 ':name_en' => $abilitie['name_en'],
                 ':name_fr' => $abilitie['name_fr'],
-                'descriptions' => "[ en: " . $abilitie['description_en'] . ", fr: " . $abilitie['description_fr'] . "]"
+                'descriptions' => "{ en: " . $abilitie['description_en'] . ", fr: " . $abilitie['description_fr'] . " }"
             ]);
         }
     }
@@ -46,7 +46,7 @@ class Deploy
                 ':energy' => $fastMove['energy'],
                 ':eps' => $fastMove['eps'],
                 ':move_duration' => $fastMove['move_duration'],
-                ':names' => "[ en: " . $fastMove['name_en'] . ", fr: " . $fastMove['name_fr'] . " ]",
+                ':names' => "{ en: " . $fastMove['name_en'] . ", fr: " . $fastMove['name_fr'] . " }",
                 ':sound_fx' => $fastMove['sound_fx'],
                 ':type' => $fastMove['type']
             ]);
@@ -70,7 +70,7 @@ class Deploy
                 ':dps' => $mainMove['dps'],
                 ':energy' => $mainMove['energy'],
                 ':move_duration' => $mainMove['move_duration'],
-                ':names' => "[ en: " . $mainMove['name_en'] . ", fr: " . $mainMove['name_fr'] . " ]",
+                ':names' => "{ en: " . $mainMove['name_en'] . ", fr: " . $mainMove['name_fr'] . " }",
                 ':slot' => $mainMove['slot'],
                 ':sound_fx' => $mainMove['sound_fx'],
                 ':type' => $mainMove['type']
@@ -132,11 +132,58 @@ class Deploy
             )
             ";
             $data = $this->db->prepare($sql);
-            // TODO create array for abilities, fast_moves, main_moves, names and types
-            //  because some value may be null !
+
+            /*
+             * create arrays to encode
+             */
+            $abilities = [];
+            if ($pokemon['abilitie_1'] !== null ) {
+                array_push($abilities, $pokemon['abilitie_1']);
+            }
+            if ($pokemon['abilitie_2'] !== null ) {
+                array_push($abilities, $pokemon['abilitie_2']);
+            }
+            if ($pokemon['abilitie_3'] !== null ) {
+                array_push($abilities, $pokemon['abilitie_3']);
+            }
+
+            $fast_moves = [];
+            if ($pokemon['fast_move_1'] !== null) {
+                array_push($fast_moves, $pokemon['fast_move_1']);
+            }
+            if ($pokemon['fast_move_2'] !== null) {
+                array_push($fast_moves, $pokemon['fast_move_2']);
+            }
+            if ($pokemon['fast_move_3'] !== null) {
+                array_push($fast_moves, $pokemon['fast_move_3']);
+            }
+
+            $main_moves = [];
+            if ($pokemon['main_move_1'] !== null) {
+                array_push($fast_moves, $pokemon['main_move_1']);
+            }
+            if ($pokemon['main_move_2'] !== null) {
+                array_push($fast_moves, $pokemon['main_move_2']);
+            }
+            if ($pokemon['main_move_3'] !== null) {
+                array_push($fast_moves, $pokemon['main_move_3']);
+            }
+            if ($pokemon['main_move_4'] !== null) {
+                array_push($fast_moves, $pokemon['main_move_4']);
+            }
+
+            $types = [];
+            if ($pokemon['type_1'] !== null) {
+                array_push($types, $pokemon['type_1']);
+            }
+            if ($pokemon['type_2'] !== null) {
+                array_push($types, $pokemon['type_2']);
+            }
+
+
             $data->execute([
                 ':id' => $pokemon['id'],
-                ':abilities' => "[ " . $pokemon['abilitie_1'] . ", " . $pokemon['abilitie_2'] . ", " . $pokemon['abilitie_3'] . " ]",
+                ':abilities' => json_encode($abilities),
                 ':attack' => $pokemon['attack'],
                 ':attack_max' => $pokemon['attack_max'],
                 ':attack_spe' => $pokemon['attack_spe'],
@@ -148,21 +195,21 @@ class Deploy
                 ':defense_max' => $pokemon['defense_max'],
                 ':defense_spe' => $pokemon['defense_spe'],
                 ':escape_rate' => $pokemon['escape_rate'],
-                ':fast_moves' => "[ " . $pokemon['fast_move_1'] . ", " . $pokemon['fast_move_2'] . ", " . $pokemon['fast_move_3'] . " ]",
+                ':fast_moves' => json_encode($fast_moves),
                 ':height' => $pokemon['height'],
-                ':hp' => $pokemon['pv'],
-                ':hp_max' => $pokemon['pv_max'],
+                ':hp' => $pokemon['hp'],
+                ':hp_max' => $pokemon['hp_max'],
                 ':image' => $pokemon['image'],
-                ':main_moves' => "[ " . $pokemon['main_move_1'] . ", " . $pokemon['main_move_2'] . ", " . $pokemon['main_move_3'] . ", " . $pokemon['main_move_4'] . " ]",
-                ':names' => "[ en: " . $pokemon['name_en'] . ", fr: " . $pokemon['name_fr'] . " ]",
+                ':main_moves' => json_encode($main_moves),
+                ':names' => "{ en: " . $pokemon['name_en'] . ", fr: " . $pokemon['name_fr'] . " }",
                 ':order' => $pokemon['order'],
                 ':pc_max' => $pokemon['pc_max'],
                 ':pokedex' => $pokemon['pokedex'],
                 ':scream' => $pokemon['scream'],
-                ':species' => "[ en: " . $pokemon['specie_en'] . ", fr: " . $pokemon['specie_fr'] . " ]",
+                ':species' => "{ en: " . $pokemon['specie_en'] . ", fr: " . $pokemon['specie_fr'] . " }",
                 ':speed' => $pokemon['speed'],
                 ':stamina_max' => $pokemon['stamina_max'],
-                ':types' => "[ " . $pokemon['type_1'] . ", " . $pokemon['type_2'] . " ]",
+                ':types' => json_encode($types),
                 ':weight' => $pokemon['weight']
             ]);
         }
