@@ -3,7 +3,7 @@
 // if needed, change values
 
 $host       = "localhost"; // enter your hostname
-$dbname     = "pogopi"; // you can change the database name, then change it in init.sql too !
+$dbname     = "pogopiV2"; // you can change the database name, then change it in init.sql too !
 $username   = "pogopi"; // put correct user name
 $password   = "pogopi"; // put correct password
 

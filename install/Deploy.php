@@ -15,18 +15,16 @@ class Deploy
         foreach ($abilities as $abilitie) {
             $sql = "
             INSERT INTO abilitie 
-            (id, name_en, name_fr, description_en, description_fr)
+            (id, descriptions, names)
             VALUES 
-            (:id, :name_en, :name_fr, :description_en, :description_fr)
+            (:id, :descriptions, :names)
             ";
             $data = $this->db->prepare($sql);
             $data->execute([
                 ':id' => $abilitie['id'],
                 ':name_en' => $abilitie['name_en'],
                 ':name_fr' => $abilitie['name_fr'],
-                'description_en' => $abilitie['description_en'],
-                'description_fr' => $abilitie['description_fr']
-
+                'descriptions' => "[ en: " . $abilitie['description_en'] . ", fr: " . $abilitie['description_fr'] . "]"
             ]);
         }
     }
@@ -36,9 +34,9 @@ class Deploy
         foreach ($fastMoves as $fastMove) {
             $sql = "
             INSERT INTO fast_move 
-            (id, damage, dps, energy, eps, move_duration, name_en, name_fr, sound_fx, type)
+            (id, damage, dps, energy, eps, move_duration, names, sound_fx, type)
             VALUES 
-            (:id, :damage, :dps, :energy, :eps, :move_duration, :name_en, :name_fr, :sound_fx, :type)
+            (:id, :damage, :dps, :energy, :eps, :move_duration, :names, :sound_fx, :type)
             ";
             $data = $this->db->prepare($sql);
             $data->execute([
@@ -48,8 +46,7 @@ class Deploy
                 ':energy' => $fastMove['energy'],
                 ':eps' => $fastMove['eps'],
                 ':move_duration' => $fastMove['move_duration'],
-                ':name_en' => $fastMove['name_en'],
-                ':name_fr' => $fastMove['name_fr'],
+                ':names' => "[ en: " . $fastMove['name_en'] . ", fr: " . $fastMove['name_fr'] . " ]",
                 ':sound_fx' => $fastMove['sound_fx'],
                 ':type' => $fastMove['type']
             ]);
@@ -62,9 +59,9 @@ class Deploy
         foreach ($mainMoves as $mainMove) {
             $sql = "
             INSERT INTO main_move 
-            (id, damage, dps, energy, move_duration, name_en, name_fr, slot, sound_fx, type)
+            (id, damage, dps, energy, move_duration, names, slot, sound_fx, type)
             VALUES 
-            (:id, :damage, :dps, :energy, :move_duration, :name_en, :name_fr, :slot, :sound_fx, :type)
+            (:id, :damage, :dps, :energy, :move_duration, :names, :slot, :sound_fx, :type)
             ";
             $data = $this->db->prepare($sql);
             $data->execute([
@@ -73,8 +70,7 @@ class Deploy
                 ':dps' => $mainMove['dps'],
                 ':energy' => $mainMove['energy'],
                 ':move_duration' => $mainMove['move_duration'],
-                ':name_en' => $mainMove['name_en'],
-                ':name_fr' => $mainMove['name_fr'],
+                ':names' => "[ en: " . $mainMove['name_en'] . ", fr: " . $mainMove['name_fr'] . " ]",
                 ':slot' => $mainMove['slot'],
                 ':sound_fx' => $mainMove['sound_fx'],
                 ':type' => $mainMove['type']
@@ -123,23 +119,24 @@ class Deploy
         foreach ($pokemons as $pokemon) {
             $sql = "
             INSERT INTO pokemon 
-            (id, attack, attack_max, attack_spe, base_experience, base_happiness, buddy_walk,
-             capture_rate, defense, defense_max, defense_spe, escape_rate, height,
-             image, name_en, name_fr, `order`, pc_max, pv, pv_max, scream, specie_en, specie_fr,
-             speed, stamina_max, weight,
-             abilitie_1, abilitie_2, abilitie_3, fast_move_1, fast_move_2, fast_move_3,
-             main_move_1, main_move_2, main_move_3, main_move_4, pokedex, type_1, type_2)
+            (id, abilities, attack, attack_max, attack_spe, base_experience, base_happiness, 
+             buddy_walk, capture_rate, defense, defense_max, defense_spe, escape_rate, 
+             fast_moves, height, hp, hp_max, image, main_moves, names, `order`, pc_max, pokedex, 
+             scream, species, speed, stamina_max, types, weight
+            )
             VALUES 
-            (:id, :attack, :attack_max, :attack_spe, :base_experience, :base_happiness, :buddy_walk,
-             :capture_rate, :defense, :defense_max, :defense_spe, :escape_rate, :height,
-             :image, :name_en, :name_fr, :order, :pc_max, :pv, :pv_max, :scream, :specie_en, :specie_fr,
-             :speed, :stamina_max, :weight,
-             :abilitie_1, :abilitie_2, :abilitie_3, :fast_move_1, :fast_move_2, :fast_move_3,
-             :main_move_1, :main_move_2, :main_move_3, :main_move_4, :pokedex, :type_1, :type_2)
+            (:id, :abilities, :attack, :attack_max, :attack_spe, :base_experience, :base_happiness, 
+             :buddy_walk, :capture_rate, :defense, :defense_max, :defense_spe, :escape_rate, 
+             :fast_moves, :height, :hp, :hp_max, :image, :main_moves, :names, :order, :pc_max, :pokedex,
+             :scream, :species, :speed, :stamina_max, :types, :weight
+            )
             ";
             $data = $this->db->prepare($sql);
+            // TODO create array for abilities, fast_moves, main_moves, names and types
+            //  because some value may be null !
             $data->execute([
                 ':id' => $pokemon['id'],
+                ':abilities' => "[ " . $pokemon['abilitie_1'] . ", " . $pokemon['abilitie_2'] . ", " . $pokemon['abilitie_3'] . " ]",
                 ':attack' => $pokemon['attack'],
                 ':attack_max' => $pokemon['attack_max'],
                 ':attack_spe' => $pokemon['attack_spe'],
@@ -151,33 +148,22 @@ class Deploy
                 ':defense_max' => $pokemon['defense_max'],
                 ':defense_spe' => $pokemon['defense_spe'],
                 ':escape_rate' => $pokemon['escape_rate'],
+                ':fast_moves' => "[ " . $pokemon['fast_move_1'] . ", " . $pokemon['fast_move_2'] . ", " . $pokemon['fast_move_3'] . " ]",
                 ':height' => $pokemon['height'],
+                ':hp' => $pokemon['pv'],
+                ':hp_max' => $pokemon['pv_max'],
                 ':image' => $pokemon['image'],
-                ':name_en' => $pokemon['name_en'],
-                ':name_fr' => $pokemon['name_fr'],
+                ':main_moves' => "[ " . $pokemon['main_move_1'] . ", " . $pokemon['main_move_2'] . ", " . $pokemon['main_move_3'] . ", " . $pokemon['main_move_4'] . " ]",
+                ':names' => "[ en: " . $pokemon['name_en'] . ", fr: " . $pokemon['name_fr'] . " ]",
                 ':order' => $pokemon['order'],
                 ':pc_max' => $pokemon['pc_max'],
-                ':pv' => $pokemon['pv'],
-                ':pv_max' => $pokemon['pv_max'],
+                ':pokedex' => $pokemon['pokedex'],
                 ':scream' => $pokemon['scream'],
-                ':specie_en' => $pokemon['specie_en'],
-                ':specie_fr' => $pokemon['specie_fr'],
+                ':species' => "[ en: " . $pokemon['specie_en'] . ", fr: " . $pokemon['specie_fr'] . " ]",
                 ':speed' => $pokemon['speed'],
                 ':stamina_max' => $pokemon['stamina_max'],
-                ':weight' => $pokemon['weight'],
-                ':abilitie_1' => $pokemon['abilitie_1'],
-                ':abilitie_2' => $pokemon['abilitie_2'],
-                ':abilitie_3' => $pokemon['abilitie_3'],
-                ':fast_move_1' => $pokemon['fast_move_1'],
-                ':fast_move_2' => $pokemon['fast_move_2'],
-                ':fast_move_3' => $pokemon['fast_move_3'],
-                ':main_move_1' => $pokemon['main_move_1'],
-                ':main_move_2' => $pokemon['main_move_2'],
-                ':main_move_3' => $pokemon['main_move_3'],
-                ':main_move_4' => $pokemon['main_move_4'],
-                ':pokedex' => $pokemon['pokedex'],
-                ':type_1' => $pokemon['type_1'],
-                ':type_2' => $pokemon['type_2']
+                ':types' => "[ " . $pokemon['type_1'] . ", " . $pokemon['type_2'] . " ]",
+                ':weight' => $pokemon['weight']
             ]);
         }
 
@@ -188,25 +174,22 @@ class Deploy
         foreach ($teams as $team) {
             $sql = "
             INSERT INTO team
-            (id, color_en, color_fr, img_player, img_pngXl, img_pngXs, img_svg,
-             name_en, name_fr, player_en, player_fr)
+            (id, colors, img_player, img_pngXl, img_pngXs, img_svg,
+             names, players)
             VALUES 
-            (:id, :color_en, :color_fr, :img_player, :img_pngXl, :img_pngXs, :img_svg,
-             :name_en, :name_fr, :player_en, :player_fr)
+            (:id, :colors, :img_player, :img_pngXl, :img_pngXs, :img_svg,
+             :names, :players)
             ";
             $data = $this->db->prepare($sql);
             $data->execute([
                 ':id' => $team['id'],
-                ':color_en' => $team['color_en'],
-                ':color_fr' => $team['color_fr'],
+                ':colors' => "[ en: " . $team['color_en'] . ", fr: " . $team['color_fr'] . " ]",
                 ':img_player' => $team['img_player'],
                 ':img_pngXl' => $team['img_pngXl'],
                 ':img_pngXs' => $team['img_pngXs'],
                 ':img_svg' => $team['img_svg'],
-                ':name_en' => $team['name_en'],
-                ':name_fr' => $team['name_fr'],
-                ':player_en' => $team['player_en'],
-                ':player_fr' => $team['player_fr']
+                ':names' => "[ en: " . $team['name_en'] . ", fr: " . $team['name_fr'] . " ]",
+                ':players' => "[ en: " . $team['player_en'] . ", fr: " . $team['player_fr'] . " ]"
             ]);
         }
 
@@ -217,16 +200,15 @@ class Deploy
         foreach ($types as $type) {
             $sql = "
             INSERT INTO type 
-            (id, img, name_en, name_fr)
+            (id, img, names)
             VALUES 
-            (:id, :img, :name_en, :name_fr)
+            (:id, :img, :names)
             ";
             $data = $this->db->prepare($sql);
             $data->execute([
                 ':id' => $type['id'],
                 ':img' => $type['img'],
-                ':name_en' => $type['name_en'],
-                ':name_fr' => $type['name_fr']
+                ':names' => "[ en: " . $type['name_en'] . ', fr: ' . $type['name_fr'] . " ]"
             ]);
         }
     }
