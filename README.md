@@ -143,6 +143,7 @@ Using database with web php:
 
 ## TODO
  
- - league table and request (not really usefull)
- - player table and request (not pokemon go players)
- - audio clip table and request ? seriously ?
+ - making array for types, abilities, and more ...
+ - fix missing abilities
+ - create a dedicated repo for ressources
+ - i don't know ...
