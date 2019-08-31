@@ -19,11 +19,15 @@ class Deploy
             VALUES 
             (:id, :descriptions, :names)
             ";
+
+            $names = [];
+            array_push($names, $abilitie['name_en']);
+            array_push($names, $abilitie['name_fr']);
+
             $data = $this->db->prepare($sql);
             $data->execute([
                 ':id' => $abilitie['id'],
-                ':name_en' => $abilitie['name_en'],
-                ':name_fr' => $abilitie['name_fr'],
+                ':names' => json_encode($names),
                 'descriptions' => "{ en: " . $abilitie['description_en'] . ", fr: " . $abilitie['description_fr'] . " }"
             ]);
         }
@@ -160,16 +164,16 @@ class Deploy
 
             $main_moves = [];
             if ($pokemon['main_move_1'] !== null) {
-                array_push($fast_moves, $pokemon['main_move_1']);
+                array_push($main_moves, $pokemon['main_move_1']);
             }
             if ($pokemon['main_move_2'] !== null) {
-                array_push($fast_moves, $pokemon['main_move_2']);
+                array_push($main_moves, $pokemon['main_move_2']);
             }
             if ($pokemon['main_move_3'] !== null) {
-                array_push($fast_moves, $pokemon['main_move_3']);
+                array_push($main_moves, $pokemon['main_move_3']);
             }
             if ($pokemon['main_move_4'] !== null) {
-                array_push($fast_moves, $pokemon['main_move_4']);
+                array_push($main_moves, $pokemon['main_move_4']);
             }
 
             $types = [];

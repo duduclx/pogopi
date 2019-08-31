@@ -75,7 +75,7 @@ if (isset($_GET['step']) && $_GET['step'] === '2') {
         You need:</p>
         <ul>
             <li>PHP 7.1 or more</li>
-            <li>Mysql 5.0 or more</li>
+            <li>Mysql 5.7 or more</li>
             <li><strong>Edit first the config file</strong> with your credentials</li>
             <li>config is located at /api/Controller/config.php</li>
             <li>5 minutes or less</li>

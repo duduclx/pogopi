@@ -31,22 +31,17 @@ class Api
                 // is string
                 $sql = 'SELECT 
                         id,
-                        description_en,
-                        description_fr,
-                        name_en,
-                        name_fr
+                        descriptions,
+                        names
                         FROM abilitie
-                        WHERE name_en LIKE CONCAT(\'%\', :name, \'%\')
-                        OR name_fr LIKE CONCAT(\'%\', :name, \'%\')';
+                        WHERE names LIKE CONCAT(\'%\', :name, \'%\')';
                 break;
             default:
                 // is number
                 $sql = 'SELECT 
                         id,
-                        description_en,
-                        description_fr,
-                        name_en,
-                        name_fr
+                        descriptions,
+                        names
                         FROM abilitie
                         WHERE id = :name';
                 break;
@@ -56,7 +51,7 @@ class Api
             ':name' => $name
         ]);
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
 
         if(empty($result)) {
             $result['error'] = 400;
