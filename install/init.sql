@@ -4,9 +4,10 @@ use pogopiV2;
 
 CREATE TABLE abilitie
 (
-    id             INT(3) UNSIGNED PRIMARY KEY,
-    descriptions   TEXT, -- indexed array lang->text
-    names          VARCHAR(255) -- indexed array lang->text
+    id             INT(3) UNSIGNED,
+    lang           VARCHAR(5),
+    description    VARCHAR(255),
+    name           VARCHAR(30)
 );
 
 CREATE TABLE fast_move
@@ -52,33 +53,27 @@ CREATE TABLE pokedex
 CREATE TABLE pokemon
 (
     id              INT(4) UNSIGNED PRIMARY KEY,
-    abilities       VARCHAR(20), -- array of table abilitie's key
     attack          INT(3) UNSIGNED,
     attack_max      INT(3) UNSIGNED,
     attack_spe      INT(3) UNSIGNED,
     base_experience INT(3) UNSIGNED,
-    base_happiness   INT(3) UNSIGNED,
+    base_happiness  INT(3) UNSIGNED,
     buddy_walk      INT(2) UNSIGNED,
     capture_rate    INT(5) UNSIGNED, -- max 10 000
     defense         INT(3) UNSIGNED,
     defense_max     INT(3) UNSIGNED,
     defense_spe     INT(3) UNSIGNED,
     escape_rate     INT(4) UNSIGNED, -- percent
-    fast_moves      VARCHAR(20), -- array of table fast_move's key
     height          DECIMAL(5,2) UNSIGNED,
     hp              INT(4) UNSIGNED,
     hp_max          INT(4) UNSIGNED,
     image           VARCHAR(20),
-    main_moves      VARCHAR(20), -- array of table main_move's key
-    names           VARCHAR(255), -- indexed array lang->text
     `order`         INT(4) UNSIGNED, -- is index
     pc_max          INT(4) UNSIGNED,
     pokedex         INT(2) UNSIGNED, -- fk table pokedex, is index
     scream          VARCHAR(20),
-    species         VARCHAR(255), -- indexed array lang->text
     speed           INT(4) UNSIGNED,
     stamina_max     INT(4) UNSIGNED,
-    types          VARCHAR(20), -- array of table type's key
     weight          DECIMAL(5,2) UNSIGNED
 );
 
@@ -90,6 +85,44 @@ CREATE INDEX idx_pokedex
 
 CREATE INDEX idx_order
     ON pokemon (`order`);
+
+CREATE TABLE pokemon_abilitie
+(
+    pokemon_id  INT(4) UNSIGNED,
+    abilitie_id INT(3) UNSIGNED
+);
+
+CREATE TABLE pokemon_fast_move
+(
+    pokemon_id   INT(4) UNSIGNED,
+    fast_move_id INT(3) UNSIGNED
+);
+
+CREATE TABLE pokemon_main_move
+(
+    pokemon_id   INT(4) UNSIGNED,
+    main_move_id INT(3) UNSIGNED
+);
+
+CREATE TABLE pokemon_name
+(
+    pokemon_id INT(4) UNSIGNED,
+    lang       VARCHAR(5),
+    name       VARCHAR(25)
+);
+
+CREATE TABLE pokemon_type
+(
+    pokemon_id   INT(4) UNSIGNED,
+    type_id      INT(2) UNSIGNED
+);
+
+CREATE TABLE pokemon_specie
+(
+    pokemon_id INT(4) UNSIGNED,
+    lang       VARCHAR(5),
+    specie     VARCHAR(25)
+);
 
 CREATE TABLE team
 (
@@ -119,10 +152,30 @@ CREATE TABLE version
  create relation between tables
  */
 ALTER TABLE fast_move
-    ADD FOREIGN KEY (type) REFERENCES type(id);
+    ADD FOREIGN KEY (type) REFERENCES type(id),
+    ADD FOREIGN KEY (id) REFERENCES pokemon_fast_move(fast_move_id);
 
 ALTER TABLE main_move
-    ADD FOREIGN KEY (type) REFERENCES type(id);
+    ADD FOREIGN KEY (type) REFERENCES type(id),
+    ADD FOREIGN KEY (id) REFERENCES pokemon_main_move(main_move_id);
 
 ALTER TABLE pokemon
     ADD FOREIGN KEY (pokedex) REFERENCES pokedex(id);
+
+ALTER TABLE pokemon_abilitie
+    ADD FOREIGN KEY (pokemon_id) REFERENCES pokemon(id);
+
+ALTER TABLE pokemon_fast_move
+    ADD FOREIGN KEY (pokemon_id) REFERENCES pokemon(id);
+
+ALTER TABLE pokemon_main_move
+    ADD FOREIGN KEY (pokemon_id) REFERENCES pokemon(id);
+
+ALTER TABLE pokemon_name
+    ADD FOREIGN KEY (pokemon_id) REFERENCES pokemon(id);
+
+ALTER TABLE pokemon_type
+    ADD FOREIGN KEY (pokemon_id) REFERENCES pokemon(id);
+
+ALTER TABLE pokemon_specie
+    ADD FOREIGN KEY (pokemon_id) REFERENCES pokemon(id);

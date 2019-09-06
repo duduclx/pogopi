@@ -1,4 +1,4 @@
-## POGOPI
+## POGOPI V2
 
 Yet Another Pokemon Go Api.
 

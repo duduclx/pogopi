@@ -15,20 +15,24 @@ class Deploy
         foreach ($abilities as $abilitie) {
             $sql = "
             INSERT INTO abilitie 
-            (id, descriptions, names)
+            (id, lang, description, name)
             VALUES 
-            (:id, :descriptions, :names)
+            (:id, :lang, :description, :name)
             ";
-
-            $names = [];
-            array_push($names, $abilitie['name_en']);
-            array_push($names, $abilitie['name_fr']);
 
             $data = $this->db->prepare($sql);
             $data->execute([
                 ':id' => $abilitie['id'],
-                ':names' => json_encode($names),
-                'descriptions' => "{ en: " . $abilitie['description_en'] . ", fr: " . $abilitie['description_fr'] . " }"
+                ':lang' => 'FR',
+                ':description' => $abilitie['description_fr'],
+                ':name' => $abilitie['name_fr']
+            ]);
+
+            $data->execute([
+                ':id' => $abilitie['id'],
+                ':lang' => 'EN',
+                ':description' => $abilitie['description_en'],
+                ':name' => $abilitie['name_en']
             ]);
         }
     }
@@ -123,71 +127,22 @@ class Deploy
         foreach ($pokemons as $pokemon) {
             $sql = "
             INSERT INTO pokemon 
-            (id, abilities, attack, attack_max, attack_spe, base_experience, base_happiness, 
+            (id, attack, attack_max, attack_spe, base_experience, base_happiness, 
              buddy_walk, capture_rate, defense, defense_max, defense_spe, escape_rate, 
-             fast_moves, height, hp, hp_max, image, main_moves, names, `order`, pc_max, pokedex, 
-             scream, species, speed, stamina_max, types, weight
+             height, hp, hp_max, image, `order`, pc_max, pokedex, 
+             scream, speed, stamina_max, weight
             )
             VALUES 
-            (:id, :abilities, :attack, :attack_max, :attack_spe, :base_experience, :base_happiness, 
+            (:id, :attack, :attack_max, :attack_spe, :base_experience, :base_happiness, 
              :buddy_walk, :capture_rate, :defense, :defense_max, :defense_spe, :escape_rate, 
-             :fast_moves, :height, :hp, :hp_max, :image, :main_moves, :names, :order, :pc_max, :pokedex,
-             :scream, :species, :speed, :stamina_max, :types, :weight
+             :height, :hp, :hp_max, :image, :order, :pc_max, :pokedex,
+             :scream, :speed, :stamina_max, :weight
             )
             ";
             $data = $this->db->prepare($sql);
 
-            /*
-             * create arrays to encode
-             */
-            $abilities = [];
-            if ($pokemon['abilitie_1'] !== null ) {
-                array_push($abilities, $pokemon['abilitie_1']);
-            }
-            if ($pokemon['abilitie_2'] !== null ) {
-                array_push($abilities, $pokemon['abilitie_2']);
-            }
-            if ($pokemon['abilitie_3'] !== null ) {
-                array_push($abilities, $pokemon['abilitie_3']);
-            }
-
-            $fast_moves = [];
-            if ($pokemon['fast_move_1'] !== null) {
-                array_push($fast_moves, $pokemon['fast_move_1']);
-            }
-            if ($pokemon['fast_move_2'] !== null) {
-                array_push($fast_moves, $pokemon['fast_move_2']);
-            }
-            if ($pokemon['fast_move_3'] !== null) {
-                array_push($fast_moves, $pokemon['fast_move_3']);
-            }
-
-            $main_moves = [];
-            if ($pokemon['main_move_1'] !== null) {
-                array_push($main_moves, $pokemon['main_move_1']);
-            }
-            if ($pokemon['main_move_2'] !== null) {
-                array_push($main_moves, $pokemon['main_move_2']);
-            }
-            if ($pokemon['main_move_3'] !== null) {
-                array_push($main_moves, $pokemon['main_move_3']);
-            }
-            if ($pokemon['main_move_4'] !== null) {
-                array_push($main_moves, $pokemon['main_move_4']);
-            }
-
-            $types = [];
-            if ($pokemon['type_1'] !== null) {
-                array_push($types, $pokemon['type_1']);
-            }
-            if ($pokemon['type_2'] !== null) {
-                array_push($types, $pokemon['type_2']);
-            }
-
-
             $data->execute([
                 ':id' => $pokemon['id'],
-                ':abilities' => json_encode($abilities),
                 ':attack' => $pokemon['attack'],
                 ':attack_max' => $pokemon['attack_max'],
                 ':attack_spe' => $pokemon['attack_spe'],
@@ -199,12 +154,10 @@ class Deploy
                 ':defense_max' => $pokemon['defense_max'],
                 ':defense_spe' => $pokemon['defense_spe'],
                 ':escape_rate' => $pokemon['escape_rate'],
-                ':fast_moves' => json_encode($fast_moves),
                 ':height' => $pokemon['height'],
                 ':hp' => $pokemon['hp'],
                 ':hp_max' => $pokemon['hp_max'],
                 ':image' => $pokemon['image'],
-                ':main_moves' => json_encode($main_moves),
                 ':names' => "{ en: " . $pokemon['name_en'] . ", fr: " . $pokemon['name_fr'] . " }",
                 ':order' => $pokemon['order'],
                 ':pc_max' => $pokemon['pc_max'],
@@ -213,9 +166,132 @@ class Deploy
                 ':species' => "{ en: " . $pokemon['specie_en'] . ", fr: " . $pokemon['specie_fr'] . " }",
                 ':speed' => $pokemon['speed'],
                 ':stamina_max' => $pokemon['stamina_max'],
-                ':types' => json_encode($types),
                 ':weight' => $pokemon['weight']
             ]);
+
+            /*
+             * pokemon_abilitie
+             */
+            $sql = "
+            INSERT INTO pokemon_abilitie
+            (pokemon_id, abilitie_id)
+            VALUES
+            (:pokemon_id, :abiltie_id)";
+            $data = $this->db->prepare($sql);
+
+            if ($pokemon['abilitie_1'] !== null ) {
+                $data->execute([
+                    ':pokemon_id' => $pokemon['id'],
+                    ':abilitie_id' => $pokemon['abilitie_1']
+                ]);
+            }
+            if ($pokemon['abilitie_2'] !== null ) {
+                $data->execute([
+                    ':pokemon_id' => $pokemon['id'],
+                    ':abilitie_id' => $pokemon['abilitie_2']
+                ]);
+            }
+            if ($pokemon['abilitie_3'] !== null ) {
+                $data->execute([
+                    ':pokemon_id' => $pokemon['id'],
+                    ':abilitie_id' => $pokemon['abilitie_3']
+                ]);
+            }
+
+            /*
+             * pokemon_fast_move
+             */
+            $sql = "
+            INSERT INTO pokemon_fast_move
+            (pokemon_id, fast_move_id)
+            VALUES
+            (:pokemon_id, :fast_move_id)";
+            $data = $this->db->prepare($sql);
+
+            if ($pokemon['fast_move_1'] !== null) {
+                $data->execute([
+                    ':pokemon_id' => $pokemon['id'],
+                    ':fast_move_id' => $pokemon['fast_move_1']
+                ]);
+            }
+            if ($pokemon['fast_move_2'] !== null) {
+                $data->execute([
+                    ':pokemon_id' => $pokemon['id'],
+                    ':fast_move_id' => $pokemon['fast_move_2']
+                ]);
+            }
+            if ($pokemon['fast_move_3'] !== null) {
+                $data->execute([
+                    ':pokemon_id' => $pokemon['id'],
+                    ':fast_move_id' => $pokemon['fast_move_3']
+                ]);
+            }
+
+            /*
+             * pokemon_main_move
+             */
+            $sql = "
+            INSERT INTO pokemon_main_move
+            (pokemon_id, main_move_id)
+            VALUES
+            (:pokemon_id, :main_move_id)";
+            $data = $this->db->prepare($sql);
+
+            if ($pokemon['main_move_1'] !== null) {
+                $data->execute([
+                    ':pokemon_id' => $pokemon['id'],
+                    ':main_move_id' => $pokemon['main_move_1']
+                ]);
+            }
+            if ($pokemon['main_move_2'] !== null) {
+                $data->execute([
+                    ':pokemon_id' => $pokemon['id'],
+                    ':main_move_id' => $pokemon['main_move_2']
+                ]);
+            }
+            if ($pokemon['main_move_3'] !== null) {
+                $data->execute([
+                    ':pokemon_id' => $pokemon['id'],
+                    ':main_move_id' => $pokemon['main_move_3']
+                ]);
+            }
+            if ($pokemon['main_move_4'] !== null) {
+                $data->execute([
+                    ':pokemon_id' => $pokemon['id'],
+                    ':main_move_id' => $pokemon['main_move_4']
+                ]);
+            }
+
+            /*
+             * pokemon_name
+             */
+
+            /*
+             * pokemon_specie
+             */
+
+            /*
+             * pokemon_type
+             */
+            $sql = "
+            INSERT INTO pokemon_type
+            (pokemon_id, type_id)
+            VALUES
+            (:pokemon_id, :type_id)";
+            $data = $this->db->prepare($sql);
+            $types = [];
+            if ($pokemon['type_1'] !== null) {
+                $data->execute([
+                    ':pokemon_id' => $pokemon['id'],
+                    ':type_id' => $pokemon['type_1']
+                ]);
+            }
+            if ($pokemon['type_2'] !== null) {
+                $data->execute([
+                    ':pokemon_id' => $pokemon['id'],
+                    ':type_id' => $pokemon['type_2']
+                ]);
+            }
         }
 
     }
