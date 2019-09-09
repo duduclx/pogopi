@@ -51,10 +51,27 @@ $route->add('fastmove', function () {
     $request->fastMoveAll();
 });
 
+$route->add('generation/id/.+', function($number) {
+    $request = new Api();
+    $request->generationId($number);
+});
+
+$route->add('generation/fr/.+', function($name) {
+    $request = new Api();
+    $request->generationFr($name);
+});
+
+$route->add('generation/max', function() {
+    $request = new Api();
+    $request->generationMax();
+});
+
+/*
 $route->add('generation/.+', function($number) {
     $request = new Api();
     $request->generation($number);
 });
+*/
 
 $route->add('generation', function () {
     $request = new Api();

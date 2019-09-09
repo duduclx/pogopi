@@ -291,21 +291,13 @@ class Api
         echo json_encode($fastmove);
     }
 
-    public function generation($name)
+    /*
+     * return generation (pokedex) by name Fr
+     */
+    public function generationFr($name)
     {
-
-        switch (intval($name)) {
-            case '0':
-                // is string
-                $sql = 'SELECT id, name FROM pokedex
-                        WHERE name = :name';
-                break;
-            default:
-                // is number
-                $sql = 'SELECT id, name FROM pokedex
-                        WHERE id = :name';
-                break;
-        }
+        $sql = 'SELECT id, name FROM pokedex
+                WHERE name LIKE CONCAT(\'%\', :name, \'%\')';
         $query = $this->pdo->prepare($sql);
         $query->execute([
             ':name' => $name
@@ -314,7 +306,53 @@ class Api
         $result = $query->fetch(PDO::FETCH_ASSOC);
 
         if(empty($result)) {
-            $result['error'] = 400;
+            $this->error();
+            exit;
+        }
+
+        header('Content-type: application/json');
+        echo json_encode($result);
+    }
+
+    /*
+     * return generation by Id
+     */
+    public function generationId($number)
+    {
+        $sql = 'SELECT id, name FROM pokedex
+                WHERE id = :number';
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+            ':number' => $number
+        ]);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if(empty($result)) {
+            $this->error();
+            exit;
+        }
+
+        header('Content-type: application/json');
+        echo json_encode($result);
+    }
+
+    /*
+     * return count of generation
+     */
+    public function generationMax()
+    {
+        $sql = 'SELECT COUNT(id) AS totalGeneration FROM pokedex';
+
+        $query = $this->pdo->prepare($sql);
+
+        $query->execute();
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if(empty($result)) {
+            $this->error();
+            exit;
         }
 
         header('Content-type: application/json');
@@ -323,15 +361,17 @@ class Api
 
     public function generationAll()
     {
-        $query = $this->pdo->prepare('
-        SELECT id, name FROM pokedex');
+        $sql = 'SELECT id, name FROM pokedex';
+
+        $query = $this->pdo->prepare($sql);
 
         $query->execute();
 
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
         if(empty($result)) {
-            $result['error'] = 400;
+            $this->error();
+            exit;
         }
 
         header('Content-type: application/json');
