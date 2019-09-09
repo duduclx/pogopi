@@ -76,9 +76,14 @@ $route->add('pokedex', function () {
     $request->generationAll();
 });
 
-$route->add('pokemon/.+/.+', function ($name,$number) {
+$route->add('pokemon/id/.+', function ($number) {
     $request = new Api();
-    $request->pokemon($name,$number);
+    $request->pokemonId($number);
+});
+
+$route->add('pokemon/type/.+', function ($number) {
+    $request = new Api();
+    $request->pokemon($number);
 });
 
 $route->add('pokemon', function () {

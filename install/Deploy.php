@@ -15,24 +15,16 @@ class Deploy
         foreach ($abilities as $abilitie) {
             $sql = "
             INSERT INTO abilitie 
-            (id, lang, description, name)
+            (id, description, name)
             VALUES 
-            (:id, :lang, :description, :name)
+            (:id, :description, :name)
             ";
 
             $data = $this->db->prepare($sql);
             $data->execute([
                 ':id' => $abilitie['id'],
-                ':lang' => 'FR',
                 ':description' => $abilitie['description_fr'],
                 ':name' => $abilitie['name_fr']
-            ]);
-
-            $data->execute([
-                ':id' => $abilitie['id'],
-                ':lang' => 'EN',
-                ':description' => $abilitie['description_en'],
-                ':name' => $abilitie['name_en']
             ]);
         }
     }
@@ -42,9 +34,9 @@ class Deploy
         foreach ($fastMoves as $fastMove) {
             $sql = "
             INSERT INTO fast_move 
-            (id, damage, dps, energy, eps, move_duration, names, sound_fx, type)
+            (id, damage, dps, energy, eps, move_duration, name, sound_fx, type)
             VALUES 
-            (:id, :damage, :dps, :energy, :eps, :move_duration, :names, :sound_fx, :type)
+            (:id, :damage, :dps, :energy, :eps, :move_duration, :name, :sound_fx, :type)
             ";
             $data = $this->db->prepare($sql);
             $data->execute([
@@ -54,7 +46,7 @@ class Deploy
                 ':energy' => $fastMove['energy'],
                 ':eps' => $fastMove['eps'],
                 ':move_duration' => $fastMove['move_duration'],
-                ':names' => "{ en: " . $fastMove['name_en'] . ", fr: " . $fastMove['name_fr'] . " }",
+                ':name' => $fastMove['name_fr'],
                 ':sound_fx' => $fastMove['sound_fx'],
                 ':type' => $fastMove['type']
             ]);
@@ -67,9 +59,9 @@ class Deploy
         foreach ($mainMoves as $mainMove) {
             $sql = "
             INSERT INTO main_move 
-            (id, damage, dps, energy, move_duration, names, slot, sound_fx, type)
+            (id, damage, dps, energy, move_duration, name, slot, sound_fx, type)
             VALUES 
-            (:id, :damage, :dps, :energy, :move_duration, :names, :slot, :sound_fx, :type)
+            (:id, :damage, :dps, :energy, :move_duration, :name, :slot, :sound_fx, :type)
             ";
             $data = $this->db->prepare($sql);
             $data->execute([
@@ -78,7 +70,7 @@ class Deploy
                 ':dps' => $mainMove['dps'],
                 ':energy' => $mainMove['energy'],
                 ':move_duration' => $mainMove['move_duration'],
-                ':names' => "{ en: " . $mainMove['name_en'] . ", fr: " . $mainMove['name_fr'] . " }",
+                ':name' => $mainMove['name_fr'],
                 ':slot' => $mainMove['slot'],
                 ':sound_fx' => $mainMove['sound_fx'],
                 ':type' => $mainMove['type']
@@ -127,16 +119,10 @@ class Deploy
         foreach ($pokemons as $pokemon) {
             $sql = "
             INSERT INTO pokemon 
-            (id, attack, attack_max, attack_spe, base_experience, base_happiness, 
-             buddy_walk, capture_rate, defense, defense_max, defense_spe, escape_rate, 
-             height, hp, hp_max, image, `order`, pc_max, pokedex, 
-             scream, speed, stamina_max, weight
+            (id, attack, defense, height, hp, image, name, `order`, pokedex, scream, weight
             )
             VALUES 
-            (:id, :attack, :attack_max, :attack_spe, :base_experience, :base_happiness, 
-             :buddy_walk, :capture_rate, :defense, :defense_max, :defense_spe, :escape_rate, 
-             :height, :hp, :hp_max, :image, :order, :pc_max, :pokedex,
-             :scream, :speed, :stamina_max, :weight
+            (:id, :attack, :defense, :height, :hp, :image, :name, :order, :pokedex, :scream, :weight
             )
             ";
             $data = $this->db->prepare($sql);
@@ -144,28 +130,14 @@ class Deploy
             $data->execute([
                 ':id' => $pokemon['id'],
                 ':attack' => $pokemon['attack'],
-                ':attack_max' => $pokemon['attack_max'],
-                ':attack_spe' => $pokemon['attack_spe'],
-                ':base_experience' => $pokemon['base_experience'],
-                ':base_happiness' => $pokemon['base_happiness'],
-                ':buddy_walk' => $pokemon['buddy_walk'],
-                ':capture_rate' => $pokemon['capture_rate'],
                 ':defense' => $pokemon['defense'],
-                ':defense_max' => $pokemon['defense_max'],
-                ':defense_spe' => $pokemon['defense_spe'],
-                ':escape_rate' => $pokemon['escape_rate'],
                 ':height' => $pokemon['height'],
                 ':hp' => $pokemon['hp'],
-                ':hp_max' => $pokemon['hp_max'],
                 ':image' => $pokemon['image'],
-                ':names' => "{ en: " . $pokemon['name_en'] . ", fr: " . $pokemon['name_fr'] . " }",
+                ':name' => $pokemon['name_fr'],
                 ':order' => $pokemon['order'],
-                ':pc_max' => $pokemon['pc_max'],
                 ':pokedex' => $pokemon['pokedex'],
                 ':scream' => $pokemon['scream'],
-                ':species' => "{ en: " . $pokemon['specie_en'] . ", fr: " . $pokemon['specie_fr'] . " }",
-                ':speed' => $pokemon['speed'],
-                ':stamina_max' => $pokemon['stamina_max'],
                 ':weight' => $pokemon['weight']
             ]);
 
@@ -176,7 +148,7 @@ class Deploy
             INSERT INTO pokemon_abilitie
             (pokemon_id, abilitie_id)
             VALUES
-            (:pokemon_id, :abiltie_id)";
+            (:pokemon_id, :abilitie_id)";
             $data = $this->db->prepare($sql);
 
             if ($pokemon['abilitie_1'] !== null ) {
@@ -263,14 +235,6 @@ class Deploy
             }
 
             /*
-             * pokemon_name
-             */
-
-            /*
-             * pokemon_specie
-             */
-
-            /*
              * pokemon_type
              */
             $sql = "
@@ -327,15 +291,15 @@ class Deploy
         foreach ($types as $type) {
             $sql = "
             INSERT INTO type 
-            (id, img, names)
+            (id, img, name)
             VALUES 
-            (:id, :img, :names)
+            (:id, :img, :name)
             ";
             $data = $this->db->prepare($sql);
             $data->execute([
                 ':id' => $type['id'],
                 ':img' => $type['img'],
-                ':names' => "[ en: " . $type['name_en'] . ', fr: ' . $type['name_fr'] . " ]"
+                ':name' => $type['name_fr']
             ]);
         }
     }
@@ -352,10 +316,5 @@ class Deploy
         $data->execute([
             ':version' => $version
         ]);
-    }
-
-    public function successMessage()
-    {
-
     }
 }
