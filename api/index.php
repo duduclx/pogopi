@@ -26,9 +26,24 @@ $route->add('abilitie', function () {
     $request->abilitieAll();
 });
 
-$route->add('fastmove/.+', function($number) {
+$route->add('fastmove/id/.+', function ($number) {
     $request = new Api();
-    $request->fastMove($number);
+    $request->fastMoveId($number);
+});
+
+$route->add('fastmove/fr/.+', function ($name) {
+    $request = new Api();
+    $request->fastMoveFr($name);
+});
+
+$route->add('fastmove/type/.+', function ($name) {
+    $request = new Api();
+    $request->fastMoveType($name);
+});
+
+$route->add('fastmove/max', function() {
+    $request = new Api();
+    $request->fastMoveMax();
 });
 
 $route->add('fastmove', function () {

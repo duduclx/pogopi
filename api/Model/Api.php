@@ -82,49 +82,166 @@ class Api
         echo json_encode($result);
     }
 
-    public function fastMove($name)
+    /*
+     * return fastmove by id
+     * api/fastmove/id/{id}
+     */
+    public function fastMoveId($number)
     {
-        switch (intval($name)) {
-            case '0':
-                // is string
-                $sql = 'SELECT 
-                        id,
-                        damage,
-                        dps,
-                        energy,
-                        eps,
-                        move_duration,
-                        name,
-                        sound_fx,
-                        type
-                        FROM fast_move
-                        WHERE name LIKE CONCAT(\'%\', :name, \'%\')';
-                break;
-            default:
-                // is number
-                $sql = 'SELECT 
-                        id,
-                        damage,
-                        dps,
-                        energy,
-                        eps,
-                        move_duration,
-                        name,
-                        sound_fx,
-                        type
-                        FROM fast_move
-                        WHERE id = :name';
-                break;
-        }
+        $sql = 'SELECT 
+                fast_move.id,
+                fast_move.damage,
+                fast_move.dps,
+                fast_move.energy,
+                fast_move.eps,
+                fast_move.move_duration,
+                fast_move.name,
+                fast_move.sound_fx,
+                fast_move.type,
+                tp.name AS typename,
+                tp.img AS typeimg
+                FROM fast_move
+                LEFT JOIN type AS tp ON type = tp.id
+                WHERE fast_move.id = :number';
+
         $query = $this->pdo->prepare($sql);
+
         $query->execute([
-            ':name' => $name
+            ':number' => $number
         ]);
 
         $result = $query->fetch(PDO::FETCH_ASSOC);
 
         if(empty($result)) {
-            $result['error'] = 400;
+            $this->error();
+            exit;
+        }
+
+        $result['type'] = [
+            'id' => $result['type'],
+            'name' => $result['typename'],
+            'img' => $result['typeimg']
+        ];
+        unset($result['typename']);
+        unset($result['typeimg']);
+
+        header('Content-type: application/json');
+        echo json_encode($result);
+    }
+
+    /*
+     * return fastmove by name Fr
+     */
+    public function fastMoveFr($name)
+    {
+        $sql = 'SELECT 
+                fast_move.id,
+                fast_move.damage,
+                fast_move.dps,
+                fast_move.energy,
+                fast_move.eps,
+                fast_move.move_duration,
+                fast_move.name,
+                fast_move.sound_fx,
+                fast_move.type,
+                tp.name AS typename,
+                tp.img AS typeimg
+                FROM fast_move
+                LEFT JOIN type AS tp ON type = tp.id
+                WHERE fast_move.name LIKE CONCAT(\'%\', :name, \'%\')';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+            ':name' => $name
+        ]);
+
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($result)) {
+            $this->error();
+            exit;
+        }
+
+        foreach ($result AS $row) {
+            $row['type'] = [
+                'id' => $row['type'],
+                'name' => $row['typename'],
+                'img' => $row['typeimg']
+            ];
+            unset($row['typename']);
+            unset($row['typeimg']);
+            $fastmove[] = $row;
+        }
+
+        header('Content-type: application/json');
+        echo json_encode($fastmove);
+    }
+
+    /*
+     * return fastmove by type Fr
+     */
+    public function fastMoveType($name)
+    {
+        $sql = 'SELECT 
+                fast_move.id,
+                fast_move.damage,
+                fast_move.dps,
+                fast_move.energy,
+                fast_move.eps,
+                fast_move.move_duration,
+                fast_move.name,
+                fast_move.sound_fx,
+                fast_move.type,
+                tp.name AS typename,
+                tp.img AS typeimg
+                FROM fast_move
+                LEFT JOIN type AS tp ON type = tp.id
+                WHERE tp.name LIKE CONCAT(\'%\', :name, \'%\')';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+            ':name' => $name
+        ]);
+
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($result)) {
+            $this->error();
+            exit;
+        }
+
+        foreach ($result AS $row) {
+            $row['type'] = [
+                'id' => $row['type'],
+                'name' => $row['typename'],
+                'img' => $row['typeimg']
+            ];
+            unset($row['typename']);
+            unset($row['typeimg']);
+            $fastmove[] = $row;
+        }
+
+        header('Content-type: application/json');
+        echo json_encode($fastmove);
+    }
+
+    /*
+     * return count of fastmove
+     */
+    public function fastMoveMax()
+    {
+        $sql = 'SELECT 
+                COUNT(fast_move.id) AS totalFastMove
+                FROM fast_move';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if(empty($result)) {
+            $this->error();
+            exit;
         }
 
         header('Content-type: application/json');
@@ -133,29 +250,45 @@ class Api
 
     public function fastMoveAll()
     {
-        $query = $this->pdo->prepare('
-                        SELECT 
-                        id,
-                        damage,
-                        dps,
-                        energy,
-                        eps,
-                        move_duration,
-                        name,
-                        sound_fx,
-                        type
-                        FROM fast_move');
+        $sql = 'SELECT 
+                fast_move.id,
+                fast_move.damage,
+                fast_move.dps,
+                fast_move.energy,
+                fast_move.eps,
+                fast_move.move_duration,
+                fast_move.name,
+                fast_move.sound_fx,
+                fast_move.type,
+                tp.name AS typename,
+                tp.img AS typeimg
+                FROM fast_move
+                LEFT JOIN type AS tp ON type = tp.id';
+
+        $query = $this->pdo->prepare($sql);
 
         $query->execute();
 
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
         if(empty($result)) {
-            $result['error'] = 400;
+            $this->error();
+            exit;
+        }
+
+        foreach ($result AS $row) {
+            $row['type'] = [
+                'id' => $row['type'],
+                'name' => $row['typename'],
+                'img' => $row['typeimg']
+            ];
+            unset($row['typename']);
+            unset($row['typeimg']);
+            $fastmove[] = $row;
         }
 
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($fastmove);
     }
 
     public function generation($name)
@@ -347,6 +480,7 @@ class Api
 
     /*
      * return a pokemon by ID
+     * api/pokemon/id/{number}
      */
     public function pokemonId($number)
     {
@@ -416,7 +550,8 @@ class Api
         $result = $query->fetch(PDO::FETCH_ASSOC);
 
         if(empty($result)) {
-            $result['error'] = 400;
+            $this->error();
+            exit;
         }
 
         // create type array
@@ -657,6 +792,10 @@ class Api
         echo json_encode($result, JSON_PRETTY_PRINT);
     }
 
+    /*
+     * return all pokemons in array
+     * api/pokemon/
+     */
     public function pokemonAll()
     {
         $base_sql = 'SELECT
