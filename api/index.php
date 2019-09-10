@@ -16,10 +16,22 @@ $route->add('/', function () {
     exit();
 });
 
+$route->add('abilitie/id/.+', function($number) {
+    $request = new Api();
+    $request->abilitieFr($number);
+});
+
+$route->add('abilitie/fr/.+', function($name) {
+    $request = new Api();
+    $request->abilitieFr($name);
+});
+
+/*
 $route->add('abilitie/.+', function($number) {
     $request = new Api();
     $request->abilitie($number);
 });
+*/
 
 $route->add('abilitie', function () {
     $request = new Api();
@@ -66,21 +78,29 @@ $route->add('generation/max', function() {
     $request->generationMax();
 });
 
-/*
-$route->add('generation/.+', function($number) {
-    $request = new Api();
-    $request->generation($number);
-});
-*/
-
 $route->add('generation', function () {
     $request = new Api();
     $request->generationAll();
 });
 
-$route->add('mainmove/.+', function($number) {
+$route->add('mainmove/id/.+', function($number) {
     $request = new Api();
-    $request->mainMove($number);
+    $request->mainMoveId($number);
+});
+
+$route->add('mainmove/fr/.+', function($name) {
+    $request = new Api();
+    $request->mainMoveFr($name);
+});
+
+$route->add('mainmove/type/.+', function($name) {
+    $request = new Api();
+    $request->mainMoveType($name);
+});
+
+$route->add('mainmove/max', function() {
+    $request = new Api();
+    $request->mainMoveMax();
 });
 
 $route->add('mainmove', function () {
@@ -88,9 +108,24 @@ $route->add('mainmove', function () {
     $request->mainMoveAll();
 });
 
-$route->add('pokeball/.+', function ($number) {
-   $request = new Api();
-   $request->pokeball($number);
+$route->add('pokeball/id/.+', function ($number) {
+    $request = new Api();
+    $request->pokeballId($number);
+});
+
+$route->add('pokeball/generation/.+', function ($number) {
+    $request = new Api();
+    $request->pokeballGen($number);
+});
+
+$route->add('pokeball/name/.+', function ($number) {
+    $request = new Api();
+    $request->pokeballName($number);
+});
+
+$route->add('pokeball/max', function () {
+    $request = new Api();
+    $request->pokeballMax();
 });
 
 $route->add('pokeball', function () {
@@ -98,14 +133,14 @@ $route->add('pokeball', function () {
    $request->pokeballAll();
 });
 
-$route->add('pokedex/.+', function($number) {
+$route->add('pokemon/type/id/.+', function ($number) {
     $request = new Api();
-    $request->generation($number);
+    $request->pokemonTypeId($number);
 });
 
-$route->add('pokedex', function () {
+$route->add('pokemon/type/name/.+', function ($number) {
     $request = new Api();
-    $request->generationAll();
+    $request->pokemonTypeName($number);
 });
 
 $route->add('pokemon/id/.+', function ($number) {
@@ -113,9 +148,19 @@ $route->add('pokemon/id/.+', function ($number) {
     $request->pokemonId($number);
 });
 
-$route->add('pokemon/type/.+', function ($number) {
+$route->add('pokemon/generation/.+', function ($number) {
     $request = new Api();
-    $request->pokemon($number);
+    $request->pokemonGen($number);
+});
+
+$route->add('pokemon/name/.+', function ($name) {
+    $request = new Api();
+    $request->pokemonName($name);
+});
+
+$route->add('pokemon/order/.+', function ($number) {
+    $request = new Api();
+    $request->pokemonOrder($number);
 });
 
 $route->add('pokemon', function () {
@@ -123,6 +168,7 @@ $route->add('pokemon', function () {
     $request->pokemonAll();
 });
 
+// TODO check reste of method
 $route->add('team/.+', function($name) {
     $request = new Api();
     $request->team($name);
