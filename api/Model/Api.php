@@ -1637,13 +1637,15 @@ class Api
             pokemon.height,
             pokemon.hp,
             pokemon.image,
-            pokemon.name,
+            -- pokemon.name,
             pokemon.order,
             pokemon.pokedex,
             pokemon.scream,
             pokemon.weight,
             pokemon.pokedex,
             pkd.name AS pokedex,
+            GROUP_CONCAT(DISTINCT pkmn.lang) AS nameslang,
+            GROUP_CONCAT(pkmn.name) AS namesname,
             GROUP_CONCAT(DISTINCT type.id) AS typesid,
             GROUP_CONCAT(DISTINCT type.img) AS typesimg,
             GROUP_CONCAT(DISTINCT type.name) AS typesname,
@@ -1674,6 +1676,7 @@ class Api
             GROUP_CONCAT(mmtp.img) AS mainmovestypeimg 
             FROM `pokemon`
             LEFT JOIN pokedex AS pkd ON pokemon.pokedex = pkd.id
+            LEFT JOIN pokemon_name AS pkmn on pokemon.id = pkmn.pokemon_id
             LEFT JOIN pokemon_type AS pktp ON pokemon.id = pktp.pokemon_id
             LEFT JOIN type ON type.id = pktp.type_id
             -- LEFT JOIN pokemon_abilitie AS pkab ON pokemon.id = pkab.pokemon_id
@@ -1698,6 +1701,15 @@ class Api
         }
 
         foreach($results as $result) {
+            // create name array
+            $result['nameslang'] = explode(',', $result['nameslang']);
+            $result['namesname'] = explode(',', $result['namesname']);
+            for ($i = 0; $i< count($result['nameslang']); $i++) {
+                $result['name'][$result['nameslang'][$i]] = $result['namesname'][$i];
+            }
+            unset($result['nameslang']);
+            unset($result['namesname']);
+
             // create type array
             $result['typesname'] = explode(',', $result['typesname']);
             $result['typesimg'] = explode(',', $result['typesimg']);
@@ -1835,7 +1847,8 @@ class Api
     }
 
     /*
-     * api/pokemon/type/name/{id}
+     * api/pokemon/type/fr/{id}
+     *
      */
     public function pokemonTypeName($number)
     {
@@ -1846,13 +1859,15 @@ class Api
             pokemon.height,
             pokemon.hp,
             pokemon.image,
-            pokemon.name,
+            -- pokemon.name,
             pokemon.order,
             pokemon.pokedex,
             pokemon.scream,
             pokemon.weight,
             pokemon.pokedex,
             pkd.name AS pokedex,
+            GROUP_CONCAT(DISTINCT pkmn.lang) AS nameslang,
+            GROUP_CONCAT(pkmn.name) AS namesname,
             GROUP_CONCAT(DISTINCT type.id) AS typesid,
             GROUP_CONCAT(DISTINCT type.img) AS typesimg,
             GROUP_CONCAT(DISTINCT type.name) AS typesname,
@@ -1883,6 +1898,7 @@ class Api
             GROUP_CONCAT(mmtp.img) AS mainmovestypeimg 
             FROM `pokemon`
             LEFT JOIN pokedex AS pkd ON pokemon.pokedex = pkd.id
+            LEFT JOIN pokemon_name AS pkmn ON pokemon.id = pkmn.pokemon_id
             LEFT JOIN pokemon_type AS pktp ON pokemon.id = pktp.pokemon_id
             LEFT JOIN type ON type.id = pktp.type_id
             -- LEFT JOIN pokemon_abilitie AS pkab ON pokemon.id = pkab.pokemon_id
@@ -1907,6 +1923,15 @@ class Api
         }
 
         foreach($results as $result) {
+            // create name array
+            $result['nameslang'] = explode(',', $result['nameslang']);
+            $result['namesname'] = explode(',', $result['namesname']);
+            for ($i = 0; $i< count($result['nameslang']); $i++) {
+                $result['name'][$result['nameslang'][$i]] = $result['namesname'][$i];
+            }
+            unset($result['nameslang']);
+            unset($result['namesname']);
+
             // create type array
             $result['typesname'] = explode(',', $result['typesname']);
             $result['typesimg'] = explode(',', $result['typesimg']);
@@ -2066,7 +2091,7 @@ class Api
     }
 
     /*
-     * api/pokemon/
+     * api/pokemon/all
      */
     public function pokemonAll()
     {

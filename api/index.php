@@ -174,7 +174,7 @@ $route->add('pokemon/max', function () {
     $request->pokemonMax();
 });
 
-$route->add('pokemon', function () {
+$route->add('pokemon/all', function () {
     $request = new Api();
     $request->pokemonAll();
 });
