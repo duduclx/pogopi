@@ -5,6 +5,7 @@ use api\Model\Api;
 use api\Controller\RouteController;
 use api\Model\Fastmove;
 use api\Model\Generation;
+use api\Model\Pokeball;
 use api\Model\Team;
 use api\Model\Type;
 use api\Model\Version;
@@ -17,6 +18,8 @@ require 'Model/Api.php';
 require 'Model/Abilitie.php';
 require 'Model/Fastmove.php';
 require 'Model/Generation.php';
+
+require 'Model/Pokeball.php';
 require 'Model/Team.php';
 require 'Model/Type.php';
 require 'Model/Version.php';
@@ -136,29 +139,29 @@ $route->add('mainmove', function () {
 /*
  * pokeball
  */
+$route->add('pokeball/all', function () {
+    $request = new Pokeball();
+    $request->pokeballAll();
+});
+
+$route->add('pokeball/max', function () {
+    $request = new Pokeball();
+    $request->pokeballMax();
+});
+
 $route->add('pokeball/id/.+', function ($number) {
-    $request = new Api();
+    $request = new Pokeball();
     $request->pokeballId($number);
 });
 
 $route->add('pokeball/generation/.+', function ($number) {
-    $request = new Api();
+    $request = new Pokeball();
     $request->pokeballGen($number);
 });
 
 $route->add('pokeball/name/.+', function ($number) {
-    $request = new Api();
+    $request = new Pokeball();
     $request->pokeballName($number);
-});
-
-$route->add('pokeball/max', function () {
-    $request = new Api();
-    $request->pokeballMax();
-});
-
-$route->add('pokeball', function () {
-   $request = new Api();
-   $request->pokeballAll();
 });
 
 /*
