@@ -16,6 +16,10 @@ $route->add('/', function () {
     exit();
 });
 
+/*
+ * Abilitie
+ */
+
 $route->add('.+/abilitie/.+', function($intl, $name) {
     $request = new Api();
     $request->abilitieName($intl, $name);
@@ -35,6 +39,10 @@ $route->add('abilitie', function () {
     $request = new Api();
     $request->abilitieAll();
 });
+
+/*
+ * fastmove
+ */
 
 $route->add('fastmove/id/.+', function ($number) {
     $request = new Api();
