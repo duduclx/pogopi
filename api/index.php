@@ -3,13 +3,15 @@
 use api\Model\abilitie;
 use api\Model\Api;
 use api\Controller\RouteController;
+use api\Model\Version;
 
 /*
  * Load needed classes
  */
 require 'Controller/RouteController.php';
 require 'Model/Api.php';
-require 'Model/abilitie.php';
+require 'Model/Abilitie.php';
+require 'Model/Version.php';
 
 $route = new RouteController();
 
@@ -44,7 +46,6 @@ $route->add('abilitie/id/.+', function($number) {
 /*
  * fastmove
  */
-
 $route->add('fastmove/id/.+', function ($number) {
     $request = new Api();
     $request->fastMoveId($number);
@@ -202,7 +203,7 @@ $route->add('type', function () {
 });
 
 $route->add('version', function () {
-    $request = new Api();
+    $request = new Version();
     $request->version();
 });
 

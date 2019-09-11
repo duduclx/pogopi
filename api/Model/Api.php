@@ -2319,24 +2319,4 @@ class Api
         header('Content-type: application/json');
         echo json_encode($result);
     }
-
-    public function version()
-    {
-        $query = $this->pdo->prepare(
-            'SELECT 
-                       version
-                       FROM version');
-
-        $query->execute();
-
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-
-        if(empty($result)) {
-            $this->error();
-            exit;
-        }
-
-        header('Content-type: application/json');
-        echo json_encode($result);
-    }
 }
