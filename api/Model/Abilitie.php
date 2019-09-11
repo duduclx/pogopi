@@ -15,7 +15,7 @@ class Abilitie
         $this->pdo = new PDO("mysql:dbname=$dbname;host=$host;charset=UTF8", $username, $password);
     }
 
-    public function error()
+    private function error()
     {
         $result['error'] = 400;
         header('Content-type: application/json');

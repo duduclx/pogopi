@@ -3,6 +3,7 @@
 use api\Model\abilitie;
 use api\Model\Api;
 use api\Controller\RouteController;
+use api\Model\Fastmove;
 use api\Model\Version;
 
 /*
@@ -11,6 +12,8 @@ use api\Model\Version;
 require 'Controller/RouteController.php';
 require 'Model/Api.php';
 require 'Model/Abilitie.php';
+require 'Model/Fastmove.php';
+
 require 'Model/Version.php';
 
 $route = new RouteController();
@@ -46,31 +49,34 @@ $route->add('abilitie/id/.+', function($number) {
 /*
  * fastmove
  */
+$route->add('fastmove/all', function () {
+    $request = new Fastmove();
+    $request->fastMoveAll();
+});
+
+$route->add('fastmove/max', function() {
+    $request = new Fastmove();
+    $request->fastMoveMax();
+});
+
 $route->add('fastmove/id/.+', function ($number) {
-    $request = new Api();
+    $request = new Fastmove();
     $request->fastMoveId($number);
 });
 
 $route->add('fastmove/fr/.+', function ($name) {
-    $request = new Api();
+    $request = new Fastmove();
     $request->fastMoveFr($name);
 });
 
 $route->add('fastmove/type/.+', function ($name) {
-    $request = new Api();
+    $request = new Fastmove();
     $request->fastMoveType($name);
 });
 
-$route->add('fastmove/max', function() {
-    $request = new Api();
-    $request->fastMoveMax();
-});
-
-$route->add('fastmove', function () {
-    $request = new Api();
-    $request->fastMoveAll();
-});
-
+/*
+ * generation
+ */
 $route->add('generation/id/.+', function($number) {
     $request = new Api();
     $request->generationId($number);
