@@ -13,7 +13,10 @@ class Fastmove
     public function __construct()
     {
         include ('Controller/config.php');
-        $this->pdo = new PDO("mysql:dbname=$dbname;host=$host;charset=UTF8", $username, $password);
+        $this->pdo = new PDO(
+            "mysql:dbname=$dbname;host=$host;charset=UTF8",
+            $username,
+            $password);
         $this->sql = "
             SELECT 
             fast_move.id,

@@ -8,11 +8,22 @@ use PDO;
 class Abilitie
 {
     private $pdo;
+    private $sql;
 
     public function __construct()
     {
         include ('Controller/config.php');
-        $this->pdo = new PDO("mysql:dbname=$dbname;host=$host;charset=UTF8", $username, $password);
+        $this->pdo = new PDO(
+            "mysql:dbname=$dbname;host=$host;charset=UTF8",
+            $username,
+            $password);
+        $this->sql = '
+            SELECT 
+            id,
+            GROUP_CONCAT(lang) AS langs,
+            GROUP_CONCAT(description) AS descriptions,
+            GROUP_CONCAT(name) AS names
+            FROM abilitie';
     }
 
     private function error()
@@ -22,29 +33,7 @@ class Abilitie
         echo json_encode($result);
     }
 
-    /*
-     * api/abilitie/all
-     */
-    public function abilitieAll()
-    {
-        $query = $this->pdo->prepare('
-                        SELECT 
-                        id,
-                        GROUP_CONCAT(lang) AS langs,
-                        GROUP_CONCAT(description) AS descriptions,
-                        GROUP_CONCAT(name) AS names
-                        FROM abilitie
-                        GROUP BY id');
-
-        $query->execute();
-
-        $results = $query->fetchAll(PDO::FETCH_ASSOC);
-
-        if(empty($results)) {
-            $this->error();
-            exit;
-        }
-
+    private function formatResult($results) {
         foreach ($results as $result) {
             $result['langs'] = explode(',',$result['langs']);
             $result['descriptions'] = explode(',',$result['descriptions']);
@@ -56,6 +45,27 @@ class Abilitie
             }
             $abilities[] = $abilitie;
         }
+        return $abilities;
+    }
+
+    /*
+     * api/abilitie/all
+     */
+    public function abilitieAll()
+    {
+        $sql = $this->sql . ' GROUP BY id';
+        $query = $this->pdo->prepare($sql);
+
+        $query->execute();
+
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($results)) {
+            $this->error();
+            exit;
+        }
+
+        $abilities = $this->formatResult($results);
 
         header('Content-type: application/json');
         echo json_encode($abilities);
@@ -87,13 +97,7 @@ class Abilitie
      */
     public function abilitieId($number)
     {
-        $sql = 'SELECT 
-                id,
-                GROUP_CONCAT(lang) AS langs,
-                GROUP_CONCAT(description) AS descriptions,
-                GROUP_CONCAT(name) AS names
-                FROM abilitie
-                WHERE id = :number';
+        $sql = $this->sql . ' WHERE id = :number';
 
         $query = $this->pdo->prepare($sql);
         $query->execute([
@@ -107,17 +111,7 @@ class Abilitie
             exit;
         }
 
-        foreach ($results as $result) {
-            $result['langs'] = explode(',',$result['langs']);
-            $result['descriptions'] = explode(',',$result['descriptions']);
-            $result['names'] = explode(',',$result['names']);
-            for ($i=0; $i < count($result['langs']); $i++) {
-                $abilitie['id'] = $result['id'];
-                $abilitie['description'][$result['langs'][$i]] = $result['descriptions'][$i];
-                $abilitie['name'][$result['langs'][$i]] = $result['names'][$i];
-            }
-            $abilities[] = $abilitie;
-        }
+        $abilities = $this->formatResult($results);
 
         header('Content-type: application/json');
         echo json_encode($abilities);
