@@ -5,6 +5,7 @@ use pogopiV2;
 CREATE TABLE abilitie
 (
     id             INT(3) UNSIGNED,
+    lang           VARCHAR(3),
     description    VARCHAR(255),
     name           VARCHAR(30)
 );

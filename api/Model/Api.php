@@ -1,13 +1,12 @@
 <?php
 
-
 namespace api\Model;
 
 use PDO;
 
 class Api
 {
-
+    //  TODO divide to sub classes
     private $pdo;
 
     public function __construct()
@@ -21,7 +20,6 @@ class Api
         $result['error'] = 400;
         header('Content-type: application/json');
         echo json_encode($result);
-
     }
 
     /*
@@ -31,6 +29,7 @@ class Api
     {
         $sql = 'SELECT 
                 id,
+                lang,
                 description,
                 name
                 FROM abilitie
@@ -41,15 +40,21 @@ class Api
             ':number' => $number
         ]);
 
-        $result = $query->fetch(PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
         if(empty($result)) {
             $this->error();
             exit;
         }
 
+        foreach ($result as $row) {
+            $abilitie['id'] = $row['id'];
+            $abilitie['description'][$row['lang']] = $row['description'];
+            $abilitie['name'][$row['lang']] = $row['name'];
+        }
+
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($abilitie);
     }
 
     /*
@@ -69,7 +74,7 @@ class Api
             ':name' => $name
         ]);
 
-        $result = $query->fetch(PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
         if(empty($result)) {
             $this->error();
@@ -77,6 +82,27 @@ class Api
         }
 
         header('Content-type: application/json');
+        echo json_encode($result);
+    }
+
+    /*
+     * api/abilitie/max
+     */
+    public function abilitieMax()
+    {
+        $sql = 'SELECT count(id) AS maxAbilitie FROM abilitie';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($result)) {
+            $this->error();
+            exit;
+        }
+
+        header('Content-Type: application/json');
         echo json_encode($result);
     }
 
@@ -2002,6 +2028,28 @@ class Api
     }
 
     /*
+     * api/pokemon/max
+     */
+    public function pokemonMax()
+    {
+        $sql = 'SELECT COUNT(id) AS maxPokemon FROM pokemon';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if(empty($result)) {
+            $this->error();
+            exit;
+        }
+
+        header('Content-type: application/json');
+        echo json_encode($result);
+
+    }
+
+    /*
      * api/pokemon/
      */
     public function pokemonAll()
@@ -2194,6 +2242,9 @@ class Api
         echo json_encode($pokemon);
     }
 
+    /*
+     * api/team/{id}
+     */
     public function team($number)
     {
         //check if lang exist in request
@@ -2352,7 +2403,8 @@ class Api
         $result = $query->fetch(PDO::FETCH_ASSOC);
 
         if(empty($result)) {
-            $result['error'] = 400;
+            $this->error();
+            exit;
         }
 
         header('Content-type: application/json');

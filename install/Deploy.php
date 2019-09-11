@@ -15,16 +15,23 @@ class Deploy
         foreach ($abilities as $abilitie) {
             $sql = "
             INSERT INTO abilitie 
-            (id, description, name)
+            (id, lang, description, name)
             VALUES 
-            (:id, :description, :name)
+            (:id, :lang, :description, :name)
             ";
 
             $data = $this->db->prepare($sql);
             $data->execute([
                 ':id' => $abilitie['id'],
+                ':lang' => 'fr',
                 ':description' => $abilitie['description_fr'],
                 ':name' => $abilitie['name_fr']
+            ]);
+            $data->execute([
+                ':id' => $abilitie['id'],
+                ':lang' => 'en',
+                ':description' => $abilitie['description_en'],
+                ':name' => $abilitie['name_en']
             ]);
         }
     }
@@ -235,6 +242,46 @@ class Deploy
             }
 
             /*
+             * pokemon_name
+             */
+            $sql = '
+            INSERT INTO pokemon_name
+            (pokemon_id, lang, name)
+            VALUES 
+            (:pokemon_id, :lang, :name)';
+            $data = $this->db->prepare($sql);
+            $data->execute([
+               ':pokemon_id' => $pokemon['id'],
+               ':lang' => 'fr',
+               ':name' => $pokemon['name_fr']
+            ]);
+            $data->execute([
+                ':pokemon_id' => $pokemon['id'],
+                ':lang' => 'en',
+                ':name' => $pokemon['name_en']
+            ]);
+
+            /*
+             * pokemon_specie
+             */
+            $sql = '
+            INSERT INTO pokemon_specie
+            (pokemon_id, lang, specie)
+            VALUES
+            (:pokemon_id, :lang, :specie)';
+            $data = $this->db->prepare($sql);
+            $data->execute([
+                ':pokemon_id' => $pokemon['id'],
+                ':lang' => 'fr',
+                ':specie' => $pokemon['specie_fr']
+            ]);
+            $data->execute([
+                ':pokemon_id' => $pokemon['id'],
+                ':lang' => 'en',
+                ':specie' => $pokemon['specie_en']
+            ]);
+
+            /*
              * pokemon_type
              */
             $sql = "
@@ -243,7 +290,6 @@ class Deploy
             VALUES
             (:pokemon_id, :type_id)";
             $data = $this->db->prepare($sql);
-            $types = [];
             if ($pokemon['type_1'] !== null) {
                 $data->execute([
                     ':pokemon_id' => $pokemon['id'],

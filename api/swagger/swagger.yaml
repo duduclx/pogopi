@@ -10,21 +10,21 @@ servers:
   - url: http://localhost/pogopi/api
 tags:
   - name: abilitie
-    description: list of abilitie (talent)
+    description: pokemons abilities
   - name: fastmove
-    description: list of fast attack
+    description: pokemons fast attack
   - name: generation
-    description: list of generation / pokedex
+    description: pokemons generations
   - name: mainmove
-    description: list of charged attack
-  - name: type
-    description: list of type
-  - name: team
-    description: team trainers
+    description: pokemons charged attacks
   - name: pokeball
-    description: list of pokeballs
+    description: pokeballs
   - name: pokemon
     description: pokemons informations
+  - name: team
+    description: team trainers
+  - name: type
+    description: pokemons types
   - name: version
     description: api's version
 paths:
@@ -32,7 +32,7 @@ paths:
     get:
       tags:
         - abilitie
-      summary: list of abilities
+      summary: get all abilities
       responses:
         200:
           description: successful operation
@@ -45,13 +45,53 @@ paths:
         400:
           description: Invalid status value
           content: {}
-  /abilitie/{id-name}:
+  /abilitie/max:
     get:
       tags:
         - abilitie
-      summary: Finds abilitie by id or name
+      summary: Return number of abilities
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Abilitie'
+        400:
+          description: Invalid status value
+          content: {}
+  /abilitie/id/{id}:
+    get:
+      tags:
+        - abilitie
+      summary: Finds abilitie by id
       parameters:
-        - name: id-name
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Abilitie'
+        400:
+          description: Invalid status value
+          content: {}
+  /abilitie/fr/{name}:
+    get:
+      tags:
+        - abilitie
+      summary: Finds abilitie by name
+      parameters:
+        - name: name
           in: path
           required: true
           schema:
@@ -72,7 +112,7 @@ paths:
     get:
       tags:
         - fastmove
-      summary: list of fast attack
+      summary: get all fast attacks
       responses:
         200:
           description: successful operation
@@ -85,11 +125,74 @@ paths:
         400:
           description: Invalid status value
           content: {}
-  /fastmove/{id-name}:
+  /fastmove/max:
     get:
       tags:
         - fastmove
-      summary: Finds fast attack by id or name
+      summary: return number of fast attacks
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fastmove'
+        400:
+          description: Invalid status value
+          content: {}
+  /fastmove/id/{id}:
+    get:
+      tags:
+        - fastmove
+      summary: Finds fast attack by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fastmove'
+        400:
+          description: Invalid status value
+          content: {}
+  /fastmove/fr/{name}:
+    get:
+      tags:
+        - fastmove
+      summary: Finds fast attack by name
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fastmove'
+        400:
+          description: Invalid status value
+          content: {}
+  /fastmove/type/{id-name}:
+    get:
+      tags:
+        - fastmove
+      summary: Finds fast attack by type's id or name
       parameters:
         - name: id-name
           in: path
@@ -112,7 +215,7 @@ paths:
     get:
       tags:
         - generation
-      summary: list of generation
+      summary: get all generations
       responses:
         200:
           description: successful operation
@@ -125,13 +228,53 @@ paths:
         400:
           description: Invalid status value
           content: {}
-  /generation/{id-name}:
+  /generation/max:
     get:
       tags:
         - generation
-      summary: Finds generation by id or name
+      summary: return number of generations
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Generation'
+        400:
+          description: Invalid status value
+          content: {}
+  /generation/id/{id}:
+    get:
+      tags:
+        - generation
+      summary: Finds generation by id
       parameters:
-        - name: id-name
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Generation'
+        400:
+          description: Invalid status value
+          content: {}
+  /generation/fr/{name}:
+    get:
+      tags:
+        - generation
+      summary: Finds generation by name
+      parameters:
+        - name: name
           in: path
           required: true
           schema:
@@ -165,11 +308,74 @@ paths:
         400:
           description: Invalid status value
           content: {}
-  /mainmove/{id-name}:
+  /mainmove/max:
     get:
       tags:
         - mainmove
-      summary: Finds charged attack by id or name
+      summary: return number of charged attack
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+                items:
+                  $ref: '#/components/schemas/Mainmove'
+        400:
+          description: Invalid status value
+          content: {}
+  /mainmove/id/{id}:
+    get:
+      tags:
+        - mainmove
+      summary: Finds charged attack by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Mainmove'
+        400:
+          description: Invalid status value
+          content: {}
+  /mainmove/fr/{name}:
+    get:
+      tags:
+        - mainmove
+      summary: Finds charged attack by name
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Mainmove'
+        400:
+          description: Invalid status value
+          content: {}
+  /mainmove/type/{id-name}:
+    get:
+      tags:
+        - mainmove
+      summary: Finds charged attack by type's id or name
       parameters:
         - name: id-name
           in: path
@@ -187,6 +393,246 @@ paths:
                   $ref: '#/components/schemas/Mainmove'
         400:
           description: Invalid status value
+          content: {}
+  /pokeball:
+    get:
+      tags:
+        - pokeball
+      summary: List all pokeballs
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokeball'
+  /pokeball/max:
+    get:
+      tags:
+        - pokeball
+      summary: Return number of pokeballs
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokeball'
+  /pokeball/id/{id}:
+    get:
+      tags:
+        - pokeball
+      summary: Find pokeball by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokeball'
+        404:
+          description: Pokeball not found
+          content: {}
+  /pokeball/name/{name}:
+    get:
+      tags:
+        - pokeball
+      summary: Find pokeball by generations id
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokeball'
+        404:
+          description: Pokeball not found
+          content: {}
+  /pokeball/generation/{id}:
+    get:
+      tags:
+        - pokeball
+      summary: Find pokeball by generations id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokeball'
+        404:
+          description: Pokeball not found
+          content: {}
+  /pokemon:
+    get:
+      tags:
+        - pokemon
+      summary: Find them all
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokemon'
+  /pokemon/max:
+    get:
+      tags:
+        - pokemon
+      summary: Return number of pokemons
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokemon'
+  /pokemon/id/{id}:
+    get:
+      tags:
+        - pokemon
+      summary: Find pokemon by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokemon'
+        400:
+          description: Invalid ID supplied
+          content: {}
+  /pokemon/fr/{name}:
+    get:
+      tags:
+        - pokemon
+      summary: Find pokemon by Name
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokemon'
+        400:
+          description: Invalid ID supplied
+          content: {}
+  /pokemon/generation/{id}:
+    get:
+      tags:
+        - pokemon
+      summary: Find pokemons by generation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokemon'
+        400:
+          description: Invalid ID supplied
+          content: {}
+  /pokemon/order/{id}:
+    get:
+      tags:
+        - pokemon
+      summary: Find pokemon by order
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokemon'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Pokemon not found
+          content: {}
+  /pokemon/type/id/{id}:
+    get:
+      tags:
+        - pokemon
+      summary: Find pokemon by type's id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokemon'
+        400:
+          description: Invalid ID supplied
+          content: {}
+  /pokemon/type/fr/{name}:
+    get:
+      tags:
+        - pokemon
+      summary: Find pokemon by type's id
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokemon'
+        400:
+          description: Invalid ID supplied
           content: {}
   /team:
     get:
@@ -264,239 +710,6 @@ paths:
         400:
           description: Invalid status value
           content: {}
-  /pokeball:
-    get:
-      tags:
-        - pokeball
-      summary: List all pokeballs
-      description: Returns all pokemons
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pokeball'
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: Pokemon not found
-          content: {}
-  /pokeball/{id-name}:
-    get:
-      tags:
-        - pokeball
-      summary: Find pokeball by ID or name
-      description: Returns a single pokeball
-      parameters:
-        - name: id-name
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pokeball'
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: Pokemon not found
-          content: {}
-  /pokedex:
-    get:
-      tags:
-        - generation
-      summary: list of generation
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Generation'
-        400:
-          description: Invalid status value
-          content: {}
-  /pokedex/{id-name}:
-    get:
-      tags:
-        - generation
-      summary: Finds generation by id or name
-      parameters:
-        - name: id-name
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Generation'
-        400:
-          description: Invalid status value
-          content: {}
-  /pokemon:
-    get:
-      tags:
-        - pokemon
-      summary: Find them all
-      description: Returns all pokemons
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pokemon'
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: Pokemon not found
-          content: {}
-  /pokemon/{intl}/{name}:
-    get:
-      tags:
-        - pokemon
-      summary: Find pokemon by Name
-      description: Returns a single pokemon
-      parameters:
-        - name: intl
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pokemon'
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: Pokemon not found
-          content: {}
-  /pokemon/id/{id}:
-    get:
-      tags:
-        - pokemon
-      summary: Find pokemon by ID
-      description: Returns a single pokemon
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pokemon'
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: Pokemon not found
-          content: {}
-  /pokemon/generation/{id}:
-    get:
-      tags:
-        - pokemon
-      summary: Find pokemons by generation ID
-      description: Returns array of pokemons
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pokemon'
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: Pokemon not found
-          content: {}
-  /pokemon/order/{id}:
-    get:
-      tags:
-        - pokemon
-      summary: Find pokemon by order ID
-      description: Returns array of pokemons
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pokemon'
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: Pokemon not found
-          content: {}
-  /pokemon/type/{id}:
-    get:
-      tags:
-        - pokemon
-      summary: Find pokemon by type ID
-      description: Returns array of pokemons
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pokemon'
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: Pokemon not found
-          content: {}
   /version:
     get:
       tags:
@@ -522,13 +735,9 @@ components:
         id:
           type: integer
           format: int64
-        description_en:
+        description:
           type: string
-        description_fr:
-          type: string
-        name_en:
-          type: string
-        name_fr:
+        name:
           type: string
       xml:
         name: abilitie

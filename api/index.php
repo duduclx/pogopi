@@ -18,7 +18,7 @@ $route->add('/', function () {
 
 $route->add('abilitie/id/.+', function($number) {
     $request = new Api();
-    $request->abilitieFr($number);
+    $request->abilitieId($number);
 });
 
 $route->add('abilitie/fr/.+', function($name) {
@@ -26,12 +26,10 @@ $route->add('abilitie/fr/.+', function($name) {
     $request->abilitieFr($name);
 });
 
-/*
-$route->add('abilitie/.+', function($number) {
+$route->add('abilitie/max', function () {
     $request = new Api();
-    $request->abilitie($number);
+    $request->abilitieMax();
 });
-*/
 
 $route->add('abilitie', function () {
     $request = new Api();
@@ -138,7 +136,7 @@ $route->add('pokemon/type/id/.+', function ($number) {
     $request->pokemonTypeId($number);
 });
 
-$route->add('pokemon/type/name/.+', function ($number) {
+$route->add('pokemon/type/fr/.+', function ($number) {
     $request = new Api();
     $request->pokemonTypeName($number);
 });
@@ -148,14 +146,14 @@ $route->add('pokemon/id/.+', function ($number) {
     $request->pokemonId($number);
 });
 
+$route->add('pokemon/fr/.+', function ($name) {
+    $request = new Api();
+    $request->pokemonName($name);
+});
+
 $route->add('pokemon/generation/.+', function ($number) {
     $request = new Api();
     $request->pokemonGen($number);
-});
-
-$route->add('pokemon/name/.+', function ($name) {
-    $request = new Api();
-    $request->pokemonName($name);
 });
 
 $route->add('pokemon/order/.+', function ($number) {
@@ -163,12 +161,17 @@ $route->add('pokemon/order/.+', function ($number) {
     $request->pokemonOrder($number);
 });
 
+$route->add('pokemon/max', function () {
+    $request = new Api();
+    $request->pokemonMax();
+});
+
 $route->add('pokemon', function () {
     $request = new Api();
     $request->pokemonAll();
 });
 
-// TODO check reste of method
+// TODO check following methods
 $route->add('team/.+', function($name) {
     $request = new Api();
     $request->team($name);
