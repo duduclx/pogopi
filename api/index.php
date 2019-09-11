@@ -5,6 +5,7 @@ use api\Model\Api;
 use api\Controller\RouteController;
 use api\Model\Fastmove;
 use api\Model\Generation;
+use api\Model\Mainmove;
 use api\Model\Pokeball;
 use api\Model\Team;
 use api\Model\Type;
@@ -18,6 +19,7 @@ require 'Model/Api.php';
 require 'Model/Abilitie.php';
 require 'Model/Fastmove.php';
 require 'Model/Generation.php';
+require 'Model/Mainmove.php';
 
 require 'Model/Pokeball.php';
 require 'Model/Team.php';
@@ -111,29 +113,29 @@ $route->add('generation/all', function () {
 /*
  * mainmove
  */
+$route->add('mainmove/all', function () {
+    $request = new Mainmove();
+    $request->mainMoveAll();
+});
+
+$route->add('mainmove/max', function() {
+    $request = new Mainmove();
+    $request->mainMoveMax();
+});
+
 $route->add('mainmove/id/.+', function($number) {
-    $request = new Api();
+    $request = new Mainmove();
     $request->mainMoveId($number);
 });
 
 $route->add('mainmove/fr/.+', function($name) {
-    $request = new Api();
+    $request = new Mainmove();
     $request->mainMoveFr($name);
 });
 
 $route->add('mainmove/type/.+', function($name) {
-    $request = new Api();
+    $request = new Mainmove();
     $request->mainMoveType($name);
-});
-
-$route->add('mainmove/max', function() {
-    $request = new Api();
-    $request->mainMoveMax();
-});
-
-$route->add('mainmove', function () {
-    $request = new Api();
-    $request->mainMoveAll();
 });
 
 /*
