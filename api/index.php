@@ -16,14 +16,14 @@ $route->add('/', function () {
     exit();
 });
 
+$route->add('.+/abilitie/.+', function($intl, $name) {
+    $request = new Api();
+    $request->abilitieName($intl, $name);
+});
+
 $route->add('abilitie/id/.+', function($number) {
     $request = new Api();
     $request->abilitieId($number);
-});
-
-$route->add('abilitie/fr/.+', function($name) {
-    $request = new Api();
-    $request->abilitieFr($name);
 });
 
 $route->add('abilitie/max', function () {

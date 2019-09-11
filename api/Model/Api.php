@@ -58,19 +58,21 @@ class Api
     }
 
     /*
-     * api/abilitie/fr/{name}
+     * api/abilitie/{intl}/{name}
      */
-    public function abilitieFr($name)
+    public function abilitieName($intl, $name)
     {
         $sql = 'SELECT 
                 id,
                 description,
                 name
                 FROM abilitie
-                WHERE name LIKE CONCAT(\'%\', :name, \'%\')';
+                WHERE name LIKE CONCAT(\'%\', :name, \'%\')
+                AND lang = :intl';
 
         $query = $this->pdo->prepare($sql);
         $query->execute([
+            ':intl' => $intl,
             ':name' => $name
         ]);
 
@@ -114,21 +116,35 @@ class Api
         $query = $this->pdo->prepare('
                         SELECT 
                         id,
-                        description,
-                        name
-                        FROM abilitie');
+                        GROUP_CONCAT(lang) AS langs,
+                        GROUP_CONCAT(description) AS descriptions,
+                        GROUP_CONCAT(name) AS names
+                        FROM abilitie
+                        GROUP BY id');
 
         $query->execute();
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($result)) {
+        if(empty($results)) {
             $this->error();
             exit;
         }
 
+        foreach ($results as $result) {
+            $result['langs'] = explode(',',$result['langs']);
+            $result['descriptions'] = explode(',',$result['descriptions']);
+            $result['names'] = explode(',',$result['names']);
+            for ($i=0; $i < count($result['langs']); $i++) {
+                $abilitie['id'] = $result['id'];
+                $abilitie['description'][$result['langs'][$i]] = $result['descriptions'][$i];
+                $abilitie['name'][$result['langs'][$i]] = $result['names'][$i];
+            }
+            $abilities[] = $abilitie;
+        }
+
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($abilities);
     }
 
     /*
