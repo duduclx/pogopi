@@ -1,5 +1,6 @@
 <?php
 
+use api\Model\abilitie;
 use api\Model\Api;
 use api\Controller\RouteController;
 
@@ -8,6 +9,7 @@ use api\Controller\RouteController;
  */
 require 'Controller/RouteController.php';
 require 'Model/Api.php';
+require 'Model/abilitie.php';
 
 $route = new RouteController();
 
@@ -19,25 +21,24 @@ $route->add('/', function () {
 /*
  * Abilitie
  */
+$route->add('abilitie/all', function () {
+    $request = new Abilitie();
+    $request->abilitieAll();
+});
+
+$route->add('abilitie/max', function () {
+    $request = new Abilitie();
+    $request->abilitieMax();
+});
 
 $route->add('.+/abilitie/.+', function($intl, $name) {
-    $request = new Api();
+    $request = new Abilitie();
     $request->abilitieName($intl, $name);
 });
 
 $route->add('abilitie/id/.+', function($number) {
-    $request = new Api();
+    $request = new Abilitie();
     $request->abilitieId($number);
-});
-
-$route->add('abilitie/max', function () {
-    $request = new Api();
-    $request->abilitieMax();
-});
-
-$route->add('abilitie', function () {
-    $request = new Api();
-    $request->abilitieAll();
 });
 
 /*
