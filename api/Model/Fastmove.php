@@ -41,8 +41,8 @@ class Fastmove
         echo json_encode($result);
     }
 
-    private function formatResults($result) {
-        foreach ($result AS $row) {
+    private function formatResults($results) {
+        foreach ($results AS $row) {
             $row['type'] = [
                 'id' => $row['type'],
                 'name' => $row['typename'],
@@ -52,7 +52,6 @@ class Fastmove
             unset($row['typeimg']);
             $fastmove[] = $row;
         }
-
         return $fastmove;
     }
 
@@ -62,7 +61,6 @@ class Fastmove
     public function fastMoveAll()
     {
         $query = $this->pdo->prepare($this->sql);
-
         $query->execute();
 
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -109,7 +107,6 @@ class Fastmove
         $sql = $this->sql . ' WHERE fast_move.id = :number';
 
         $query = $this->pdo->prepare($sql);
-
         $query->execute([
             ':number' => $number
         ]);
@@ -160,6 +157,7 @@ class Fastmove
 
     /*
      * api/fastmove/type/{id or name}
+     * TODO intl
      */
     public function fastMoveType($name)
     {

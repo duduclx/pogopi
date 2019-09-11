@@ -1,9 +1,10 @@
 <?php
 
-use api\Model\abilitie;
+use api\Model\Abilitie;
 use api\Model\Api;
 use api\Controller\RouteController;
 use api\Model\Fastmove;
+use api\Model\Type;
 use api\Model\Version;
 
 /*
@@ -13,11 +14,14 @@ require 'Controller/RouteController.php';
 require 'Model/Api.php';
 require 'Model/Abilitie.php';
 require 'Model/Fastmove.php';
-
+require 'Model/Type.php';
 require 'Model/Version.php';
 
 $route = new RouteController();
 
+/*
+ * swagger
+ */
 $route->add('/', function () {
     header("Location: swagger/");
     exit();
@@ -97,6 +101,9 @@ $route->add('generation', function () {
     $request->generationAll();
 });
 
+/*
+ * mainmove
+ */
 $route->add('mainmove/id/.+', function($number) {
     $request = new Api();
     $request->mainMoveId($number);
@@ -122,6 +129,9 @@ $route->add('mainmove', function () {
     $request->mainMoveAll();
 });
 
+/*
+ * pokeball
+ */
 $route->add('pokeball/id/.+', function ($number) {
     $request = new Api();
     $request->pokeballId($number);
@@ -147,6 +157,9 @@ $route->add('pokeball', function () {
    $request->pokeballAll();
 });
 
+/*
+ * pokemon
+ */
 $route->add('pokemon/type/id/.+', function ($number) {
     $request = new Api();
     $request->pokemonTypeId($number);
@@ -188,6 +201,9 @@ $route->add('pokemon/all', function () {
 });
 
 // TODO check following methods
+/*
+ * team
+ */
 $route->add('team/.+', function($name) {
     $request = new Api();
     $request->team($name);
@@ -198,16 +214,28 @@ $route->add('team', function() {
     $request->teamAll();
 });
 
-$route->add('type/.+', function ($name) {
-    $request = new Api();
-    $request->type($name);
-});
-
-$route->add('type', function () {
-    $request = new Api();
+/*
+ * type
+ * TODO route conflict with type/all
+ */
+$route->add('types/all', function () {
+    $request = new Type();
     $request->typeAll();
 });
 
+$route->add('types/max', function () {
+    $request = new Type();
+    $request->typeMax();
+});
+
+$route->add('type/.+', function ($name) {
+    $request = new Type();
+    $request->typeId($name);
+});
+
+/*
+ * version
+ */
 $route->add('version', function () {
     $request = new Version();
     $request->version();
