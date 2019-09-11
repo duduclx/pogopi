@@ -4,6 +4,8 @@ use api\Model\Abilitie;
 use api\Model\Api;
 use api\Controller\RouteController;
 use api\Model\Fastmove;
+use api\Model\Generation;
+use api\Model\Team;
 use api\Model\Type;
 use api\Model\Version;
 
@@ -14,6 +16,8 @@ require 'Controller/RouteController.php';
 require 'Model/Api.php';
 require 'Model/Abilitie.php';
 require 'Model/Fastmove.php';
+require 'Model/Generation.php';
+require 'Model/Team.php';
 require 'Model/Type.php';
 require 'Model/Version.php';
 
@@ -82,22 +86,22 @@ $route->add('fastmove/type/.+', function ($name) {
  * generation
  */
 $route->add('generation/id/.+', function($number) {
-    $request = new Api();
+    $request = new Generation();
     $request->generationId($number);
 });
 
-$route->add('generation/fr/.+', function($name) {
-    $request = new Api();
-    $request->generationFr($name);
+$route->add('generation/name/.+', function($name) {
+    $request = new Generation();
+    $request->generationName($name);
 });
 
 $route->add('generation/max', function() {
-    $request = new Api();
+    $request = new Generation();
     $request->generationMax();
 });
 
-$route->add('generation', function () {
-    $request = new Api();
+$route->add('generation/all', function () {
+    $request = new Generation();
     $request->generationAll();
 });
 
@@ -205,33 +209,34 @@ $route->add('pokemon/all', function () {
  * team
  */
 $route->add('team/.+', function($name) {
-    $request = new Api();
-    $request->team($name);
+    $request = new Team();
+    $request->teamId($name);
 });
 
 $route->add('team', function() {
-    $request = new Api();
+    $request = new Team();
     $request->teamAll();
 });
 
 /*
  * type
- * TODO route conflict with type/all
  */
-$route->add('types/all', function () {
+$route->add('type/id/.+', function ($name) {
+    $request = new Type();
+    $request->typeId($name);
+});
+
+$route->add('type/all', function () {
     $request = new Type();
     $request->typeAll();
 });
 
-$route->add('types/max', function () {
+$route->add('type/max', function () {
     $request = new Type();
     $request->typeMax();
 });
 
-$route->add('type/.+', function ($name) {
-    $request = new Type();
-    $request->typeId($name);
-});
+
 
 /*
  * version
