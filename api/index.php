@@ -1,12 +1,13 @@
 <?php
 
-use api\Model\Abilitie;
-use api\Model\Api;
 use api\Controller\RouteController;
+
+use api\Model\Abilitie;
 use api\Model\Fastmove;
 use api\Model\Generation;
 use api\Model\Mainmove;
 use api\Model\Pokeball;
+use api\Model\Pokemon;
 use api\Model\Team;
 use api\Model\Type;
 use api\Model\Version;
@@ -15,13 +16,13 @@ use api\Model\Version;
  * Load needed classes
  */
 require 'Controller/RouteController.php';
-require 'Model/Api.php';
+
 require 'Model/Abilitie.php';
 require 'Model/Fastmove.php';
 require 'Model/Generation.php';
 require 'Model/Mainmove.php';
-
 require 'Model/Pokeball.php';
+require 'Model/Pokemon.php';
 require 'Model/Team.php';
 require 'Model/Type.php';
 require 'Model/Version.php';
@@ -170,42 +171,42 @@ $route->add('pokeball/name/.+', function ($number) {
  * pokemon
  */
 $route->add('pokemon/type/id/.+', function ($number) {
-    $request = new Api();
+    $request = new Pokemon();
     $request->pokemonTypeId($number);
 });
 
 $route->add('pokemon/type/fr/.+', function ($number) {
-    $request = new Api();
+    $request = new Pokemon();
     $request->pokemonTypeName($number);
 });
 
 $route->add('pokemon/id/.+', function ($number) {
-    $request = new Api();
+    $request = new Pokemon();
     $request->pokemonId($number);
 });
 
 $route->add('pokemon/fr/.+', function ($name) {
-    $request = new Api();
+    $request = new Pokemon();
     $request->pokemonName($name);
 });
 
 $route->add('pokemon/generation/.+', function ($number) {
-    $request = new Api();
+    $request = new Pokemon();
     $request->pokemonGen($number);
 });
 
 $route->add('pokemon/order/.+', function ($number) {
-    $request = new Api();
+    $request = new Pokemon();
     $request->pokemonOrder($number);
 });
 
 $route->add('pokemon/max', function () {
-    $request = new Api();
+    $request = new Pokemon();
     $request->pokemonMax();
 });
 
 $route->add('pokemon/all', function () {
-    $request = new Api();
+    $request = new Pokemon();
     $request->pokemonAll();
 });
 
