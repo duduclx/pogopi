@@ -54,15 +54,40 @@ class Team
     }
 
     /*
+     * api/team/name/{intl}/{name}
+     */
+    public function teamName($intl, $name)
+    {
+        $sql = 'SELECT team_id FROM team_name
+            WHERE lang = :intl
+            AND name LIKE CONCAT(\'%\', :name, \'%\')';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+            ':intl' => $intl,
+            ':name' => $name
+        ]);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($result)) {
+            $this->error();
+            exit;
+        }
+
+        $team = $this->teamId(intval($result['team_id']));
+    }
+
+    /*
      * api/team/id/{id}
      */
     public function teamId($number)
     {
-        $sql = $this->sql . ' WHERE id = :name';
+        $sql = $this->sql . ' WHERE id = :number';
 
         $query = $this->pdo->prepare($sql);
         $query->execute([
-            ':name' => $number
+            ':number' => $number
         ]);
 
         $result = $query->fetch(PDO::FETCH_ASSOC);

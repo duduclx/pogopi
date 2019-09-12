@@ -218,6 +218,11 @@ $route->add('team/all', function() {
     $request->teamAll();
 });
 
+$route->add('team/name/.+/.+', function ($intl, $name) {
+    $request = new Team();
+    $request->teamName($intl, $name);
+});
+
 $route->add('team/id/.+', function($name) {
     $request = new Team();
     $request->teamId($name);
