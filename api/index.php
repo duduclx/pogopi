@@ -218,6 +218,11 @@ $route->add('team/all', function() {
     $request->teamAll();
 });
 
+$route->add('team/max', function() {
+    $request = new Team();
+    $request->teamMax();
+});
+
 $route->add('team/name/.+/.+', function ($intl, $name) {
     $request = new Team();
     $request->teamName($intl, $name);
@@ -245,8 +250,6 @@ $route->add('type/max', function () {
     $request = new Type();
     $request->typeMax();
 });
-
-
 
 /*
  * version

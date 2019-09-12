@@ -10,6 +10,13 @@ class Team
     private $pdo;
     private $sql;
 
+    /*
+     * ROUTES
+     * api/team/all
+     * api/team/id/{id}
+     * api/team/name/{intl}/{name}
+     */
+
     public function __construct()
     {
         include ('Controller/config.php');
@@ -48,59 +55,8 @@ class Team
         }
         unset($result['langs']);
         unset($result['names']);
-        $team[] = $result;
 
-        return $team;
-    }
-
-    /*
-     * api/team/name/{intl}/{name}
-     */
-    public function teamName($intl, $name)
-    {
-        $sql = 'SELECT team_id FROM team_name
-            WHERE lang = :intl
-            AND name LIKE CONCAT(\'%\', :name, \'%\')';
-
-        $query = $this->pdo->prepare($sql);
-        $query->execute([
-            ':intl' => $intl,
-            ':name' => $name
-        ]);
-
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-
-        if (empty($result)) {
-            $this->error();
-            exit;
-        }
-
-        $team = $this->teamId(intval($result['team_id']));
-    }
-
-    /*
-     * api/team/id/{id}
-     */
-    public function teamId($number)
-    {
-        $sql = $this->sql . ' WHERE id = :number';
-
-        $query = $this->pdo->prepare($sql);
-        $query->execute([
-            ':number' => $number
-        ]);
-
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-
-        if(empty($result)) {
-            $this->error();
-            exit;
-        }
-
-        $result = $this->formatResult($result);
-
-        header('Content-type: application/json');
-        echo json_encode($result);
+        return $result;
     }
 
     /*
@@ -125,6 +81,77 @@ class Team
         }
 
         header('Content-type: application/json');
-        echo json_encode($team);
+        echo json_encode($team, JSON_NUMERIC_CHECK);
+    }
+
+    /*
+     * api/team/max
+     */
+    public function teamMax()
+    {
+        $sql = 'SELECT COUNT(id) AS maxTeam FROM team';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($result)) {
+            $this->error();
+            exit;
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($result, JSON_NUMERIC_CHECK);
+    }
+
+    /*
+     * api/team/id/{id}
+     */
+    public function teamId($number)
+    {
+        $sql = $this->sql . ' WHERE id = :number';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+            ':number' => $number
+        ]);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if(empty($result['id'])) {
+            $this->error();
+            exit;
+        }
+
+        $result = $this->formatResult($result);
+
+        header('Content-type: application/json');
+        echo json_encode($result,JSON_NUMERIC_CHECK);
+    }
+
+    /*
+     * api/team/name/{intl}/{name}
+     */
+    public function teamName($intl, $name)
+    {
+        $sql = 'SELECT team_id FROM team_name
+            WHERE lang = :intl
+            AND name LIKE CONCAT(\'%\', :name, \'%\')';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+            ':intl' => $intl,
+            ':name' => $name
+        ]);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($result)) {
+            $this->error();
+            exit;
+        }
+
+        $team = $this->teamId($result['team_id']);
     }
 }
