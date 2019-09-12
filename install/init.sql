@@ -128,13 +128,17 @@ CREATE TABLE pokemon_specie
 CREATE TABLE team
 (
     id         INT(2) UNSIGNED PRIMARY KEY,
-    colors     VARCHAR(255), -- indexed array lang->text
-    img_player VARCHAR(30),
-    img_pngXl  VARCHAR(30),
-    img_pngXs  VARCHAR(30),
-    img_svg    VARCHAR(30),
-    names      VARCHAR(255), -- indexed array lang->text
-    players    VARCHAR(10) -- indexed array lang->text
+    img        VARCHAR(30),
+    png        VARCHAR(30),
+    svg        VARCHAR(30),
+    player     VARCHAR(10) -- indexed array lang->text
+);
+
+CREATE TABLE team_name
+(
+    team_id     INT(2) UNSIGNED,
+    lang        VARCHAR(3),
+    name        VARCHAR(20)
 );
 
 CREATE TABLE type

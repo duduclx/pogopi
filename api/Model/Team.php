@@ -10,7 +10,6 @@ class Team
     private $pdo;
     private $sql;
 
-    // TODO fix team database
     public function __construct()
     {
         include ('Controller/config.php');
@@ -20,15 +19,16 @@ class Team
             $password);
         $this->sql = '
             SELECT 
-            id,
-            colors,
-            img_player,
-            img_pngXl,
-            img_pngXs,
-            img_svg,
-            names,
-            players
-            FROM team';
+            team.id,
+            team.img,
+            team.png,
+            team.svg,
+            team.player,
+            GROUP_CONCAT(tn.lang) AS langs,
+            GROUP_CONCAT(tn.name) AS names
+            FROM team
+            LEFT JOIN team_name AS tn ON tn.team_id = team.id
+            ';
     }
 
     private function error()
@@ -38,34 +38,41 @@ class Team
         echo json_encode($result);
     }
 
+    private function formatResult($result)
+    {
+        // create name array
+        $result['langs'] = explode(',', $result['langs']);
+        $result['names'] = explode(',', $result['names']);
+        for($i = 0; $i < count($result['langs']); $i++) {
+            $result['name'][$result['langs'][$i]] = $result['names'][$i];
+        }
+        unset($result['langs']);
+        unset($result['names']);
+        $team[] = $result;
+
+        return $team;
+    }
+
     /*
-     * api/team/{id}
+     * api/team/id/{id}
      */
     public function teamId($number)
     {
-        switch (intval($number)) {
-            case '0':
-                // is string
-                $sql = $this->sql . ' WHERE names LIKE CONCAT(\'%\', :name, \'%\')
-                       OR colors LIKE CONCAT(\'%\', :name, \'%\')';
-                break;
-            default:
-                // is number
-                $sql = 'SELECT * FROM team WHERE id = :name';
-                break;
-        }
+        $sql = $this->sql . ' WHERE id = :name';
 
         $query = $this->pdo->prepare($sql);
         $query->execute([
             ':name' => $number
         ]);
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
 
         if(empty($result)) {
             $this->error();
             exit;
         }
+
+        $result = $this->formatResult($result);
 
         header('Content-type: application/json');
         echo json_encode($result);
@@ -76,21 +83,23 @@ class Team
      */
     public function teamAll()
     {
-        $query = $this->pdo->prepare(
-            'SELECT * FROM team');
+        $sql = $this->sql . ' GROUP BY team.id';
+
+        $query = $this->pdo->prepare($sql);
         $query->execute();
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        var_dump($result);
-        exit;
-
-        if(empty($result)) {
+        if(empty($results)) {
             $this->error();
             exit;
         }
 
+        foreach($results as $result) {
+            $team[] = $this->formatResult($result);
+        }
+
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($team);
     }
 }

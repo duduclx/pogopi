@@ -210,18 +210,17 @@ $route->add('pokemon/all', function () {
     $request->pokemonAll();
 });
 
-// TODO check following methods
 /*
  * team
  */
-$route->add('team/.+', function($name) {
-    $request = new Team();
-    $request->teamId($name);
-});
-
-$route->add('team', function() {
+$route->add('team/all', function() {
     $request = new Team();
     $request->teamAll();
+});
+
+$route->add('team/id/.+', function($name) {
+    $request = new Team();
+    $request->teamId($name);
 });
 
 /*

@@ -310,26 +310,41 @@ class Deploy
     {
         foreach ($teams as $team) {
             $sql = "
-            INSERT INTO team
-            (id, colors, img_player, img_pngXl, img_pngXs, img_svg,
-             names, players)
-            VALUES 
-            (:id, :colors, :img_player, :img_pngXl, :img_pngXs, :img_svg,
-             :names, :players)
-            ";
+                INSERT INTO team
+                (id, img, png, svg, player)
+                VALUES 
+                (:id, :img, :png, :svg, :player)
+                ";
             $data = $this->db->prepare($sql);
             $data->execute([
                 ':id' => $team['id'],
-                ':colors' => "[ en: " . $team['color_en'] . ", fr: " . $team['color_fr'] . " ]",
-                ':img_player' => $team['img_player'],
-                ':img_pngXl' => $team['img_pngXl'],
-                ':img_pngXs' => $team['img_pngXs'],
-                ':img_svg' => $team['img_svg'],
-                ':names' => "[ en: " . $team['name_en'] . ", fr: " . $team['name_fr'] . " ]",
-                ':players' => "[ en: " . $team['player_en'] . ", fr: " . $team['player_fr'] . " ]"
+                ':img' => $team['img_player'],
+                ':png' => $team['img_pngXl'],
+                ':svg' => $team['img_svg'],
+                ':player' => $team['player_en']
+            ]);
+
+            /*
+             * team_name
+             */
+            $sql = "
+                INSERT INTO team_name
+                (team_id, lang, name)
+                VALUES 
+                (:team_id, :lang, :name)
+                ";
+            $data = $this->db->prepare($sql);
+            $data->execute([
+                ':team_id' => $team['id'],
+                ':lang' => 'fr',
+                ':name' => $team['name_fr']
+            ]);
+            $data->execute([
+                ':team_id' => $team['id'],
+                ':lang' => 'en',
+                ':name' => $team['name_en']
             ]);
         }
-
     }
 
     public function insertTypes($types)

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  mer. 11 sep. 2019 à 13:30
+-- Généré le :  jeu. 12 sep. 2019 à 10:01
 -- Version du serveur :  5.7.9
 -- Version de PHP :  7.2.19
 
@@ -7006,14 +7006,44 @@ INSERT INTO `pokemon_type` (`pokemon_id`, `type_id`) VALUES
 
 CREATE TABLE `team` (
   `id` int(2) UNSIGNED NOT NULL,
-  `colors` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `img_player` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `img_pngXl` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `img_pngXs` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `img_svg` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `names` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `players` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `img` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `png` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `svg` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `player` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `team`
+--
+
+INSERT INTO `team` (`id`, `img`, `png`, `svg`, `player`) VALUES
+(1, 'Team_Mystic_Blanche.png', 'Team_Mystic_Emblem_xl.png', 'Team_Mystic_Emblem.svg', 'blanche'),
+(2, 'Team_Valor_Candela.png', 'Team_Valor_Emblem_xl.png', 'Team_Valor_Emblem.svg', 'candela'),
+(3, 'Team_Instinct_Spark.png', 'Team_Instinct_Emblem_xl.png', 'Team_Instinct_Emblem.svg', 'candela');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `team_name`
+--
+
+CREATE TABLE `team_name` (
+  `team_id` int(2) UNSIGNED DEFAULT NULL,
+  `lang` varchar(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `team_name`
+--
+
+INSERT INTO `team_name` (`team_id`, `lang`, `name`) VALUES
+(1, 'fr', 'sagesse'),
+(1, 'en', 'mystic'),
+(2, 'fr', 'bravoure'),
+(2, 'en', 'valor'),
+(3, 'fr', 'intuition'),
+(3, 'en', 'instinct');
 
 -- --------------------------------------------------------
 

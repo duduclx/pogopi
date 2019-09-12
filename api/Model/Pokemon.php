@@ -310,8 +310,7 @@ class Pokemon
 
 
         foreach ($results as $result) {
-            $result = $this->formatResult($result);
-            $pokemon[] = $result;
+            $pokemon[] = $this->formatResult($result);
         }
 
         header('Content-type: application/json');
@@ -363,8 +362,7 @@ class Pokemon
         }
 
         foreach ($results as $result) {
-            $result = $this->formatResult($result);
-            $pokemon[] = $result;
+            $pokemon[] = $this->formatResult($result);
         }
 
         header('Content-type: application/json');
