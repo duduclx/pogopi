@@ -16,5 +16,17 @@ $pokedexes = [
   [
       "id"=> 4,
     "name"=> "Sinnoh"
-  ]
+  ],
+    [
+        "id"=> 5,
+        "name"=> "unys"
+    ],
+    [
+        "id"=> 6,
+        "name"=> "kalos"
+    ],
+    [
+        "id"=> 7,
+        "name"=> "alola"
+    ]
 ];

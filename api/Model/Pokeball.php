@@ -7,6 +7,18 @@ use PDO;
 
 class Pokeball
 {
+    private $pdo;
+    private $sql;
+
+    /*
+     * ROUTES
+     * api/pokeball/all
+     * api/pokeball/max
+     * api/pokeball/id/{id}
+     * api/pokeball/generation/{id}
+     * api/pokeball/name/{name}
+     */
+
     public function __construct()
     {
         include ('Controller/config.php');
@@ -16,11 +28,13 @@ class Pokeball
             $password);
         $this->sql = '
             SELECT 
-            id,
-            generation,
-            name,
-            img
-            FROM pokeball';
+            pokeball.id,
+            pokeball.generation AS gen,
+            pokeball.name,
+            pokeball.img,
+            gn.name
+            FROM pokeball
+            LEFT JOIN pokedex AS gn ON gn.id = pokeball.generation';
     }
 
     private function error()
@@ -30,24 +44,39 @@ class Pokeball
         echo json_encode($result);
     }
 
+    private function formatResult($result)
+    {
+        $result['generation'] = [
+            'id' => $result['gen'],
+            'name' => $result['name']
+        ];
+        unset($result['gen']);
+        unset($result['name']);
+
+        return $result;
+    }
+
     /*
      * api/pokeball/all
      */
     public function pokeballAll()
     {
         $query = $this->pdo->prepare($this->sql);
-
         $query->execute();
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($result)) {
+        if(empty($results)) {
             $this->error();
             exit;
         }
 
+        foreach ($results as $result) {
+            $pokeball[] = $this->formatResult($result);
+        }
+
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($pokeball, JSON_NUMERIC_CHECK);
     }
 
     /*
@@ -55,12 +84,9 @@ class Pokeball
      */
     public function pokeballMax()
     {
-        $sql = 'SELECT 
-               COUNT(id) AS maxPokeball
-               FROM pokeball';
+        $sql = 'SELECT COUNT(id) AS maxPokeball FROM pokeball';
 
         $query = $this->pdo->prepare($sql);
-
         $query->execute();
 
         $result = $query->fetch(PDO::FETCH_ASSOC);
@@ -71,7 +97,7 @@ class Pokeball
         }
 
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($result, JSON_NUMERIC_CHECK);
     }
 
     /*
@@ -79,7 +105,7 @@ class Pokeball
      */
     public function pokeballId($number)
     {
-        $sql = $this->sql . ' WHERE id = :number';
+        $sql = $this->sql . ' WHERE pokeball.id = :number';
 
         $query = $this->pdo->prepare($sql);
 
@@ -89,13 +115,15 @@ class Pokeball
 
         $result = $query->fetch(PDO::FETCH_ASSOC);
 
+        $result = $this->formatResult($result);
+
         if(empty($result)) {
             $this->error();
             exit;
         }
 
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($result, JSON_NUMERIC_CHECK);
     }
 
     /*
@@ -103,7 +131,7 @@ class Pokeball
      */
     public function pokeballGen($number)
     {
-        $sql = $this->sql . ' WHERE generation = :number';
+        $sql = $this->sql . ' WHERE pokeball.generation = :number';
 
         $query = $this->pdo->prepare($sql);
 
@@ -111,28 +139,32 @@ class Pokeball
             ':number' => $number
         ]);
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($result)) {
+        if(empty($results)) {
             $this->error();
             exit;
         }
 
+        foreach ($results as $result) {
+            $pokeball[] = $this->formatResult($result);
+        }
+
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($pokeball, JSON_NUMERIC_CHECK);
     }
 
     /*
      * api/pokeball/name/{name}
      */
-    public function pokeballName($number)
+    public function pokeballName($name)
     {
-        $sql = $this->sql . ' WHERE name LIKE CONCAT(\'%\', :number, \'%\')';
+        $sql = $this->sql . ' WHERE pokeball.name LIKE CONCAT(\'%\', :number, \'%\')';
 
         $query = $this->pdo->prepare($sql);
 
         $query->execute([
-            ':number' => $number
+            ':number' => $name
         ]);
 
         $result = $query->fetch(PDO::FETCH_ASSOC);
@@ -142,7 +174,9 @@ class Pokeball
             exit;
         }
 
+        $result = $this->formatResult($result);
+
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($result, JSON_NUMERIC_CHECK);
     }
 }
