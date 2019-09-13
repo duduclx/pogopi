@@ -27,11 +27,7 @@ class Version
      */
     public function version()
     {
-        $query = $this->pdo->prepare(
-            'SELECT 
-                       version
-                       FROM version');
-
+        $query = $this->pdo->prepare('SELECT version FROM version');
         $query->execute();
 
         $result = $query->fetch(PDO::FETCH_ASSOC);
@@ -42,6 +38,6 @@ class Version
         }
 
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($result, JSON_NUMERIC_CHECK);
     }
 }
