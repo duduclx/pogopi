@@ -9,6 +9,11 @@ class Version
 {
     private $pdo;
 
+    /*
+     * ROUTES
+     * api/version
+     */
+
     public function __construct()
     {
         include ('Controller/config.php');
