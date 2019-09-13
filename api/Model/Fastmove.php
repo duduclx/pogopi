@@ -10,6 +10,15 @@ class Fastmove
     private $pdo;
     private $sql;
 
+    /*
+     * ROUTES
+     * api/fastmove/all
+     * api/fastmove/max
+     * api/fastmove/id/{id}
+     * api/fastmove/name/{intl}/{name}
+     * api/fastmove/type/{id-name}
+     */
+
     public function __construct()
     {
         include ('Controller/config.php');
@@ -19,19 +28,23 @@ class Fastmove
             $password);
         $this->sql = "
             SELECT 
-            fast_move.id,
-            fast_move.damage,
-            fast_move.dps,
-            fast_move.energy,
-            fast_move.eps,
-            fast_move.move_duration AS duration,
-            fast_move.name,
-            fast_move.sound_fx AS sound,
-            fast_move.type,
-            tp.name AS typename,
+            fastmove.id,
+            fastmove.damage,
+            fastmove.dps,
+            fastmove.energy,
+            fastmove.eps,
+            fastmove.move_duration AS duration,
+            fastmove.sound_fx AS sound,
+            fastmove.type AS ti,
+            GROUP_CONCAT(DISTINCT fn.lang) AS fl,
+            GROUP_CONCAT(DISTINCT fn.name) AS fn,
+            GROUP_CONCAT(tn.name) AS tn,
+            GROUP_CONCAT(tn.lang) AS tl,
             tp.img AS typeimg
-            FROM fast_move
-            LEFT JOIN type AS tp ON type = tp.id";
+            FROM fastmove
+            LEFT JOIN fastmove_name as fn ON fn.fastmove_id = fastmove.id
+            LEFT JOIN type AS tp ON tp.id = fastmove.type
+            LEFT JOIN type_name AS tn ON tn.type_id = tp.id";
     }
 
     private function error()
@@ -41,18 +54,30 @@ class Fastmove
         echo json_encode($result);
     }
 
-    private function formatResults($results) {
-        foreach ($results AS $row) {
-            $row['type'] = [
-                'id' => $row['type'],
-                'name' => $row['typename'],
-                'img' => $row['typeimg']
-            ];
-            unset($row['typename']);
-            unset($row['typeimg']);
-            $fastmove[] = $row;
+    private function formatResult($result) {
+        // create name array
+        $result['fl'] = explode(',', $result['fl']);
+        $result['fn'] = explode(',', $result['fn']);
+        for ($i = 0; $i < count($result['fl']); $i++) {
+            $result['name'][$result['fl'][$i]] = $result['fn'][$i];
         }
-        return $fastmove;
+        unset($result['fl']);
+        unset($result['fn']);
+
+        // create type array
+        $result['type']['id'] = $result['ti'];
+        $result['type']['img'] = $result['typeimg'];
+        $result['tl'] = explode(',',$result['tl']);
+        $result['tn'] = explode(',',$result['tn']);
+        for ($i = 0; $i < count($result['tl']); $i++){
+            $result['type']['name'][$result['tl'][$i]] = $result['tn'][$i];
+        }
+        unset($result['ti']);
+        unset($result['tl']);
+        unset($result['tn']);
+        unset($result['typeimg']);
+
+        return $result;
     }
 
     /*
@@ -60,20 +85,23 @@ class Fastmove
      */
     public function fastMoveAll()
     {
-        $query = $this->pdo->prepare($this->sql);
+        $sql = $this->sql . ' GROUP BY fastmove.id';
+        $query = $this->pdo->prepare($sql);
         $query->execute();
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($result)) {
+        if(empty($results)) {
             $this->error();
             exit;
         }
 
-        $fastmove = $this->formatResults($result);
+        foreach ($results AS $result) {
+            $fastmove[] = $this->formatResult($result);
+        }
 
         header('Content-type: application/json');
-        echo json_encode($fastmove);
+        echo json_encode($fastmove, JSON_NUMERIC_CHECK);
     }
 
     /*
@@ -81,9 +109,7 @@ class Fastmove
      */
     public function fastMoveMax()
     {
-        $sql = 'SELECT 
-                COUNT(fast_move.id) AS totalFastMove
-                FROM fast_move';
+        $sql = 'SELECT COUNT(fastmove.id) AS maxFastmove FROM fastmove';
 
         $query = $this->pdo->prepare($sql);
         $query->execute();
@@ -96,7 +122,7 @@ class Fastmove
         }
 
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($result, JSON_NUMERIC_CHECK);
     }
 
     /*
@@ -104,7 +130,7 @@ class Fastmove
      */
     public function fastMoveId($number)
     {
-        $sql = $this->sql . ' WHERE fast_move.id = :number';
+        $sql = $this->sql . ' WHERE fastmove.id = :number GROUP BY fastmove.id';
 
         $query = $this->pdo->prepare($sql);
         $query->execute([
@@ -118,57 +144,70 @@ class Fastmove
             exit;
         }
 
-        $result['type'] = [
-            'id' => $result['type'],
-            'name' => $result['typename'],
-            'img' => $result['typeimg']
-        ];
-        unset($result['typename']);
-        unset($result['typeimg']);
+        $fastmove = $this->formatResult($result);
 
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($fastmove, JSON_NUMERIC_CHECK);
     }
 
     /*
-     * api/fastmove/fr/{name}
+     * api/fastmove/name/{intl}/{name}
      */
-    public function fastMoveFr($name)
+    public function fastMoveName($intl,$name)
     {
-        $sql = $this->sql . ' WHERE fast_move.name LIKE CONCAT(\'%\', :name, \'%\')';
+        $sql = 'SELECT fastmove_id FROM fastmove_name
+        WHERE lang = :intl
+        AND name LIKE CONCAT(\'%\', :name, \'%\')';
+
+        //$sql = $this->sql . ' WHERE fast_move.name LIKE CONCAT(\'%\', :name, \'%\')';
 
         $query = $this->pdo->prepare($sql);
         $query->execute([
+            ':intl' => $intl,
             ':name' => $name
         ]);
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($result)) {
+        if(empty($results)) {
             $this->error();
             exit;
         }
 
-        $fastmove = $this->formatResults($result);
+        foreach ($results as $result) {
+            $sql = $this->sql . ' WHERE fastmove.id = :number GROUP BY fastmove.id';
 
+            $query = $this->pdo->prepare($sql);
+            $query->execute([
+                ':number' => $result['fastmove_id']
+            ]);
+
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+
+            if(empty($result)) {
+                $this->error();
+                exit;
+            }
+
+            $fastmove[] = $this->formatResult($result);
+        }
         header('Content-type: application/json');
-        echo json_encode($fastmove);
+        echo json_encode($fastmove, JSON_NUMERIC_CHECK);
     }
 
     /*
      * api/fastmove/type/{id or name}
-     * TODO intl
      */
     public function fastMoveType($name)
     {
         switch (intval($name)) {
             case '0':
                 // is string
-                $sql = $this->sql . ' WHERE tp.name LIKE CONCAT(\'%\', :name, \'%\')';
+                $sql = $this->sql . ' WHERE tp.name LIKE CONCAT(\'%\', :name, \'%\') GROUP BY fastmove.id';
                 break;
             default:
                 // is number
-                $sql = $this->sql . ' WHERE fast_move.type = :name';
+                $sql = $this->sql . ' WHERE fastmove.type = :name GROUP BY fastmove.id';
                 break;
         }
 
@@ -177,16 +216,18 @@ class Fastmove
             ':name' => $name
         ]);
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($result)) {
+        if(empty($results)) {
             $this->error();
             exit;
         }
 
-        $fastmove = $this->formatResults($result);
+        foreach ($results as $result) {
+            $fastmove[] = $this->formatResult($result);
+        }
 
         header('Content-type: application/json');
-        echo json_encode($fastmove);
+        echo json_encode($fastmove, JSON_NUMERIC_CHECK);
     }
 }

@@ -36,11 +36,12 @@ class Deploy
         }
     }
 
+    // TODO remove name from fastmove
     public function insertFastMoves($fastMoves)
     {
         foreach ($fastMoves as $fastMove) {
             $sql = "
-            INSERT INTO fast_move 
+            INSERT INTO fastmove 
             (id, damage, dps, energy, eps, move_duration, name, sound_fx, type)
             VALUES 
             (:id, :damage, :dps, :energy, :eps, :move_duration, :name, :sound_fx, :type)
@@ -56,6 +57,22 @@ class Deploy
                 ':name' => $fastMove['name_fr'],
                 ':sound_fx' => $fastMove['sound_fx'],
                 ':type' => $fastMove['type']
+            ]);
+
+            $sql = "INSERT INTO fastmove_name
+            (fastmove_id, lang, name)
+            VALUES
+            (:fastmove_id, :lang, :name)";
+            $data = $this->db->prepare($sql);
+            $data->execute([
+                ':fastmove_id' => $fastMove['id'],
+                ':lang' => 'fr',
+                ':name' => $fastMove['name_fr']
+            ]);
+            $data->execute([
+                ':fastmove_id' => $fastMove['id'],
+                ':lang' => 'en',
+                ':name' => $fastMove['name_en']
             ]);
         }
     }

@@ -10,7 +10,7 @@ CREATE TABLE abilitie
     name           VARCHAR(30)
 );
 
-CREATE TABLE fast_move
+CREATE TABLE fastmove
 (
     id            INT(3) UNSIGNED PRIMARY KEY,
     damage        INT(3) UNSIGNED,
@@ -21,6 +21,13 @@ CREATE TABLE fast_move
     name          VARCHAR(255), -- indexed array lang->text
     sound_fx      varchar(20),
     type          INT(4) UNSIGNED  -- fk with table type
+);
+
+CREATE TABLE fastmove_name
+(
+    fastmove_id    INT(3) UNSIGNED,
+    lang            VARCHAR(3),
+    name            VARCHAR(20)
 );
 
 CREATE TABLE main_move
@@ -151,7 +158,7 @@ CREATE TABLE type
 
 CREATE TABLE type_name
 (
-    type_id     INT(2),
+    type_id     INT(2) UNSIGNED,
     lang        VARCHAR(3),
     name        VARCHAR(15)
 );

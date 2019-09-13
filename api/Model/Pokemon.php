@@ -42,15 +42,15 @@ class Pokemon
             -- GROUP_CONCAT(DISTINCT abilitie.id) AS abilitiesid,
             -- GROUP_CONCAT(DISTINCT abilitie.name) AS abilitiesname,
             -- GROUP_CONCAT(DISTINCT abilitie.description) AS abilitiesdescription,
-            GROUP_CONCAT(DISTINCT fast_move.id) AS fastmovesid,
-            GROUP_CONCAT(CONCAT_WS(\',\', fast_move.damage)) AS fastmovesdamage,
-            GROUP_CONCAT(CONCAT_WS(\',\', fast_move.dps)) AS fastmovesdps,
-            GROUP_CONCAT(CONCAT_WS(\',\', fast_move.energy)) AS fastmovesenergy,
-            GROUP_CONCAT(CONCAT_WS(\',\', fast_move.eps)) AS fastmoveseps,
-            GROUP_CONCAT(CONCAT_WS(\',\', fast_move.move_duration)) AS fastmovesmove,
-            GROUP_CONCAT(CONCAT_WS(\',\', fast_move.name)) AS fastmovesname,
-            GROUP_CONCAT(CONCAT_WS(\',\', fast_move.sound_fx)) AS fastmovessound,
-            GROUP_CONCAT(CONCAT_WS(\',\', fast_move.type)) AS fastmovestype,
+            GROUP_CONCAT(DISTINCT fastmove.id) AS fastmovesid,
+            GROUP_CONCAT(CONCAT_WS(\',\', fastmove.damage)) AS fastmovesdamage,
+            GROUP_CONCAT(CONCAT_WS(\',\', fastmove.dps)) AS fastmovesdps,
+            GROUP_CONCAT(CONCAT_WS(\',\', fastmove.energy)) AS fastmovesenergy,
+            GROUP_CONCAT(CONCAT_WS(\',\', fastmove.eps)) AS fastmoveseps,
+            GROUP_CONCAT(CONCAT_WS(\',\', fastmove.move_duration)) AS fastmovesmove,
+            GROUP_CONCAT(CONCAT_WS(\',\', fastmove.name)) AS fastmovesname,
+            GROUP_CONCAT(CONCAT_WS(\',\', fastmove.sound_fx)) AS fastmovessound,
+            GROUP_CONCAT(CONCAT_WS(\',\', fastmove.type)) AS fastmovestype,
             GROUP_CONCAT(fmtp.name) AS fastmovestypename,
             GROUP_CONCAT(fmtp.img) AS fastmovestypeimg,
             GROUP_CONCAT(DISTINCT main_move.id) AS mainmovesid,
@@ -72,7 +72,7 @@ class Pokemon
             -- LEFT JOIN pokemon_abilitie AS pkab ON pokemon.id = pkab.pokemon_id
             -- LEFT JOIN abilitie ON abilitie.id = pkab.abilitie_id
             LEFT JOIN pokemon_fast_move AS pkfm ON pokemon.id = pkfm.pokemon_id
-            LEFT JOIN fast_move ON fast_move.id = pkfm.fast_move_id
+            LEFT JOIN fastmove ON fast_move.id = pkfm.fast_move_id
             LEFT JOIN type AS fmtp ON fast_move.type = fmtp.id
             LEFT JOIN pokemon_main_move AS pkmm ON pokemon.id = pkmm.pokemon_id
             LEFT JOIN main_move ON main_move.id = pkmm.main_move_id

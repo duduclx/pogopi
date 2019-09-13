@@ -78,9 +78,9 @@ $route->add('fastmove/id/.+', function ($number) {
     $request->fastMoveId($number);
 });
 
-$route->add('fastmove/fr/.+', function ($name) {
+$route->add('fastmove/name/.+/.+', function ($intl, $name) {
     $request = new Fastmove();
-    $request->fastMoveFr($name);
+    $request->fastMoveName($intl, $name);
 });
 
 $route->add('fastmove/type/.+', function ($name) {
