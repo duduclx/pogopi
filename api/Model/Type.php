@@ -10,6 +10,14 @@ class Type
     private $pdo;
     private $sql;
 
+    /*
+     * ROUTES
+     * api/type/all
+     * api/type/max
+     * api/type/id/{id}
+     * api/type/name/{intl}/{name}
+     */
+
     public function __construct()
     {
         include ('Controller/config.php');
@@ -19,10 +27,13 @@ class Type
             $password);
         $this->sql = '
             SELECT 
-            id,
-            img,
-            name
-            FROM type';
+            type.id,
+            type.img,
+            GROUP_CONCAT(tn.lang) AS langs,
+            GROUP_CONCAT(tn.name) AS names
+            FROM type
+            LEFT JOIN type_name AS tn ON type.id = tn.type_id
+            ';
     }
 
     private function error()
@@ -32,28 +43,41 @@ class Type
         echo json_encode($result);
     }
 
+    private function formatResult($result)
+    {
+        $result['langs'] = explode(',',$result['langs']);
+        $result['names'] = explode(',',$result['names']);
+        for ($i = 0; $i < count($result['langs']); $i++){
+            $result['name'][$result['langs'][$i]] = $result['names'][$i];
+        }
+        unset($result['langs']);
+        unset($result['names']);
+
+        return $result;
+    }
+
     /*
      * api/type/all
      */
     public function typeAll()
     {
-        $query = $this->pdo->prepare('
-            SELECT 
-            id,
-            img,
-            name
-            FROM type');
+        $sql = $this->sql . ' GROUP BY type.id';
+        $query = $this->pdo->prepare($sql);
         $query->execute();
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($result)) {
+        if(empty($results)) {
             $this->error();
             exit;
         }
 
+        foreach ($results as $result) {
+            $types[] = $this->formatResult($result);
+        }
+
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($types, JSON_NUMERIC_CHECK);
     }
 
     /*
@@ -73,40 +97,57 @@ class Type
         }
 
         header('Content-Type: application/json');
-        echo json_encode($result);
+        echo json_encode($result, JSON_NUMERIC_CHECK);
     }
 
     /*
-     * type/{id-name}
-     * TODO intl
+     * type/id/{id}
      */
     public function typeId($number)
     {
-        //check if lang exist in request
-        switch (intval($number)) {
-            case '0':
-                // is string
-                $sql = $this->sql . ' WHERE name = :name';
-                break;
-            default:
-                // is number
-                $sql = $this->sql . ' WHERE id = :name';
-                break;
-        }
+        $sql = $this->sql . ' WHERE type.id = :number GROUP BY type.id';
 
         $query = $this->pdo->prepare($sql);
         $query->execute([
-            ':name' => $number
+            ':number' => $number
         ]);
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($result)){
+            $this->error();
+            exit;
+        }
+
+        $result = $this->formatResult($result);
+
+        header('Content-Type: application/json');
+        echo json_encode($result, JSON_NUMERIC_CHECK);
+    }
+
+    /*
+     * type/name/{intl}/{name}
+     */
+    public function typeName($intl, $name)
+    {
+        $sql = 'SELECT type_id 
+        FROM type_name 
+        WHERE lang = :intl
+        AND name LIKE CONCAT(\'%\', :name, \'%\')';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+            'intl' => $intl,
+            ':name' => $name
+        ]);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
 
         if(empty($result)) {
             $this->error();
             exit;
         }
 
-        header('Content-type: application/json');
-        echo json_encode($result);
+        $this->typeId($result['type_id']);
     }
 }

@@ -362,6 +362,23 @@ class Deploy
                 ':img' => $type['img'],
                 ':name' => $type['name_fr']
             ]);
+
+            $sql = '
+            INSERT INTO type_name
+            (type_id, lang, name)
+            VALUES 
+            (:type_id, :lang, :name)';
+            $data = $this->db->prepare($sql);
+            $data->execute([
+                ':type_id' => $type['id'],
+                ':lang' => 'fr',
+                ':name' => $type['name_fr']
+            ]);
+            $data->execute([
+                ':type_id' => $type['id'],
+                ':lang' => 'en',
+                ':name' => $type['name_en']
+            ]);
         }
     }
 

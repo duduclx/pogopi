@@ -152,6 +152,6 @@ class Team
             exit;
         }
 
-        $team = $this->teamId($result['team_id']);
+        $this->teamId($result['team_id']);
     }
 }

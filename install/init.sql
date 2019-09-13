@@ -141,11 +141,19 @@ CREATE TABLE team_name
     name        VARCHAR(20)
 );
 
+-- TODO remove name from type
 CREATE TABLE type
 (
     id      INT(2) UNSIGNED PRIMARY KEY,
     img     VARCHAR(20),
-    name   VARCHAR(255) -- indexed array lang->text
+    name    VARCHAR(255) -- indexed array lang->text
+);
+
+CREATE TABLE type_name
+(
+    type_id     INT(2),
+    lang        VARCHAR(3),
+    name        VARCHAR(15)
 );
 
 CREATE TABLE version

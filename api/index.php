@@ -236,11 +236,6 @@ $route->add('team/id/.+', function($name) {
 /*
  * type
  */
-$route->add('type/id/.+', function ($name) {
-    $request = new Type();
-    $request->typeId($name);
-});
-
 $route->add('type/all', function () {
     $request = new Type();
     $request->typeAll();
@@ -249,6 +244,16 @@ $route->add('type/all', function () {
 $route->add('type/max', function () {
     $request = new Type();
     $request->typeMax();
+});
+
+$route->add('type/id/.+', function ($number) {
+    $request = new Type();
+    $request->typeId($number);
+});
+
+$route->add('type/name/.+/.+', function ($intl, $name) {
+    $request = new Type();
+    $request->typeName($intl,$name);
 });
 
 /*
