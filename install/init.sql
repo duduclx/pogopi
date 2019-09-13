@@ -30,7 +30,7 @@ CREATE TABLE fastmove_name
     name            VARCHAR(20)
 );
 
-CREATE TABLE main_move
+CREATE TABLE mainmove
 (
     id            INT(3) UNSIGNED PRIMARY KEY,
     damage        INT(3) UNSIGNED,
@@ -41,6 +41,13 @@ CREATE TABLE main_move
     slot          INT(1) UNSIGNED,
     sound_fx      varchar(20),
     type          INT(4) UNSIGNED  -- fk with table type
+);
+
+CREATE TABLE mainmove_name
+(
+    mainmove_id     INT(3) UNSIGNED,
+    lang            VARCHAR(3),
+    name            VARCHAR(20)
 );
 
 CREATE TABLE pokeball

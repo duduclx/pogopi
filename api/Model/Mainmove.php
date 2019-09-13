@@ -10,6 +10,15 @@ class Mainmove
     private $pdo;
     private $sql;
 
+    /*
+     * ROUTES
+     * api/mainmove/all
+     * api/mainmove/max
+     * api/mainmove/id/{id}
+     * api/mainmove/name/{intl}/{name}
+     * api/mainmove/type/{id or name}
+     */
+
     public function __construct()
     {
         include ('Controller/config.php');
@@ -19,19 +28,23 @@ class Mainmove
             $password);
         $this->sql = '
             SELECT 
-            main_move.id,
-            main_move.damage,
-            main_move.dps,
-            main_move.energy,
-            main_move.move_duration AS duration,
-            main_move.name,
-            main_move.slot,
-            main_move.sound_fx AS sound,
-            main_move.type,
-            tp.name AS typename,
+            mainmove.id,
+            mainmove.damage,
+            mainmove.dps,
+            mainmove.energy,
+            mainmove.move_duration AS duration,
+            mainmove.slot,
+            mainmove.sound_fx AS sound,
+            mainmove.type AS ti,
+            GROUP_CONCAT(DISTINCT mn.lang) AS ml,
+            GROUP_CONCAT(CONCAT_WS(\',\', mn.name)) AS mn,
+            GROUP_CONCAT(tn.name) AS tn,
+            GROUP_CONCAT(tn.lang) AS tl,
             tp.img AS typeimg
-            FROM main_move
-            LEFT JOIN type AS tp ON main_move.type = tp.id';
+            FROM mainmove
+            LEFT JOIN mainmove_name AS mn ON mn.mainmove_id = mainmove.id
+            LEFT JOIN type AS tp ON mainmove.type = tp.id
+            LEFT JOIN type_name AS tn ON tn.type_id = tp.id';
     }
 
     private function error()
@@ -41,19 +54,58 @@ class Mainmove
         echo json_encode($result);
     }
 
-    public function formatResult($results)
+    private function formatResultAll($result)
     {
-        foreach ($results AS $row) {
-            $row['type'] = [
-                'id' => $row['type'],
-                'name' => $row['typename'],
-                'img' => $row['typeimg']
-            ];
-            unset($row['typename']);
-            unset($row['typeimg']);
-            $mainmove[] = $row;
+        // create name array
+        $result['ml'] = explode(',', $result['ml']);
+        $result['mn'] = explode(',', $result['mn']);
+        for ($i = 0; $i < count($result['ml']); $i++) {
+            $result['name'][$result['ml'][$i]] = $result['mn'][$i * (count($result['mn']) / count($result['ml']))];
         }
-        return $mainmove;
+        unset($result['ml']);
+        unset($result['mn']);
+
+        // create type array
+        $result['type']['id'] = $result['ti'];
+        $result['type']['img'] = $result['typeimg'];
+        $result['tl'] = explode(',',$result['tl']);
+        $result['tn'] = explode(',',$result['tn']);
+        for ($i = 0; $i < count($result['tl']); $i++){
+            $result['type']['name'][$result['tl'][$i]] = $result['tn'][$i];
+        }
+        unset($result['ti']);
+        unset($result['tl']);
+        unset($result['tn']);
+        unset($result['typeimg']);
+
+        return $result;
+    }
+
+    private function formatResult($result)
+    {
+        // create name array
+        $result['ml'] = explode(',', $result['ml']);
+        $result['mn'] = explode(',', $result['mn']);
+        for ($i = 0; $i < count($result['ml']); $i++) {
+            $result['name'][$result['ml'][$i]] = $result['mn'][$i];
+        }
+        unset($result['ml']);
+        unset($result['mn']);
+
+        // create type array
+        $result['type']['id'] = $result['ti'];
+        $result['type']['img'] = $result['typeimg'];
+        $result['tl'] = explode(',',$result['tl']);
+        $result['tn'] = explode(',',$result['tn']);
+        for ($i = 0; $i < count($result['tl']); $i++){
+            $result['type']['name'][$result['tl'][$i]] = $result['tn'][$i];
+        }
+        unset($result['ti']);
+        unset($result['tl']);
+        unset($result['tn']);
+        unset($result['typeimg']);
+
+        return $result;
     }
 
     /*
@@ -61,20 +113,23 @@ class Mainmove
      */
     public function mainMoveAll()
     {
-        $query = $this->pdo->prepare($this->sql);
+        $sql = $this->sql . ' GROUP BY mainmove.id';
+        $query = $this->pdo->prepare($sql);
         $query->execute();
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($result)) {
+        if(empty($results)) {
             $this->error();
             exit;
         }
 
-        $mainmove = $this->formatResult($result);
+        foreach ($results as $result) {
+            $mainmove[] = $this->formatResultAll($result);
+        }
 
         header('Content-type: application/json');
-        echo json_encode($mainmove);
+        echo json_encode($mainmove, JSON_NUMERIC_CHECK);
     }
 
     /*
@@ -82,7 +137,7 @@ class Mainmove
      */
     public function mainMoveMax()
     {
-        $sql = ' SELECT COUNT(main_move.id) AS totalMainMove FROM main_move';
+        $sql = ' SELECT COUNT(mainmove.id) AS maxMainmove FROM mainmove';
 
         $query = $this->pdo->prepare($sql);
         $query->execute();
@@ -95,7 +150,7 @@ class Mainmove
         }
 
         header('Content-Type: application/json');
-        echo json_encode($result);
+        echo json_encode($result, JSON_NUMERIC_CHECK);
     }
 
     /*
@@ -103,7 +158,7 @@ class Mainmove
      */
     public function mainMoveId($number)
     {
-        $sql = $this->sql . ' WHERE main_move.id = :number';
+        $sql = $this->sql . ' WHERE mainmove.id = :number GROUP BY mainmove.id';
 
         $query = $this->pdo->prepare($sql);
 
@@ -118,41 +173,50 @@ class Mainmove
             exit;
         }
 
-        $result['type'] = [
-            'id' => $result['type'],
-            'name' => $result['typename'],
-            'img' => $result['typeimg']
-        ];
-        unset($result['typename']);
-        unset($result['typeimg']);
+        $result = $this->formatResult($result);
 
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($result, JSON_NUMERIC_CHECK);
     }
 
     /*
-     * api/mainmove/fr/{name}
+     * api/mainmove/name/{intl}/{name}
      */
-    public function mainMoveFr($name)
+    public function mainMoveName($intl, $name)
     {
-        $sql = $this->sql . ' WHERE main_move.name LIKE CONCAT(\'%\', :name, \'%\')';
+        $sql = 'SELECT mainmove_id FROM mainmove_name
+        WHERE lang = :intl
+        AND name LIKE CONCAT(\'%\', :name, \'%\')';
 
         $query = $this->pdo->prepare($sql);
         $query->execute([
+            ':intl' => $intl,
             ':name' => $name
         ]);
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($result)) {
+        if(empty($results)) {
             $this->error();
             exit;
         }
 
-        $mainmove = $this->formatResult($result);
+        foreach ($results as $result) {
+            $sql = $this->sql . ' WHERE mainmove.id = :number GROUP BY mainmove.id';
+
+            $query = $this->pdo->prepare($sql);
+
+            $query->execute([
+                ':number' => $result['mainmove_id']
+            ]);
+
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+
+            $mainmove[] = $this->formatResult($result);
+        }
 
         header('Content-type: application/json');
-        echo json_encode($mainmove);
+        echo json_encode($mainmove, JSON_NUMERIC_CHECK);
     }
 
     /*
@@ -163,11 +227,11 @@ class Mainmove
         switch (intval($name)) {
             case '0':
                 // is string
-                $sql = $this->sql . ' WHERE tp.name LIKE CONCAT(\'%\', :name, \'%\')';
+                $sql = $this->sql . ' WHERE tp.name LIKE CONCAT(\'%\', :name, \'%\') GROUP BY mainmove.id';
                 break;
             default:
                 // is number
-                $sql = $this->sql . ' WHERE main_move.type = :name';
+                $sql = $this->sql . ' WHERE mainmove.type = :name GROUP BY mainmove.id';
                 break;
         }
 
@@ -177,16 +241,18 @@ class Mainmove
             ':name' => $name
         ]);
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($result)) {
+        if(empty($results)) {
             $this->error();
             exit;
         }
 
-        $mainmove = $this->formatResult($result);
+        foreach ($results as $result) {
+            $mainmove[] = $this->formatResult($result);
+        }
 
         header('Content-type: application/json');
-        echo json_encode($mainmove);
+        echo json_encode($mainmove, JSON_NUMERIC_CHECK);
     }
 }

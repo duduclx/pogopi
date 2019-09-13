@@ -159,8 +159,6 @@ class Fastmove
         WHERE lang = :intl
         AND name LIKE CONCAT(\'%\', :name, \'%\')';
 
-        //$sql = $this->sql . ' WHERE fast_move.name LIKE CONCAT(\'%\', :name, \'%\')';
-
         $query = $this->pdo->prepare($sql);
         $query->execute([
             ':intl' => $intl,
@@ -183,11 +181,6 @@ class Fastmove
             ]);
 
             $result = $query->fetch(PDO::FETCH_ASSOC);
-
-            if(empty($result)) {
-                $this->error();
-                exit;
-            }
 
             $fastmove[] = $this->formatResult($result);
         }

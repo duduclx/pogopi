@@ -77,12 +77,12 @@ class Deploy
         }
     }
 
-
+    // TODO remove name from mainmove
     public function insertMainMoves($mainMoves)
     {
         foreach ($mainMoves as $mainMove) {
             $sql = "
-            INSERT INTO main_move 
+            INSERT INTO mainmove 
             (id, damage, dps, energy, move_duration, name, slot, sound_fx, type)
             VALUES 
             (:id, :damage, :dps, :energy, :move_duration, :name, :slot, :sound_fx, :type)
@@ -98,6 +98,23 @@ class Deploy
                 ':slot' => $mainMove['slot'],
                 ':sound_fx' => $mainMove['sound_fx'],
                 ':type' => $mainMove['type']
+            ]);
+
+            $sql = '
+            INSERT INTO mainmove_name
+            (mainmove_id, lang, name)
+            VALUES
+            (:mainmove_id, :lang, :name)';
+            $data = $this->db->prepare($sql);
+            $data->execute([
+                ':mainmove_id' => $mainMove['id'],
+                ':lang' => 'fr',
+                ':name' => $mainMove['name_fr']
+            ]);
+            $data->execute([
+                ':mainmove_id' => $mainMove['id'],
+                ':lang' => 'en',
+                ':name' => $mainMove['name_en']
             ]);
         }
     }

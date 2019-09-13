@@ -129,9 +129,9 @@ $route->add('mainmove/id/.+', function($number) {
     $request->mainMoveId($number);
 });
 
-$route->add('mainmove/fr/.+', function($name) {
+$route->add('mainmove/name/.+/.+', function($intl, $name) {
     $request = new Mainmove();
-    $request->mainMoveFr($name);
+    $request->mainMoveName($intl, $name);
 });
 
 $route->add('mainmove/type/.+', function($name) {
