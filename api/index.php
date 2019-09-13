@@ -91,6 +91,16 @@ $route->add('fastmove/type/.+', function ($name) {
 /*
  * generation
  */
+$route->add('generation/all', function () {
+    $request = new Generation();
+    $request->generationAll();
+});
+
+$route->add('generation/max', function() {
+    $request = new Generation();
+    $request->generationMax();
+});
+
 $route->add('generation/id/.+', function($number) {
     $request = new Generation();
     $request->generationId($number);
@@ -99,16 +109,6 @@ $route->add('generation/id/.+', function($number) {
 $route->add('generation/name/.+', function($name) {
     $request = new Generation();
     $request->generationName($name);
-});
-
-$route->add('generation/max', function() {
-    $request = new Generation();
-    $request->generationMax();
-});
-
-$route->add('generation/all', function () {
-    $request = new Generation();
-    $request->generationAll();
 });
 
 /*

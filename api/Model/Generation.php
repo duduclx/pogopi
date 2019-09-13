@@ -10,6 +10,14 @@ class Generation
     private $pdo;
     private $sql;
 
+    /*
+     * ROUTES
+     * api/generation/all
+     * api/generation/max
+     * api/generation/id/{id}
+     * api/generation/name/{name}
+     */
+
     public function __construct()
     {
         include ('Controller/config.php');
@@ -44,7 +52,7 @@ class Generation
         }
 
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($result, JSON_NUMERIC_CHECK);
     }
 
     /*
@@ -57,28 +65,6 @@ class Generation
         $query = $this->pdo->prepare($sql);
 
         $query->execute();
-
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-
-        if(empty($result)) {
-            $this->error();
-            exit;
-        }
-
-        header('Content-type: application/json');
-        echo json_encode($result);
-    }
-
-    /*
-     * api/generation/Name/{name}
-     */
-    public function generationName($name)
-    {
-        $sql = $this->sql . ' WHERE name LIKE CONCAT(\'%\', :name, \'%\')';
-        $query = $this->pdo->prepare($sql);
-        $query->execute([
-            ':name' => $name
-        ]);
 
         $result = $query->fetch(PDO::FETCH_ASSOC);
 
@@ -110,6 +96,28 @@ class Generation
         }
 
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($result, JSON_NUMERIC_CHECK);
+    }
+
+    /*
+     * api/generation/name/{name}
+     */
+    public function generationName($name)
+    {
+        $sql = $this->sql . ' WHERE name LIKE CONCAT(\'%\', :name, \'%\')';
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+            ':name' => $name
+        ]);
+
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($result)) {
+            $this->error();
+            exit;
+        }
+
+        header('Content-type: application/json');
+        echo json_encode($result, JSON_NUMERIC_CHECK);
     }
 }
