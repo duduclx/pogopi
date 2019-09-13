@@ -10,6 +10,14 @@ class Abilitie
     private $pdo;
     private $sql;
 
+    /*
+     * ROUTES
+     * api/abilitie/all
+     * api/abilitie/max
+     * api/abilitie/id/{id}
+     * api/abilitie/name/{intl}/{name}
+     */
+
     public function __construct()
     {
         include ('Controller/config.php');
@@ -68,7 +76,7 @@ class Abilitie
         $abilities = $this->formatResult($results);
 
         header('Content-type: application/json');
-        echo json_encode($abilities);
+        echo json_encode($abilities, JSON_NUMERIC_CHECK);
     }
 
     /*
@@ -89,7 +97,7 @@ class Abilitie
         }
 
         header('Content-Type: application/json');
-        echo json_encode($result);
+        echo json_encode($result, JSON_NUMERIC_CHECK);
     }
 
     /*
@@ -114,11 +122,11 @@ class Abilitie
         $abilities = $this->formatResult($results);
 
         header('Content-type: application/json');
-        echo json_encode($abilities);
+        echo json_encode($abilities, JSON_NUMERIC_CHECK);
     }
 
     /*
-     * api/{intl}/abilitie/{name}
+     * api/abilitie/name/{intl}/{name}
      */
     public function abilitieName($intl, $name)
     {
@@ -144,6 +152,6 @@ class Abilitie
         }
 
         header('Content-type: application/json');
-        echo json_encode($result);
+        echo json_encode($result, JSON_NUMERIC_CHECK);
     }
 }

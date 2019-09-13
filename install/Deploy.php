@@ -347,6 +347,7 @@ class Deploy
         }
     }
 
+    // TODO remove name from type
     public function insertTypes($types)
     {
         foreach ($types as $type) {

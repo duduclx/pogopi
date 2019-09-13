@@ -50,7 +50,7 @@ $route->add('abilitie/max', function () {
     $request->abilitieMax();
 });
 
-$route->add('.+/abilitie/.+', function($intl, $name) {
+$route->add('abilitie/name/.+/.+', function($intl, $name) {
     $request = new Abilitie();
     $request->abilitieName($intl, $name);
 });
