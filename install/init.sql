@@ -178,11 +178,11 @@ CREATE TABLE version
 /*
  create relation between tables
  */
-ALTER TABLE fast_move
+ALTER TABLE fastmove
     ADD FOREIGN KEY (type) REFERENCES type(id),
     ADD FOREIGN KEY (id) REFERENCES pokemon_fast_move(fast_move_id);
 
-ALTER TABLE main_move
+ALTER TABLE mainmove
     ADD FOREIGN KEY (type) REFERENCES type(id),
     ADD FOREIGN KEY (id) REFERENCES pokemon_main_move(main_move_id);
 

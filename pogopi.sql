@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  jeu. 12 sep. 2019 à 10:01
+-- Généré le :  sam. 14 sep. 2019 à 00:34
 -- Version du serveur :  5.7.9
 -- Version de PHP :  7.2.19
 
@@ -320,10 +320,10 @@ INSERT INTO `abilitie` (`id`, `lang`, `description`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `fast_move`
+-- Structure de la table `fastmove`
 --
 
-CREATE TABLE `fast_move` (
+CREATE TABLE `fastmove` (
   `id` int(3) UNSIGNED NOT NULL,
   `damage` int(3) UNSIGNED DEFAULT NULL,
   `dps` decimal(3,1) UNSIGNED DEFAULT NULL,
@@ -336,10 +336,10 @@ CREATE TABLE `fast_move` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `fast_move`
+-- Déchargement des données de la table `fastmove`
 --
 
-INSERT INTO `fast_move` (`id`, `damage`, `dps`, `energy`, `eps`, `move_duration`, `name`, `sound_fx`, `type`) VALUES
+INSERT INTO `fastmove` (`id`, `damage`, `dps`, `energy`, `eps`, `move_duration`, `name`, `sound_fx`, `type`) VALUES
 (1, 35, '15.9', 0, '0.0', 2200, 'Lutte', 'struggle.wav', 1),
 (2, 11, '13.8', 6, '7.5', 800, 'Aile d\'Acier', 'steel_wing.wav', 9),
 (3, 15, '13.6', 9, '8.2', 1100, 'Draco-Queue', 'dragon_tail.wav', 16),
@@ -408,10 +408,156 @@ INSERT INTO `fast_move` (`id`, `damage`, `dps`, `energy`, `eps`, `move_duration`
 -- --------------------------------------------------------
 
 --
--- Structure de la table `main_move`
+-- Structure de la table `fastmove_name`
 --
 
-CREATE TABLE `main_move` (
+CREATE TABLE `fastmove_name` (
+  `fastmove_id` int(3) UNSIGNED DEFAULT NULL,
+  `lang` varchar(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `fastmove_name`
+--
+
+INSERT INTO `fastmove_name` (`fastmove_id`, `lang`, `name`) VALUES
+(1, 'fr', 'Lutte'),
+(1, 'en', 'Struggle'),
+(2, 'fr', 'Aile d\'Acier'),
+(2, 'en', 'Steel Wing'),
+(3, 'fr', 'Draco-Queue'),
+(3, 'en', 'Dragon Tail'),
+(4, 'fr', 'Queue de Fer'),
+(4, 'en', 'Iron Tail'),
+(5, 'fr', 'Jet-Pierres'),
+(5, 'en', 'Rock Throw'),
+(6, 'fr', 'Riposte'),
+(6, 'en', 'Counter'),
+(7, 'fr', 'Cascade'),
+(7, 'en', 'Waterfall'),
+(8, 'fr', 'Anti-Air'),
+(8, 'en', 'Smack Down'),
+(9, 'fr', 'Tranch\'Herbe'),
+(9, 'en', 'Razor Leaf'),
+(10, 'fr', 'Griffe Ombre'),
+(10, 'en', 'Shadow Claw'),
+(11, 'fr', 'Danse Flamme'),
+(11, 'en', 'Fire Spin'),
+(12, 'fr', 'Direct Toxik'),
+(12, 'en', 'Poison Jab'),
+(13, 'fr', 'Choc Mental'),
+(13, 'en', 'Confusion'),
+(14, 'fr', 'Crocs Feu'),
+(14, 'en', 'Fire Fang'),
+(15, 'fr', 'Morsure'),
+(15, 'en', 'Bite'),
+(16, 'fr', 'DracoSouffle'),
+(16, 'en', 'Dragon Breath'),
+(17, 'fr', 'Griffe'),
+(17, 'en', 'Scratch'),
+(18, 'fr', 'Fouet Lianes'),
+(18, 'en', 'Vine Whip'),
+(19, 'fr', 'écras\'Face'),
+(19, 'en', 'Pound'),
+(20, 'fr', 'Lame d\'Air'),
+(20, 'en', 'Air Slash'),
+(21, 'fr', 'éclate-Roc'),
+(21, 'en', 'Rock Smash'),
+(22, 'fr', 'Griffe Acier'),
+(22, 'en', 'Metal Claw'),
+(23, 'fr', 'Acide'),
+(23, 'en', 'Acid'),
+(24, 'fr', 'Souffle Glacé'),
+(24, 'en', 'Frost Breath'),
+(25, 'fr', 'Feinte'),
+(25, 'en', 'Feint Attack'),
+(26, 'fr', 'Psykoud\'Boul'),
+(26, 'en', 'Zen Headbutt'),
+(27, 'fr', 'Extrasenseur'),
+(27, 'en', 'Extrasensory'),
+(28, 'fr', 'Aboiement'),
+(28, 'en', 'Snarl'),
+(29, 'fr', 'Coud\'Boue'),
+(29, 'en', 'Mud-Slap'),
+(30, 'fr', 'Piqûre'),
+(30, 'en', 'Bug Bite'),
+(31, 'fr', 'Coup Bas'),
+(31, 'en', 'Sucker Punch'),
+(32, 'fr', 'Balayage'),
+(32, 'en', 'Low Kick'),
+(33, 'fr', 'Poing-Karaté'),
+(33, 'en', 'Karate Chop'),
+(34, 'fr', 'Flammèche'),
+(34, 'en', 'Ember'),
+(35, 'fr', 'Cru-Aile'),
+(35, 'en', 'Wing Attack'),
+(36, 'fr', 'Picpic'),
+(36, 'en', 'Peck'),
+(37, 'fr', 'Léchouille'),
+(37, 'en', 'Lick'),
+(38, 'fr', 'éclats Glace'),
+(38, 'en', 'Ice Shard'),
+(39, 'fr', 'Vive-Attaque'),
+(39, 'en', 'Quick Attack'),
+(40, 'fr', 'Charge'),
+(40, 'en', 'Tackle'),
+(41, 'fr', 'Coupe'),
+(41, 'en', 'Cut'),
+(42, 'fr', 'Pisto-Poing'),
+(42, 'en', 'Bullet Punch'),
+(43, 'fr', 'Pistolet à Eau'),
+(43, 'en', 'Water Gun'),
+(44, 'fr', 'écume'),
+(44, 'en', 'Bubble'),
+(45, 'fr', 'Survinsecte'),
+(45, 'en', 'Struggle Bug'),
+(46, 'fr', 'Puissance Cachée'),
+(46, 'en', 'Hidden Power'),
+(47, 'fr', 'Harcèlement'),
+(47, 'en', 'Infestation'),
+(48, 'fr', 'Change éclair'),
+(48, 'en', 'Volt Switch'),
+(49, 'fr', 'étincelle'),
+(49, 'en', 'Spark'),
+(50, 'fr', 'éclair'),
+(50, 'en', 'Thunder Shock'),
+(51, 'fr', 'Tir de Boue'),
+(51, 'en', 'Mud Shot'),
+(52, 'fr', 'Coupe Psycho'),
+(52, 'en', 'Psycho Cut'),
+(53, 'fr', 'Dard-Venin'),
+(53, 'en', 'Poison Sting'),
+(54, 'fr', 'Châtiment'),
+(54, 'en', 'Hex'),
+(55, 'fr', 'Taillade'),
+(55, 'en', 'Fury Cutter'),
+(56, 'fr', 'Rayon Chargé'),
+(56, 'en', 'Charge Beam'),
+(57, 'fr', 'étonnement'),
+(57, 'en', 'Astonish'),
+(58, 'fr', 'Balle Graine'),
+(58, 'en', 'Bullet Seed'),
+(59, 'fr', 'Bélier'),
+(59, 'en', 'Take Down'),
+(60, 'fr', 'Poudreuse'),
+(60, 'en', 'Powder Snow'),
+(61, 'fr', 'Cadeau'),
+(61, 'en', 'Present'),
+(62, 'fr', 'Trempette'),
+(62, 'en', 'Splash'),
+(63, 'fr', 'Morphing'),
+(63, 'en', 'Transform'),
+(64, 'fr', 'Bâillement'),
+(64, 'en', 'Yawn');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `mainmove`
+--
+
+CREATE TABLE `mainmove` (
   `id` int(3) UNSIGNED NOT NULL,
   `damage` int(3) UNSIGNED DEFAULT NULL,
   `dps` decimal(3,1) UNSIGNED DEFAULT NULL,
@@ -424,10 +570,10 @@ CREATE TABLE `main_move` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `main_move`
+-- Déchargement des données de la table `mainmove`
 --
 
-INSERT INTO `main_move` (`id`, `damage`, `dps`, `energy`, `move_duration`, `name`, `slot`, `sound_fx`, `type`) VALUES
+INSERT INTO `mainmove` (`id`, `damage`, `dps`, `energy`, `move_duration`, `name`, `slot`, `sound_fx`, `type`) VALUES
 (1, 130, '76.5', 100, 1700, 'Onde Originelle', 1, 'origin_pulse.wav', 11),
 (2, 130, '76.5', 100, 1700, 'Lame Pangéenne', 1, 'precipice_blades.wav', 6),
 (3, 90, '47.4', 50, 1900, 'Hydroblast', 2, 'hydro_cannon.wav', 11),
@@ -561,6 +707,282 @@ INSERT INTO `main_move` (`id`, `damage`, `dps`, `energy`, `move_duration`, `name
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `mainmove_name`
+--
+
+CREATE TABLE `mainmove_name` (
+  `mainmove_id` int(3) UNSIGNED DEFAULT NULL,
+  `lang` varchar(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `mainmove_name`
+--
+
+INSERT INTO `mainmove_name` (`mainmove_id`, `lang`, `name`) VALUES
+(1, 'fr', 'Onde Originelle'),
+(1, 'en', 'Origin Pulse'),
+(2, 'fr', 'Lame Pangéenne'),
+(2, 'en', 'Precipice Blades'),
+(3, 'fr', 'Hydroblast'),
+(3, 'en', 'Hydro Cannon'),
+(4, 'fr', 'Carnareket'),
+(4, 'en', 'Doom Desire'),
+(5, 'fr', 'Rapace'),
+(5, 'en', 'Brave Bird'),
+(6, 'fr', 'Prescience'),
+(6, 'en', 'Future Sight'),
+(7, 'fr', 'Lame de Roc'),
+(7, 'en', 'Stone Edge'),
+(8, 'fr', 'Close Combat'),
+(8, 'en', 'Close Combat'),
+(9, 'fr', 'Tempête Florale'),
+(9, 'en', 'Petal Blizzard'),
+(10, 'fr', 'Blizzard'),
+(10, 'en', 'Blizzard'),
+(11, 'fr', 'Détricanon'),
+(11, 'en', 'Gunk Shot'),
+(12, 'fr', 'Fatal-Foudre'),
+(12, 'en', 'Thunder'),
+(13, 'fr', 'Draco Météore'),
+(13, 'en', 'Draco Meteor'),
+(14, 'fr', 'Mégacorne'),
+(14, 'en', 'Megahorn'),
+(15, 'fr', 'Vent Violent'),
+(15, 'en', 'Hurricane'),
+(16, 'fr', 'Exploforce'),
+(16, 'en', 'Focus Blast'),
+(17, 'fr', 'Piqué'),
+(17, 'en', 'Sky Attack'),
+(18, 'fr', 'Surchauffe'),
+(18, 'en', 'Overheat'),
+(19, 'fr', 'Ultralaser'),
+(19, 'en', 'Hyper Beam'),
+(20, 'fr', 'Hydrocanon'),
+(20, 'en', 'Hydro Pump'),
+(21, 'fr', 'Végé-Attack'),
+(21, 'en', 'Frenzy Plant'),
+(22, 'fr', 'Poing Météore'),
+(22, 'en', 'Meteor Mash'),
+(23, 'fr', 'Surf'),
+(23, 'en', 'Surf'),
+(24, 'fr', 'élecanon'),
+(24, 'en', 'Zap Cannon'),
+(25, 'fr', 'Ball\'Météo'),
+(25, 'en', 'Weather Ball'),
+(26, 'fr', 'Ball\'Météo'),
+(26, 'en', 'Weather Ball'),
+(27, 'fr', 'Ball\'Météo'),
+(27, 'en', 'Weather Ball'),
+(28, 'fr', 'Ball\'Météo'),
+(28, 'en', 'Weather Ball'),
+(29, 'fr', 'Blaze Kick'),
+(29, 'en', 'Blaze Kick'),
+(30, 'fr', 'Luminocanon'),
+(30, 'en', 'Flash Cannon'),
+(31, 'fr', 'Lance-Soleil'),
+(31, 'en', 'Solar Beam'),
+(32, 'fr', 'Psyko'),
+(32, 'en', 'Psychic'),
+(33, 'fr', 'Tricherie'),
+(33, 'en', 'Foul Play'),
+(34, 'fr', 'Bomb-Beurk'),
+(34, 'en', 'Sludge Bomb'),
+(35, 'fr', 'Mégafouet'),
+(35, 'en', 'Power Whip'),
+(36, 'fr', 'éclair Fou'),
+(36, 'en', 'Wild Charge'),
+(37, 'fr', 'Noeud Herbe'),
+(37, 'en', 'Grass Knot'),
+(38, 'fr', 'Cradovague'),
+(38, 'en', 'Sludge Wave'),
+(39, 'fr', 'Coup-Croix'),
+(39, 'en', 'Cross Chop'),
+(40, 'fr', 'Séisme'),
+(40, 'en', 'Earthquake'),
+(41, 'fr', 'Ball\'Ombre'),
+(41, 'en', 'Shadow Ball'),
+(42, 'fr', 'Pouvoir Lunaire'),
+(42, 'en', 'Moonblast'),
+(43, 'fr', 'Déflagration'),
+(43, 'en', 'Fire Blast'),
+(44, 'fr', 'Dynamopoing'),
+(44, 'en', 'Dynamic Punch'),
+(45, 'fr', 'Avalanche'),
+(45, 'en', 'Avalanche'),
+(46, 'fr', 'Tacle Lourd'),
+(46, 'en', 'Heavy Slam'),
+(47, 'fr', 'Rafale Feu'),
+(47, 'en', 'Blast Burn'),
+(48, 'fr', 'écrasement'),
+(48, 'en', 'Stomp'),
+(49, 'fr', 'Tonnerre'),
+(49, 'en', 'Thunderbolt'),
+(50, 'fr', 'Croc de Mort'),
+(50, 'en', 'Hyper Fang'),
+(51, 'fr', 'Lance-Flammes'),
+(51, 'en', 'Flamethrower'),
+(52, 'fr', 'Canicule'),
+(52, 'en', 'Heat Wave'),
+(53, 'fr', 'Tête de fer'),
+(53, 'en', 'Iron Head'),
+(54, 'fr', 'Câlinerie'),
+(54, 'en', 'Play Rough'),
+(55, 'fr', 'Dernier Recours'),
+(55, 'en', 'Last Resort'),
+(56, 'fr', 'éboulement'),
+(56, 'en', 'Rock Slide'),
+(57, 'fr', 'Dracogriffe'),
+(57, 'en', 'Dragon Claw'),
+(58, 'fr', 'Lame-Feuille'),
+(58, 'en', 'Leaf Blade'),
+(59, 'fr', 'Tunnelier'),
+(59, 'en', 'Drill Run'),
+(60, 'fr', 'éclat Magique'),
+(60, 'en', 'Dazzling Gleam'),
+(61, 'fr', 'Colère'),
+(61, 'en', 'Outrage'),
+(62, 'fr', 'Plaie-Croix'),
+(62, 'en', 'X-Scissor'),
+(63, 'fr', 'Earth Power'),
+(63, 'en', 'Earth Power'),
+(64, 'fr', 'Rayon Gemme'),
+(64, 'en', 'Power Gem'),
+(65, 'fr', 'Laser Glace'),
+(65, 'en', 'Ice Beam'),
+(66, 'fr', 'Sacrifice'),
+(66, 'en', 'Submission'),
+(67, 'fr', 'Rebondifeu'),
+(67, 'en', 'Flame Burst'),
+(68, 'fr', 'Vibroscur'),
+(68, 'en', 'Dark Pulse'),
+(69, 'fr', 'Poison-Croix'),
+(69, 'en', 'Cross Poison'),
+(70, 'fr', 'Poing-Glace'),
+(70, 'en', 'Ice Punch'),
+(71, 'fr', 'Hydroqueue'),
+(71, 'en', 'Aqua Tail'),
+(72, 'fr', 'Plaquage'),
+(72, 'en', 'Body Slam'),
+(73, 'fr', 'Canon Graine'),
+(73, 'en', 'Seed Bomb'),
+(74, 'fr', 'Bec Vrille'),
+(74, 'en', 'Drill Peck'),
+(75, 'fr', 'Saumure'),
+(75, 'en', 'Brine'),
+(76, 'fr', 'Coup d\'Jus'),
+(76, 'en', 'Discharge'),
+(77, 'fr', 'Rayon Signal'),
+(77, 'en', 'Signal Beam'),
+(78, 'fr', 'Bombaimant'),
+(78, 'en', 'Magnet Bomb'),
+(79, 'fr', 'Poing-éclair'),
+(79, 'en', 'Thunder Punch'),
+(80, 'fr', 'Dracochoc'),
+(80, 'en', 'Dragon Pulse'),
+(81, 'fr', 'Massd\'Os'),
+(81, 'en', 'Bone Club'),
+(82, 'fr', 'Poing de Feu'),
+(82, 'en', 'Fire Punch'),
+(83, 'fr', 'Casse-Brique'),
+(83, 'en', 'Brick Break'),
+(84, 'fr', 'Power Up Punch'),
+(84, 'en', 'Power Up Punch'),
+(85, 'fr', 'Bourdon'),
+(85, 'en', 'Bug Buzz'),
+(86, 'fr', 'Gyroballe'),
+(86, 'en', 'Gyro Ball'),
+(87, 'fr', 'Choc Psy'),
+(87, 'en', 'Psyshock'),
+(88, 'fr', 'Boue-Bombe'),
+(88, 'en', 'Mud Bomb'),
+(89, 'fr', 'Détritus'),
+(89, 'en', 'Sludge'),
+(90, 'fr', 'Boule Roc'),
+(90, 'en', 'Rock Blast'),
+(91, 'fr', 'Bulles d\'O'),
+(91, 'en', 'Bubble Beam'),
+(92, 'fr', 'Poing Ombre'),
+(92, 'en', 'Shadow Punch'),
+(93, 'fr', 'Vampibaiser'),
+(93, 'en', 'Draining Kiss'),
+(94, 'fr', 'Ombre Nocturne'),
+(94, 'en', 'Night Shade'),
+(95, 'fr', 'éco-Sphère'),
+(95, 'en', 'Energy Ball'),
+(96, 'fr', 'Voile Miroir'),
+(96, 'en', 'Mirror Coat'),
+(97, 'fr', 'Aéropique'),
+(97, 'en', 'Aerial Ace'),
+(98, 'fr', 'Piétisol'),
+(98, 'en', 'Bulldoze'),
+(99, 'fr', 'Tranche-Nuit'),
+(99, 'en', 'Night Slash'),
+(100, 'fr', 'Onde Boréale'),
+(100, 'en', 'Aurora Beam'),
+(101, 'fr', 'Roue de Feu'),
+(101, 'en', 'Flame Wheel'),
+(102, 'fr', 'Tranch\'Air'),
+(102, 'en', 'Air Cutter'),
+(103, 'fr', 'Rafale Psy'),
+(103, 'en', 'Psybeam'),
+(104, 'fr', 'Tomberoche'),
+(104, 'en', 'Rock Tomb'),
+(105, 'fr', 'Vibraqua'),
+(105, 'en', 'Water Pulse'),
+(106, 'fr', 'Mâchouille'),
+(106, 'en', 'Crunch'),
+(107, 'fr', 'Vent Mauvais'),
+(107, 'en', 'Ominous Wind'),
+(108, 'fr', 'ébulition'),
+(108, 'en', 'Scald'),
+(109, 'fr', 'Koud\'Korne'),
+(109, 'en', 'Horn Attack'),
+(110, 'fr', 'Météores'),
+(110, 'en', 'Swift'),
+(111, 'fr', 'Tunnel'),
+(111, 'en', 'Dig'),
+(112, 'fr', 'Balayette'),
+(112, 'en', 'Low Sweep'),
+(113, 'fr', 'Ligotage'),
+(113, 'en', 'Wrap'),
+(114, 'fr', 'Crochet Venin'),
+(114, 'en', 'Poison Fang'),
+(115, 'fr', 'Pouvoir Antique'),
+(115, 'en', 'Ancient Power'),
+(116, 'fr', 'Tourbi-Sable'),
+(116, 'en', 'Sand Tomb'),
+(117, 'fr', 'Vent Argenté'),
+(117, 'en', 'Silver Wind'),
+(118, 'fr', 'Force Poigne'),
+(118, 'en', 'Vice Grip'),
+(119, 'fr', 'Nitrocharge'),
+(119, 'en', 'Flame Charge'),
+(120, 'fr', 'Vent Glace'),
+(120, 'en', 'Icy Wind'),
+(121, 'fr', 'Voix Enjôleuse'),
+(121, 'en', 'Disarming Voice'),
+(122, 'fr', 'Psycho Boost'),
+(122, 'en', 'Psycho Boost'),
+(123, 'fr', 'Aqua-Jet'),
+(123, 'en', 'Aqua Jet'),
+(124, 'fr', 'Ombre Portée'),
+(124, 'en', 'Shadow Sneak'),
+(125, 'fr', 'Ouragan'),
+(125, 'en', 'Twister'),
+(126, 'fr', 'Lutte'),
+(126, 'en', 'Struggle'),
+(127, 'fr', 'Leaf Tornado'),
+(127, 'en', 'Leaf Tornado'),
+(128, 'fr', 'Acid Spray'),
+(128, 'en', 'Acid Spray'),
+(129, 'fr', 'Morphing'),
+(129, 'en', 'Transform');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `pokeball`
 --
 
@@ -623,7 +1045,10 @@ INSERT INTO `pokedex` (`id`, `name`) VALUES
 (1, 'Kanto'),
 (2, 'Johto'),
 (3, 'Hoenn'),
-(4, 'Sinnoh');
+(4, 'Sinnoh'),
+(5, 'unys'),
+(6, 'kalos'),
+(7, 'alola');
 
 -- --------------------------------------------------------
 
@@ -7084,6 +7509,60 @@ INSERT INTO `type` (`id`, `img`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `type_name`
+--
+
+CREATE TABLE `type_name` (
+  `type_id` int(2) UNSIGNED DEFAULT NULL,
+  `lang` varchar(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `type_name`
+--
+
+INSERT INTO `type_name` (`type_id`, `lang`, `name`) VALUES
+(1, 'fr', 'normal'),
+(1, 'en', 'normal'),
+(2, 'fr', 'combat'),
+(2, 'en', 'fighting'),
+(3, 'fr', 'vol'),
+(3, 'en', 'flying'),
+(4, 'fr', 'poison'),
+(4, 'en', 'poison'),
+(5, 'fr', 'sol'),
+(5, 'en', 'ground'),
+(6, 'fr', 'roche'),
+(6, 'en', 'rock'),
+(7, 'fr', 'insecte'),
+(7, 'en', 'bug'),
+(8, 'fr', 'spectre'),
+(8, 'en', 'ghost'),
+(9, 'fr', 'metal'),
+(9, 'en', 'steel'),
+(10, 'fr', 'feu'),
+(10, 'en', 'fire'),
+(11, 'fr', 'eau'),
+(11, 'en', 'water'),
+(12, 'fr', 'plante'),
+(12, 'en', 'grass'),
+(13, 'fr', 'electrik'),
+(13, 'en', 'electric'),
+(14, 'fr', 'psy'),
+(14, 'en', 'psychic'),
+(15, 'fr', 'glace'),
+(15, 'en', 'ice'),
+(16, 'fr', 'dragon'),
+(16, 'en', 'dragon'),
+(17, 'fr', 'tenebres'),
+(17, 'en', 'dark'),
+(18, 'fr', 'fee'),
+(18, 'en', 'fairy');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `version`
 --
 
@@ -7103,15 +7582,15 @@ INSERT INTO `version` (`version`) VALUES
 --
 
 --
--- Index pour la table `fast_move`
+-- Index pour la table `fastmove`
 --
-ALTER TABLE `fast_move`
+ALTER TABLE `fastmove`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `main_move`
+-- Index pour la table `mainmove`
 --
-ALTER TABLE `main_move`
+ALTER TABLE `mainmove`
   ADD PRIMARY KEY (`id`);
 
 --

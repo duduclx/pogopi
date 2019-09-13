@@ -5,6 +5,8 @@ class Deploy
 {
     private $db;
 
+    // TODO remove fastname/mainmove/type name in deploy and init.sql
+
     public function __construct($host, $dbname, $username, $password)
     {
         $this->db = new PDO("mysql:dbname=$dbname;host=$host;charset=UTF8", $username, $password);
