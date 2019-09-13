@@ -170,24 +170,19 @@ $route->add('pokeball/name/.+', function ($number) {
 /*
  * pokemon
  */
-$route->add('pokemon/type/id/.+', function ($number) {
+$route->add('pokemon/all', function () {
     $request = new Pokemon();
-    $request->pokemonTypeId($number);
+    $request->pokemonAll();
 });
 
-$route->add('pokemon/type/fr/.+', function ($number) {
+$route->add('pokemon/max', function () {
     $request = new Pokemon();
-    $request->pokemonTypeName($number);
+    $request->pokemonMax();
 });
 
 $route->add('pokemon/id/.+', function ($number) {
     $request = new Pokemon();
     $request->pokemonId($number);
-});
-
-$route->add('pokemon/fr/.+', function ($name) {
-    $request = new Pokemon();
-    $request->pokemonName($name);
 });
 
 $route->add('pokemon/generation/.+', function ($number) {
@@ -200,14 +195,14 @@ $route->add('pokemon/order/.+', function ($number) {
     $request->pokemonOrder($number);
 });
 
-$route->add('pokemon/max', function () {
+$route->add('pokemon/name/.+/.+', function ($intl, $name) {
     $request = new Pokemon();
-    $request->pokemonMax();
+    $request->pokemonName($intl, $name);
 });
 
-$route->add('pokemon/all', function () {
+$route->add('pokemon/type/.+', function ($number) {
     $request = new Pokemon();
-    $request->pokemonAll();
+    $request->pokemonType($number);
 });
 
 /*
