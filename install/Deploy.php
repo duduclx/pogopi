@@ -5,8 +5,6 @@ class Deploy
 {
     private $db;
 
-    // TODO remove fastname/mainmove name in deploy and init.sql
-
     public function __construct($host, $dbname, $username, $password)
     {
         $this->db = new PDO("mysql:dbname=$dbname;host=$host;charset=UTF8", $username, $password);
@@ -158,10 +156,10 @@ class Deploy
         foreach ($pokemons as $pokemon) {
             $sql = "
             INSERT INTO pokemon 
-            (id, attack, defense, height, hp, image, name, `order`, pokedex, scream, weight
+            (id, attack, defense, height, hp, image, `order`, pokedex, scream, weight
             )
             VALUES 
-            (:id, :attack, :defense, :height, :hp, :image, :name, :order, :pokedex, :scream, :weight
+            (:id, :attack, :defense, :height, :hp, :image, :order, :pokedex, :scream, :weight
             )
             ";
             $data = $this->db->prepare($sql);
@@ -173,7 +171,6 @@ class Deploy
                 ':height' => $pokemon['height'],
                 ':hp' => $pokemon['hp'],
                 ':image' => $pokemon['image'],
-                ':name' => $pokemon['name_fr'],
                 ':order' => $pokemon['order'],
                 ':pokedex' => $pokemon['pokedex'],
                 ':scream' => $pokemon['scream'],

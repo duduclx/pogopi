@@ -16,7 +16,7 @@ class Pokemon
      * api/pokemon/order/{id}
      * api/pokemon/type/{id-name}
      */
-    // TODO pokemon/type/{id-name}
+
     public function __construct()
     {
         include ('Controller/config.php');

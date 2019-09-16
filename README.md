@@ -64,72 +64,65 @@ to see the swagger documentation.
 
 following request are possible:
 
-`api/abilitie`:
-- list all abilities (talents)
+abilitie:
+ - api/abilitie/all
+ - api/abilitie/id/{id}
+ - api/abilitie/max
+ - api/abilitie/name/{intl}/{name}
 
-`api/abilitie/{id or name}`:
-- find abilitie (talent) by id or name
+fastmove:
+ - api/fastmove/all
+ - api/fastmove/id/{id}
+ - api/fastmove/max
+ - api/fastmove/name/{intl}/{name}
+ - api/fastmove/type/{id-name}
 
-`api/fastmove`:
-- list all fast move
+generation:
+ - api/generation/all
+ - api/generation/id/{id}
+ - api/generation/max
+ - api/generation/name/{name}
  
-`api/fastmove/{id or name}`:
-- find a fast move by id or name
+mainmove:
+ - api/mainmove/all
+ - api/mainmove/id/{id}
+ - api/mainmove/max
+ - api/manimove/name/{intl}/{name}
+ - api/mainmove/type/{id-name}
+ 
+pokeball:
+ - api/pokeball/all
+ - api/pokeball/id/{id}
+ - api/pokeball/generation/{id}
+ - api/pokeball/max
+ - api/pokeball/name/{name}
+ 
+pokemon:
+ - api/pokemon/all
+ - api/pokemon/max
+ - api/pokemon/generation/{id}
+ - api/pokemon/id/{id}
+ - api/pokemon/name/{intl}/{name}
+ - api/pokemon/order/{id}
+ - api/pokemon/type/{id-name} 
 
-`api/generation` or `api/pokedex`:
-- list all pokedex
+team:
+ - api/team/all
+ - api/team/id/{id}
+ - api/team/name/{intl}/{name}
  
-`api/generation/{id or name}` or `api/pokedex/{id or name}`:
-- find pokedex by id or name
+type:
+ - api/type/all
+ - api/type/max
+ - api/type/id/{id}
+ - api/type/name/{intl}/{name}
  
-`api/mainmove`:
-- list all fast move
-  
-`api/mainmove/{id or name}`:
-- find a fast move by id or name
- 
-`api/pokemon`:
-- list all pokemons
-  
-`api/pokemon/id/{number}`:
-- find pokemon by id
-   
-`api/pokemon/order/{number}`:
-- find pokemon by order
- 
-`api/pokemon/type/{number}`:
-- find all pokemons by type id
- 
-`api/pokemon/generation/{number}` or `api/pokemon/pokedex/{number}`:
-- find all pokemons by pokedex id
- 
-`api/pokemon/fr/{name}` or `api/pokemon/en/{name}`:
-- find pokemon by his name (not full name required)
-
-`api/pokeball`:
-- list all pokeballs
- 
-`api/pokeball/{id or name}`:
-- find pokeball by id or name
- 
-`api/team`:
-- list all teams
- 
-`api/team/{id or name or color}`:
-- find team by id or name or color
- 
-`api/type`:
-- list all types
-
-`api/type/{id or name}`:
-- find type by id or name
-
-`api/version`:
-- get the api's version
+version:
+ - api/version
  
 ## database diagram
 
-![database](api/docs/Database_Diagram.png)
+![database](install/docs/Database_Diagram.png)
  
 ## examples of uses
 
@@ -143,7 +136,7 @@ Using database with web php:
 
 ## TODO
  
- - making array for types, abilities, and more ...
- - fix missing abilities
- - create a dedicated repo for ressources
- - i don't know ...
+ - add evolve chain
+ - add pokemon's from gen 5 to 7
+ - fix abilitie (missing some) or drop it
+ - member/user and JWT api

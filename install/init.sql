@@ -80,7 +80,6 @@ CREATE TABLE pokemon
     hp              INT(4) UNSIGNED,
     -- hp_max          INT(4) UNSIGNED,
     image           VARCHAR(20),
-    name            VARCHAR(20),
     `order`         INT(4) UNSIGNED, -- is index
     -- pc_max          INT(4) UNSIGNED,
     pokedex         INT(2) UNSIGNED, -- fk table pokedex, is index
