@@ -52,6 +52,8 @@ And `init.sql` to change the database name.
 Go to `http://your-server.com/install`
 and click !
 
+After installation, keep only the api folder and delete other folder and files
+
 Or import `pogopi.sql` into your database !
 
 
