@@ -48,10 +48,10 @@ class Pokemon
             LEFT JOIN pokemon_name AS pkmn on pokemon.id = pkmn.pokemon_id
             LEFT JOIN pokemon_type AS pktp ON pokemon.id = pktp.pokemon_id
             LEFT JOIN type ON type.id = pktp.type_id
-            LEFT JOIN pokemon_fast_move AS pkfm ON pokemon.id = pkfm.pokemon_id
-            LEFT JOIN fastmove ON fastmove.id = pkfm.fast_move_id
-            LEFT JOIN pokemon_main_move AS pkmm ON pokemon.id = pkmm.pokemon_id
-            LEFT JOIN mainmove ON mainmove.id = pkmm.main_move_id';
+            LEFT JOIN pokemon_fastmove AS pkfm ON pokemon.id = pkfm.pokemon_id
+            LEFT JOIN fastmove ON fastmove.id = pkfm.fastmove_id
+            LEFT JOIN pokemon_mainmove AS pkmm ON pokemon.id = pkmm.pokemon_id
+            LEFT JOIN mainmove ON mainmove.id = pkmm.mainmove_id';
     }
     private function error()
     {
@@ -229,6 +229,7 @@ class Pokemon
         $query = $this->pdo->prepare($sql);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
         if(empty($results)) {
             $this->error();
             exit;
@@ -266,10 +267,12 @@ class Pokemon
             ':number' => $number
         ]);
         $result = $query->fetch(PDO::FETCH_ASSOC);
+
         if(empty($result)) {
             $this->error();
             exit;
         }
+
         $result = $this->formatResult($result);
         header('Content-type: application/json');
         echo json_encode($result, JSON_NUMERIC_CHECK);
@@ -349,26 +352,44 @@ class Pokemon
      */
     public function pokemonType($number)
     {
+        $base_sql = '
+        SELECT type_id, name FROM type_name';
         switch (intval($number)) {
             case '0':
                 // is string
-                $sql = $this->sql . ' WHERE type.name LIKE CONCAT(\'%\', :number, \'%\') GROUP BY pokemon.id';
+                $sql = $base_sql . ' WHERE type_name.name LIKE CONCAT(\'%\', :number, \'%\')';
                 break;
             default:
                 // is number
-                $sql = $this->sql . ' WHERE type.id = :number GROUP BY pokemon.id';
+                $sql = $base_sql . ' WHERE type_name.type_id = :number';
                 break;
         }
         $query = $this->pdo->prepare($sql);
         $query->execute([
             ':number' => $number
         ]);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        $sql = 'SELECT pokemon_id, type_id FROM pokemon_type WHERE type_id = :number';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+            ':number' => $result['type_id']
+        ]);
+
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
         if(empty($results)) {
             $this->error();
             exit;
         }
         foreach ($results as $result) {
+            $sql = $this->sql . ' WHERE pokemon.id = :number GROUP BY pokemon.id';
+            $query = $this->pdo->prepare($sql);
+            $query->execute([
+                ':number' => $result['pokemon_id']
+            ]);
+            $result = $query->fetch(PDO::FETCH_ASSOC);
             $pokemon[] = $this->formatResult($result);
         }
         header('Content-type: application/json');

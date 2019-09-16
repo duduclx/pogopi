@@ -5,7 +5,7 @@ class Deploy
 {
     private $db;
 
-    // TODO remove fastname/mainmove/type name in deploy and init.sql
+    // TODO remove fastname/mainmove name in deploy and init.sql
 
     public function __construct($host, $dbname, $username, $password)
     {
@@ -38,15 +38,14 @@ class Deploy
         }
     }
 
-    // TODO remove name from fastmove
     public function insertFastMoves($fastMoves)
     {
         foreach ($fastMoves as $fastMove) {
             $sql = "
             INSERT INTO fastmove 
-            (id, damage, dps, energy, eps, move_duration, name, sound_fx, type)
+            (id, damage, dps, energy, eps, move_duration, sound_fx, type)
             VALUES 
-            (:id, :damage, :dps, :energy, :eps, :move_duration, :name, :sound_fx, :type)
+            (:id, :damage, :dps, :energy, :eps, :move_duration, :sound_fx, :type)
             ";
             $data = $this->db->prepare($sql);
             $data->execute([
@@ -56,7 +55,6 @@ class Deploy
                 ':energy' => $fastMove['energy'],
                 ':eps' => $fastMove['eps'],
                 ':move_duration' => $fastMove['move_duration'],
-                ':name' => $fastMove['name_fr'],
                 ':sound_fx' => $fastMove['sound_fx'],
                 ':type' => $fastMove['type']
             ]);
@@ -79,15 +77,14 @@ class Deploy
         }
     }
 
-    // TODO remove name from mainmove
     public function insertMainMoves($mainMoves)
     {
         foreach ($mainMoves as $mainMove) {
             $sql = "
             INSERT INTO mainmove 
-            (id, damage, dps, energy, move_duration, name, slot, sound_fx, type)
+            (id, damage, dps, energy, move_duration, slot, sound_fx, type)
             VALUES 
-            (:id, :damage, :dps, :energy, :move_duration, :name, :slot, :sound_fx, :type)
+            (:id, :damage, :dps, :energy, :move_duration, :slot, :sound_fx, :type)
             ";
             $data = $this->db->prepare($sql);
             $data->execute([
@@ -96,7 +93,6 @@ class Deploy
                 ':dps' => $mainMove['dps'],
                 ':energy' => $mainMove['energy'],
                 ':move_duration' => $mainMove['move_duration'],
-                ':name' => $mainMove['name_fr'],
                 ':slot' => $mainMove['slot'],
                 ':sound_fx' => $mainMove['sound_fx'],
                 ':type' => $mainMove['type']
@@ -217,8 +213,8 @@ class Deploy
              * pokemon_fast_move
              */
             $sql = "
-            INSERT INTO pokemon_fast_move
-            (pokemon_id, fast_move_id)
+            INSERT INTO pokemon_fastmove
+            (pokemon_id, fastmove_id)
             VALUES
             (:pokemon_id, :fast_move_id)";
             $data = $this->db->prepare($sql);
@@ -246,8 +242,8 @@ class Deploy
              * pokemon_main_move
              */
             $sql = "
-            INSERT INTO pokemon_main_move
-            (pokemon_id, main_move_id)
+            INSERT INTO pokemon_mainmove
+            (pokemon_id, mainmove_id)
             VALUES
             (:pokemon_id, :main_move_id)";
             $data = $this->db->prepare($sql);
@@ -383,21 +379,19 @@ class Deploy
         }
     }
 
-    // TODO remove name from type
     public function insertTypes($types)
     {
         foreach ($types as $type) {
             $sql = "
             INSERT INTO type 
-            (id, img, name)
+            (id, img)
             VALUES 
-            (:id, :img, :name)
+            (:id, :img)
             ";
             $data = $this->db->prepare($sql);
             $data->execute([
                 ':id' => $type['id'],
-                ':img' => $type['img'],
-                ':name' => $type['name_fr']
+                ':img' => $type['img']
             ]);
 
             $sql = '

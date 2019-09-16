@@ -196,7 +196,7 @@ class Fastmove
         switch (intval($name)) {
             case '0':
                 // is string
-                $sql = $this->sql . ' WHERE tp.name LIKE CONCAT(\'%\', :name, \'%\') GROUP BY fastmove.id';
+                $sql = $this->sql . ' WHERE tn.name LIKE CONCAT(\'%\', :name, \'%\') GROUP BY fastmove.id';
                 break;
             default:
                 // is number

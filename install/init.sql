@@ -18,7 +18,6 @@ CREATE TABLE fastmove
     energy        INT(3) UNSIGNED,
     eps           DECIMAL(3,1) UNSIGNED,
     move_duration INT(4) UNSIGNED, -- in ms
-    name          VARCHAR(255), -- indexed array lang->text
     sound_fx      varchar(20),
     type          INT(4) UNSIGNED  -- fk with table type
 );
@@ -37,7 +36,6 @@ CREATE TABLE mainmove
     dps           DECIMAL(3,1) UNSIGNED,
     energy        INT(3) UNSIGNED,
     move_duration INT(4) UNSIGNED, -- in ms
-    name          VARCHAR(255), -- indexed array lang->text
     slot          INT(1) UNSIGNED,
     sound_fx      varchar(20),
     type          INT(4) UNSIGNED  -- fk with table type
@@ -107,16 +105,16 @@ CREATE TABLE pokemon_abilitie
     abilitie_id INT(3) UNSIGNED
 );
 
-CREATE TABLE pokemon_fast_move
+CREATE TABLE pokemon_fastmove
 (
     pokemon_id   INT(4) UNSIGNED,
-    fast_move_id INT(3) UNSIGNED
+    fastmove_id  INT(3) UNSIGNED
 );
 
-CREATE TABLE pokemon_main_move
+CREATE TABLE pokemon_mainmove
 (
     pokemon_id   INT(4) UNSIGNED,
-    main_move_id INT(3) UNSIGNED
+    mainmove_id  INT(3) UNSIGNED
 );
 
 CREATE TABLE pokemon_name
@@ -155,12 +153,10 @@ CREATE TABLE team_name
     name        VARCHAR(20)
 );
 
--- TODO remove name from type
 CREATE TABLE type
 (
     id      INT(2) UNSIGNED PRIMARY KEY,
-    img     VARCHAR(20),
-    name    VARCHAR(255) -- indexed array lang->text
+    img     VARCHAR(20)
 );
 
 CREATE TABLE type_name
@@ -180,11 +176,11 @@ CREATE TABLE version
  */
 ALTER TABLE fastmove
     ADD FOREIGN KEY (type) REFERENCES type(id),
-    ADD FOREIGN KEY (id) REFERENCES pokemon_fast_move(fast_move_id);
+    ADD FOREIGN KEY (id) REFERENCES pokemon_fastmove(fastmove_id);
 
 ALTER TABLE mainmove
     ADD FOREIGN KEY (type) REFERENCES type(id),
-    ADD FOREIGN KEY (id) REFERENCES pokemon_main_move(main_move_id);
+    ADD FOREIGN KEY (id) REFERENCES pokemon_mainmove(mainmove_id);
 
 ALTER TABLE pokemon
     ADD FOREIGN KEY (pokedex) REFERENCES pokedex(id);

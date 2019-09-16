@@ -227,7 +227,7 @@ class Mainmove
         switch (intval($name)) {
             case '0':
                 // is string
-                $sql = $this->sql . ' WHERE tp.name LIKE CONCAT(\'%\', :name, \'%\') GROUP BY mainmove.id';
+                $sql = $this->sql . ' WHERE tn.name LIKE CONCAT(\'%\', :name, \'%\') GROUP BY mainmove.id';
                 break;
             default:
                 // is number
