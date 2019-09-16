@@ -36,10 +36,12 @@ class Pokemon
             pokemon.pokedex,
             pokemon.scream,
             pokemon.weight,
-            pokemon.pokedex,
+            pokemon.pokedex AS pokedexId,
             pkd.name AS pokedex,
             GROUP_CONCAT(DISTINCT pkmn.lang) AS nameslang,
             GROUP_CONCAT(pkmn.name) AS namesname,
+            GROUP_CONCAT(DISTINCT pksp.lang) AS spelangs,
+            GROUP_CONCAT(DISTINCT pksp.specie) AS spenames,
             GROUP_CONCAT(DISTINCT type.id) AS typesid,
             GROUP_CONCAT(DISTINCT fastmove.id) AS fastmovesid,
             GROUP_CONCAT(DISTINCT mainmove.id) AS mainmovesid
@@ -47,6 +49,7 @@ class Pokemon
             LEFT JOIN pokedex AS pkd ON pokemon.pokedex = pkd.id
             LEFT JOIN pokemon_name AS pkmn on pokemon.id = pkmn.pokemon_id
             LEFT JOIN pokemon_type AS pktp ON pokemon.id = pktp.pokemon_id
+            LEFT JOIN pokemon_specie AS pksp ON pokemon.id = pksp.pokemon_id
             LEFT JOIN type ON type.id = pktp.type_id
             LEFT JOIN pokemon_fastmove AS pkfm ON pokemon.id = pkfm.pokemon_id
             LEFT JOIN fastmove ON fastmove.id = pkfm.fastmove_id
@@ -69,6 +72,20 @@ class Pokemon
         }
         unset($result['nameslang']);
         unset($result['namesname']);
+        // create pokedex array
+        $result['pokedex'] = [
+            'id' => $result['pokedexId'],
+            'name' => $result['pokedex']
+        ];
+        unset($result['pokedexId']);
+        // create specie array
+        $result['spelangs'] = explode(',', $result['spelangs']);
+        $result['spenames'] = explode(',', $result['spenames']);
+        for ($i = 0; $i < count($result['spelangs']); $i++){
+            $result['specie'][$result['spelangs'][$i]] = $result['spenames'][$i];
+        }
+        unset($result['spelangs']);
+        unset($result['spenames']);
         // create type array
         $result['typesid'] = explode(',', $result['typesid']);
         foreach ($result['typesid'] as $type) {

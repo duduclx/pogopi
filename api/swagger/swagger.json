@@ -53,12 +53,12 @@
     }
   ],
   "paths": {
-    "/abilitie": {
+    "/abilitie/all": {
       "get": {
         "tags": [
           "abilitie"
         ],
-        "summary": "get all abilities",
+        "summary": "list all abilities",
         "responses": {
           "200": {
             "description": "successful operation",
@@ -112,14 +112,14 @@
         "tags": [
           "abilitie"
         ],
-        "summary": "Finds abilitie by id",
+        "summary": "abilitie by id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -144,15 +144,23 @@
         }
       }
     },
-    "/abilitie/fr/{name}": {
+    "/abilitie/name/{intl}/{name}": {
       "get": {
         "tags": [
           "abilitie"
         ],
-        "summary": "Finds abilitie by name",
+        "summary": "abilitie by name",
         "parameters": [
           {
             "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "intl",
             "in": "path",
             "required": true,
             "schema": {
@@ -181,12 +189,12 @@
         }
       }
     },
-    "/fastmove": {
+    "/fastmove/all": {
       "get": {
         "tags": [
           "fastmove"
         ],
-        "summary": "get all fast attacks",
+        "summary": "list all fast attacks",
         "responses": {
           "200": {
             "description": "successful operation",
@@ -240,14 +248,14 @@
         "tags": [
           "fastmove"
         ],
-        "summary": "Finds fast attack by id",
+        "summary": "fast attack by id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -272,15 +280,23 @@
         }
       }
     },
-    "/fastmove/fr/{name}": {
+    "/fastmove/name/{intl}/{name}": {
       "get": {
         "tags": [
           "fastmove"
         ],
-        "summary": "Finds fast attack by name",
+        "summary": "fast attack by name",
         "parameters": [
           {
             "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "intl",
             "in": "path",
             "required": true,
             "schema": {
@@ -314,7 +330,7 @@
         "tags": [
           "fastmove"
         ],
-        "summary": "Finds fast attack by type's id or name",
+        "summary": "fast attack by type's id or name",
         "parameters": [
           {
             "name": "id-name",
@@ -346,12 +362,12 @@
         }
       }
     },
-    "/generation": {
+    "/generation/all": {
       "get": {
         "tags": [
           "generation"
         ],
-        "summary": "get all generations",
+        "summary": "list all generations",
         "responses": {
           "200": {
             "description": "successful operation",
@@ -405,14 +421,14 @@
         "tags": [
           "generation"
         ],
-        "summary": "Finds generation by id",
+        "summary": "generation by id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -437,12 +453,12 @@
         }
       }
     },
-    "/generation/fr/{name}": {
+    "/generation/name/{name}": {
       "get": {
         "tags": [
           "generation"
         ],
-        "summary": "Finds generation by name",
+        "summary": "generation by name",
         "parameters": [
           {
             "name": "name",
@@ -474,12 +490,12 @@
         }
       }
     },
-    "/mainmove": {
+    "/mainmove/all": {
       "get": {
         "tags": [
           "mainmove"
         ],
-        "summary": "list of charged attack",
+        "summary": "list of charged attacks",
         "responses": {
           "200": {
             "description": "successful operation",
@@ -506,7 +522,7 @@
         "tags": [
           "mainmove"
         ],
-        "summary": "return number of charged attack",
+        "summary": "return number of charged attacks",
         "responses": {
           "200": {
             "description": "successful operation",
@@ -533,14 +549,14 @@
         "tags": [
           "mainmove"
         ],
-        "summary": "Finds charged attack by id",
+        "summary": "charged attack by id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -565,15 +581,23 @@
         }
       }
     },
-    "/mainmove/fr/{name}": {
+    "/mainmove/name/{intl}/{name}": {
       "get": {
         "tags": [
           "mainmove"
         ],
-        "summary": "Finds charged attack by name",
+        "summary": "charged attack by name",
         "parameters": [
           {
             "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "intl",
             "in": "path",
             "required": true,
             "schema": {
@@ -607,7 +631,7 @@
         "tags": [
           "mainmove"
         ],
-        "summary": "Finds charged attack by type's id or name",
+        "summary": "charged attack by type's id or name",
         "parameters": [
           {
             "name": "id-name",
@@ -639,12 +663,12 @@
         }
       }
     },
-    "/pokeball": {
+    "/pokeball/all": {
       "get": {
         "tags": [
           "pokeball"
         ],
-        "summary": "List all pokeballs",
+        "summary": "list all pokeballs",
         "responses": {
           "200": {
             "description": "successful operation",
@@ -664,7 +688,7 @@
         "tags": [
           "pokeball"
         ],
-        "summary": "Return number of pokeballs",
+        "summary": "return number of pokeballs",
         "responses": {
           "200": {
             "description": "successful operation",
@@ -684,14 +708,14 @@
         "tags": [
           "pokeball"
         ],
-        "summary": "Find pokeball by id",
+        "summary": "pokeball by id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -718,7 +742,7 @@
         "tags": [
           "pokeball"
         ],
-        "summary": "Find pokeball by generations id",
+        "summary": "pokeball by name",
         "parameters": [
           {
             "name": "name",
@@ -752,14 +776,14 @@
         "tags": [
           "pokeball"
         ],
-        "summary": "Find pokeball by generations id",
+        "summary": "pokeball by generations number",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -781,12 +805,12 @@
         }
       }
     },
-    "/pokemon": {
+    "/pokemon/all": {
       "get": {
         "tags": [
           "pokemon"
         ],
-        "summary": "Find them all",
+        "summary": "get them all",
         "responses": {
           "200": {
             "description": "successful operation",
@@ -806,7 +830,7 @@
         "tags": [
           "pokemon"
         ],
-        "summary": "Return number of pokemons",
+        "summary": "return number of pokemons",
         "responses": {
           "200": {
             "description": "successful operation",
@@ -826,14 +850,14 @@
         "tags": [
           "pokemon"
         ],
-        "summary": "Find pokemon by id",
+        "summary": "pokemon by id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -855,15 +879,23 @@
         }
       }
     },
-    "/pokemon/fr/{name}": {
+    "/pokemon/name/{intl}/{name}": {
       "get": {
         "tags": [
           "pokemon"
         ],
-        "summary": "Find pokemon by Name",
+        "summary": "pokemon by Name",
         "parameters": [
           {
             "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "intl",
             "in": "path",
             "required": true,
             "schema": {
@@ -894,14 +926,14 @@
         "tags": [
           "pokemon"
         ],
-        "summary": "Find pokemons by generation",
+        "summary": "pokemons by generation number",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -928,14 +960,14 @@
         "tags": [
           "pokemon"
         ],
-        "summary": "Find pokemon by order",
+        "summary": "pokemon by order number",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -961,49 +993,15 @@
         }
       }
     },
-    "/pokemon/type/id/{id}": {
+    "/pokemon/type/{id-name}": {
       "get": {
         "tags": [
           "pokemon"
         ],
-        "summary": "Find pokemon by type's id",
+        "summary": "pokemon by type's id or name",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pokemon"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid ID supplied",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/pokemon/type/fr/{name}": {
-      "get": {
-        "tags": [
-          "pokemon"
-        ],
-        "summary": "Find pokemon by type's id",
-        "parameters": [
-          {
-            "name": "name",
+            "name": "id-name",
             "in": "path",
             "required": true,
             "schema": {
@@ -1029,7 +1027,7 @@
         }
       }
     },
-    "/team": {
+    "/team/all": {
       "get": {
         "tags": [
           "team"
@@ -1049,15 +1047,57 @@
         }
       }
     },
-    "/team/{id-name-color}": {
+    "/team/id/{id}": {
       "get": {
         "tags": [
           "team"
         ],
-        "summary": "Find purchase order by Id or Name or Color",
+        "summary": "team by id",
         "parameters": [
           {
-            "name": "id-name-color",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Team"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/team/name/{intl}/{name}": {
+      "get": {
+        "tags": [
+          "team"
+        ],
+        "summary": "team by name",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "intl",
             "in": "path",
             "required": true,
             "schema": {
@@ -1079,15 +1119,11 @@
           "400": {
             "description": "Invalid ID supplied",
             "content": {}
-          },
-          "404": {
-            "description": "Order not found",
-            "content": {}
           }
         }
       }
     },
-    "/type": {
+    "/type/all": {
       "get": {
         "tags": [
           "type"
@@ -1114,15 +1150,87 @@
         }
       }
     },
-    "/type/{id-name}": {
+    "/type/max": {
       "get": {
         "tags": [
           "type"
         ],
-        "summary": "Finds type by id or name",
+        "summary": "return number of type",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Type"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/type/id/{id}": {
+      "get": {
+        "tags": [
+          "type"
+        ],
+        "summary": "type by id",
         "parameters": [
           {
-            "name": "id-name",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Type"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/type/name/{intl}/{name}": {
+      "get": {
+        "tags": [
+          "type"
+        ],
+        "summary": "type by name",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "intl",
             "in": "path",
             "required": true,
             "schema": {
@@ -1189,10 +1297,30 @@
             "format": "int64"
           },
           "description": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "properties": {
+                "fr": {
+                  "type": "string"
+                },
+                "en": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "name": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "properties": {
+                "fr": {
+                  "type": "string"
+                },
+                "en": {
+                  "type": "string"
+                }
+              }
+            }
           }
         },
         "xml": {
@@ -1218,20 +1346,30 @@
           "eps": {
             "type": "integer"
           },
-          "move_duration": {
+          "duration": {
             "type": "integer"
           },
-          "name_en": {
-            "type": "string"
+          "name": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "fr": {
+                  "type": "string"
+                },
+                "en": {
+                  "type": "string"
+                }
+              }
+            }
           },
-          "name_fr": {
-            "type": "string"
-          },
-          "sound_fx": {
+          "sound": {
             "type": "string"
           },
           "type": {
-            "type": "integer"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Type"
+            }
           }
         },
         "xml": {
@@ -1269,14 +1407,8 @@
           "energy": {
             "type": "integer"
           },
-          "move_duration": {
+          "duration": {
             "type": "integer"
-          },
-          "name_en": {
-            "type": "string"
-          },
-          "name_fr": {
-            "type": "string"
           },
           "slot": {
             "type": "integer"
@@ -1284,8 +1416,24 @@
           "sound_fx": {
             "type": "string"
           },
+          "name": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "fr": {
+                  "type": "string"
+                },
+                "en": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "type": {
-            "type": "integer"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Type"
+            }
           }
         },
         "xml": {
@@ -1344,11 +1492,18 @@
           "img": {
             "type": "string"
           },
-          "name_en": {
-            "type": "string"
-          },
-          "name_fr": {
-            "type": "string"
+          "name": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "fr": {
+                  "type": "string"
+                },
+                "en": {
+                  "type": "string"
+                }
+              }
+            }
           }
         },
         "xml": {
@@ -1362,14 +1517,21 @@
             "type": "integer",
             "format": "int64"
           },
+          "img": {
+            "type": "string"
+          },
           "generation": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          },
-          "image": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
           }
         },
         "xml": {
@@ -1386,116 +1548,83 @@
           "attack": {
             "type": "integer"
           },
-          "attack_max": {
-            "type": "integer"
-          },
-          "attack_spe": {
-            "type": "integer"
-          },
-          "base_experience": {
-            "type": "integer"
-          },
-          "base_happiness": {
-            "type": "integer"
-          },
-          "buddy_walk": {
-            "type": "integer"
-          },
-          "capture_rate": {
-            "type": "integer"
-          },
           "defense": {
-            "type": "integer"
-          },
-          "defense_max": {
-            "type": "integer"
-          },
-          "defense_spe": {
-            "type": "integer"
-          },
-          "escape_rate": {
             "type": "integer"
           },
           "height": {
             "type": "number"
           },
+          "hp": {
+            "type": "integer"
+          },
           "image": {
             "type": "string"
           },
-          "name_en": {
-            "type": "string"
-          },
-          "name_fr": {
-            "type": "string"
+          "name": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "fr": {
+                  "type": "string"
+                },
+                "en": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "order": {
             "type": "integer"
           },
-          "pc_max": {
-            "type": "integer"
-          },
-          "pv": {
-            "type": "integer"
-          },
-          "pv_max": {
-            "type": "integer"
+          "pokedex": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "scream": {
             "type": "string"
           },
-          "specie_en": {
-            "type": "integer"
-          },
-          "specie_fr": {
-            "type": "integer"
-          },
-          "speed": {
-            "type": "integer"
-          },
-          "stamina_max": {
-            "type": "integer"
+          "specie": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "fr": {
+                  "type": "string"
+                },
+                "en": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "weight": {
             "type": "number"
           },
-          "abilitie_1": {
-            "type": "integer"
+          "fastmove": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fastmove"
+            }
           },
-          "abilitie_2": {
-            "type": "integer"
+          "mainmove": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mainmove"
+            }
           },
-          "abilitie_3": {
-            "type": "integer"
-          },
-          "fast_move_1": {
-            "type": "integer"
-          },
-          "fast_move_2": {
-            "type": "integer"
-          },
-          "fast_move_3": {
-            "type": "integer"
-          },
-          "main_move_1": {
-            "type": "integer"
-          },
-          "main_move_2": {
-            "type": "integer"
-          },
-          "main_move_3": {
-            "type": "integer"
-          },
-          "main_move_4": {
-            "type": "integer"
-          },
-          "pokedex": {
-            "type": "integer"
-          },
-          "type_1": {
-            "type": "integer"
-          },
-          "type_2": {
-            "type": "integer"
+          "type": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Type"
+            }
           }
         },
         "xml": {
@@ -1511,7 +1640,7 @@
           }
         },
         "xml": {
-          "name": "type"
+          "name": "Version"
         }
       }
     }
