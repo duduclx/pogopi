@@ -29,6 +29,7 @@ class Pokemon
             pokemon.id,
             pokemon.attack,
             pokemon.defense,
+            pokemon.evolve,
             pokemon.height,
             pokemon.hp,
             pokemon.image,
@@ -40,17 +41,17 @@ class Pokemon
             pkd.name AS pokedex,
             GROUP_CONCAT(DISTINCT pkmn.lang) AS nameslang,
             GROUP_CONCAT(pkmn.name) AS namesname,
+            GROUP_CONCAT(DISTINCT type.id) AS typesid,
             GROUP_CONCAT(DISTINCT pksp.lang) AS spelangs,
             GROUP_CONCAT(DISTINCT pksp.specie) AS spenames,
-            GROUP_CONCAT(DISTINCT type.id) AS typesid,
             GROUP_CONCAT(DISTINCT fastmove.id) AS fastmovesid,
             GROUP_CONCAT(DISTINCT mainmove.id) AS mainmovesid
             FROM pokemon
             LEFT JOIN pokedex AS pkd ON pokemon.pokedex = pkd.id
             LEFT JOIN pokemon_name AS pkmn on pokemon.id = pkmn.pokemon_id
             LEFT JOIN pokemon_type AS pktp ON pokemon.id = pktp.pokemon_id
-            LEFT JOIN pokemon_specie AS pksp ON pokemon.id = pksp.pokemon_id
             LEFT JOIN type ON type.id = pktp.type_id
+            LEFT JOIN pokemon_specie AS pksp ON pokemon.id = pksp.pokemon_id
             LEFT JOIN pokemon_fastmove AS pkfm ON pokemon.id = pkfm.pokemon_id
             LEFT JOIN fastmove ON fastmove.id = pkfm.fastmove_id
             LEFT JOIN pokemon_mainmove AS pkmm ON pokemon.id = pkmm.pokemon_id
@@ -86,6 +87,10 @@ class Pokemon
         }
         unset($result['spelangs']);
         unset($result['spenames']);
+        // create evolve array
+        //  TODO fix missing pokemon.evolve
+        //$result['evolve'] = $this->getEvolve($result['evolve']);
+
         // create type array
         $result['typesid'] = explode(',', $result['typesid']);
         foreach ($result['typesid'] as $type) {
@@ -106,6 +111,48 @@ class Pokemon
         unset($result['mainmovesid']);
         return $result;
     }
+    private function getEvolve($number)
+    {
+        $sql = 'SELECT
+        evolve.id,
+        GROUP_CONCAT(pokemon_id) as ids,
+        GROUP_CONCAT(level) as levels,
+        GROUP_CONCAT(to_id) as to_ids
+        FROM evolve
+        WHERE evolve.id = :number
+        GROUP BY evolve.id';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+           ':number' => $number
+        ]);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        // create evolve array
+        $result['ids'] = explode(',', $result['ids']);
+        $result['levels'] = explode(',', $result['levels']);
+        $result['to_ids'] = explode(',', $result['to_ids']);
+
+
+        for ($i = 0; $i < count($result['ids']); $i++) {
+            if ($result['to_ids'][$i] != 0) {
+                $result[$result['levels'][$i]][] = [
+                    'id' => $result['ids'][$i],
+                    'to' => [
+                        'id' => $result['to_ids'][$i],
+                    ],
+                ];
+            }
+        }
+
+        unset($result['ids']);
+        unset($result['levels']);
+        unset($result['to_ids']);
+
+        return $result;
+    }
+
     private function getType($number)
     {
         $sql = 'SELECT 

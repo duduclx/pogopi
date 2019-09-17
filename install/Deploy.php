@@ -41,14 +41,26 @@ class Deploy
         foreach ($evolves as $evolve) {
             $sql = '
             INSERT INTO evolve
-            (pokemon_id, level, to_pokemon_id)
+            (id,pokemon_id, level, to_id)
             VALUES 
-            (:pokemon_id, :level, :to_pokemon_id)';
+            (:id, :pokemon_id, :level, :to_id)';
             $data = $this->db->prepare($sql);
             $data->execute([
+                ':id' => $evolve['id'],
                ':pokemon_id' => $evolve['pokemon_id'],
                ':level' => $evolve['level'],
-               ':to_pokemon_id' => $evolve['to_pokemon_id']
+               ':to_id' => $evolve['to_id']
+            ]);
+
+            $sql = '
+            UPDATE pokemon 
+            SET evolve = :evo
+            WHERE pokemon.id = :number';
+
+            $data = $this->db->prepare($sql);
+            $data->execute([
+                ':evo' => $evolve['id'],
+                ':number' => $evolve['pokemon_id']
             ]);
         }
     }

@@ -12,9 +12,10 @@ CREATE TABLE abilitie
 
 CREATE TABLE evolve
 (
+    id               INT(4) UNSIGNED,
     pokemon_id       INT(4) UNSIGNED,
     level            INT(1) UNSIGNED,
-    to_pokemon_id    INT(4) UNSIGNED
+    to_id            INT(4) UNSIGNED
 );
 
 CREATE TABLE fastmove
@@ -80,6 +81,7 @@ CREATE TABLE pokemon
     -- buddy_walk      INT(2) UNSIGNED,
     -- capture_rate    INT(5) UNSIGNED, -- max 10 000
     defense         INT(3) UNSIGNED,
+    evolve          INT(4) UNSIGNED,
     -- defense_max     INT(3) UNSIGNED,
     -- defense_spe     INT(3) UNSIGNED,
     -- escape_rate     INT(4) UNSIGNED, -- percent
