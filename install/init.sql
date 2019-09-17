@@ -12,18 +12,9 @@ CREATE TABLE abilitie
 
 CREATE TABLE evolve
 (
-    evolve_id        INT(4) UNSIGNED, -- fk to evolvechain.id
     pokemon_id       INT(4) UNSIGNED,
     level            INT(1) UNSIGNED,
     to_pokemon_id    INT(4) UNSIGNED
-);
-
-CREATE TABLE evolvechain
-(
-    id      INT(4) UNSIGNED PRIMARY KEY,
-    base    INT(4) UNSIGNED,
-    middle  INT(1) UNSIGNED,
-    top     INT(4) UNSIGNED
 );
 
 CREATE TABLE fastmove
@@ -189,9 +180,6 @@ CREATE TABLE version
 /*
  create relation between tables
  */
-ALTER TABLE evolve
-    ADD FOREIGN KEY (evolve_id) REFERENCES evolvechain(id);
-
 ALTER TABLE fastmove
     ADD FOREIGN KEY (type) REFERENCES type(id),
     ADD FOREIGN KEY (id) REFERENCES pokemon_fastmove(fastmove_id);

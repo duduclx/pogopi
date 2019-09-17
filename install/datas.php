@@ -1,6 +1,7 @@
 <?php
 
 include 'data/abilities.php';
+include 'data/evolve.php';
 include 'data/fastMoves.php';
 include 'data/mainMoves.php';
 include 'data/pokeballs.php';

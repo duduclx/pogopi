@@ -30,13 +30,14 @@ if (isset($_GET['step']) && $_GET['step'] === '2') {
         // type needed first
         $deploy->insertTypes($types);
         $deploy->insertAbilities($abilities);
+        $deploy->insertEvolves($evolves);
         $deploy->insertTeam($teams);
         $deploy->insertPokeballs($pokeballs);
         $deploy->insertPokedex($pokedexes);
         $deploy->insertFastMoves($fastMoves);
         $deploy->insertMainMoves($mainMoves);
         $deploy->insertPokemons($pokemons);
-        $deploy->version(2);
+        $deploy->version(2.1);
 
         $message = "Tables populated successfully. <br>
                     Please check api/Controller/config.php and delete mysql root user/password ! <br>

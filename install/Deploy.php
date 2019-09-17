@@ -36,6 +36,23 @@ class Deploy
         }
     }
 
+    public function insertEvolves($evolves)
+    {
+        foreach ($evolves as $evolve) {
+            $sql = '
+            INSERT INTO evolve
+            (pokemon_id, level, to_pokemon_id)
+            VALUES 
+            (:pokemon_id, :level, :to_pokemon_id)';
+            $data = $this->db->prepare($sql);
+            $data->execute([
+               ':pokemon_id' => $evolve['pokemon_id'],
+               ':level' => $evolve['level'],
+               ':to_pokemon_id' => $evolve['to_pokemon_id']
+            ]);
+        }
+    }
+
     public function insertFastMoves($fastMoves)
     {
         foreach ($fastMoves as $fastMove) {
