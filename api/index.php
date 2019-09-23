@@ -175,6 +175,11 @@ $route->add('pokemon/tinyAll', function () {
     $request->tinyAll();
 });
 
+$route->add('pokemon/tinyId/.+', function ($number) {
+    $request = new Pokemon();
+    $request->tinyId($number);
+});
+
 $route->add('pokemon/all', function () {
     $request = new Pokemon();
     $request->pokemonAll();

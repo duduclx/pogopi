@@ -392,16 +392,82 @@ class Pokemon
 
         header('Content-type: application/json');
         echo json_encode($pokemons, JSON_NUMERIC_CHECK);
-
-
     }
 
     /*
      * api/pokemon/tinyId/{id}
      */
+    public function tinyId($number)
+    {
+        $sql = 'SELECT
+            pokemon.id,
+            pokemon.image,
+            pokemon.order,
+            pokemon.pokedex,
+            pokemon.pokedex AS pokedexId,
+            pkd.name AS pokedex,
+            GROUP_CONCAT(DISTINCT pkmn.lang) AS nameslang,
+            GROUP_CONCAT(pkmn.name) AS namesname,
+            GROUP_CONCAT(DISTINCT type.id) AS typesid,
+            GROUP_CONCAT(tpnm.lang) AS typeslang,
+            GROUP_CONCAT(tpnm.name) AS typesname
+            FROM pokemon
+            LEFT JOIN pokedex AS pkd ON pokemon.pokedex = pkd.id
+            LEFT JOIN pokemon_name AS pkmn on pokemon.id = pkmn.pokemon_id
+            LEFT JOIN pokemon_type AS pktp ON pokemon.id = pktp.pokemon_id
+            LEFT JOIN type ON type.id = pktp.type_id
+            LEFT JOIN type_name AS tpnm ON type.id = tpnm.type_id
+            WHERE pokemon.id = :number
+            GROUP BY pokemon.id';
+
+        $query = $this->pdo->prepare($sql);
+
+        $query->execute([
+            ':number' => $number
+        ]);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if(empty($result)) {
+            $this->error();
+            exit;
+        }
+
+        // create name array
+        $result['nameslang'] = explode(',', $result['nameslang']);
+        $result['namesname'] = explode(',', $result['namesname']);
+        for ($i = 0; $i < count($result['nameslang']); $i++) {
+            $result['name'][$result['nameslang'][$i]] = $result['namesname'][$i];
+        }
+        unset($result['namesname']);
+        unset($result['nameslang']);
+
+        // create pokedex array
+        $result['pokedex'] = [
+            'id' => $result['pokedexId'],
+            'name' => $result['pokedex']
+        ];
+        unset($result['pokedexId']);
+        // create type array
+        $result['typesid'] = explode(',', $result['typesid']);
+        $result['typeslang'] = explode(',',$result['typeslang']);
+        $result['typesname'] = explode(',',$result['typesname']);
+        for ($i = 0; $i < count($result['typesid']); $i++){
+            $result['type'][$i]['id'] = $result['typesid'][$i];
+            for ($j = 0; $j < count($result['typeslang']); $j++) {
+                $result['type'][$i][$result['typeslang'][$j]] = $result['typesname'][$j];
+            }
+        }
+        unset($result['typesid']);
+        unset($result['typeslang']);
+        unset($result['typesname']);
+
+        header('Content-type: application/json');
+        echo json_encode($result, JSON_NUMERIC_CHECK);
+    }
 
     /*
-     * api/pokemon/id/{number}
+     * api/pokemon/id/{id}
      */
     public function pokemonId($number)
     {
