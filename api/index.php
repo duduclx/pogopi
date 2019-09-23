@@ -170,6 +170,11 @@ $route->add('pokeball/name/.+', function ($number) {
 /*
  * pokemon
  */
+$route->add('pokemon/tinyAll', function () {
+    $request = new Pokemon();
+    $request->tinyAll();
+});
+
 $route->add('pokemon/all', function () {
     $request = new Pokemon();
     $request->pokemonAll();
