@@ -8,6 +8,7 @@ use api\Model\Generation;
 use api\Model\Mainmove;
 use api\Model\Pokeball;
 use api\Model\Pokemon;
+use api\Model\PokemonTiny;
 use api\Model\Team;
 use api\Model\Type;
 use api\Model\Version;
@@ -23,6 +24,7 @@ require 'Model/Generation.php';
 require 'Model/Mainmove.php';
 require 'Model/Pokeball.php';
 require 'Model/Pokemon.php';
+require 'Model/PokemonTiny.php';
 require 'Model/Team.php';
 require 'Model/Type.php';
 require 'Model/Version.php';
@@ -168,50 +170,76 @@ $route->add('pokeball/name/.+', function ($number) {
 });
 
 /*
- * pokemon
+ * pokemon max
  */
-$route->add('pokemon/tinyAll', function () {
-    $request = new Pokemon();
-    $request->tinyAll();
-});
-
-$route->add('pokemon/tinyId/.+', function ($number) {
-    $request = new Pokemon();
-    $request->tinyId($number);
-});
-
-$route->add('pokemon/all', function () {
-    $request = new Pokemon();
-    $request->pokemonAll();
-});
-
 $route->add('pokemon/max', function () {
     $request = new Pokemon();
     $request->pokemonMax();
 });
 
-$route->add('pokemon/id/.+', function ($number) {
+/*
+ * pokemon-full
+ */
+$route->add('pokemon/full/all', function () {
+    $request = new Pokemon();
+    $request->pokemonAll();
+});
+
+$route->add('pokemon/full/id/.+', function ($number) {
     $request = new Pokemon();
     $request->pokemonId($number);
 });
 
-$route->add('pokemon/generation/.+', function ($number) {
+$route->add('pokemon/full/generation/.+', function ($number) {
     $request = new Pokemon();
     $request->pokemonGen($number);
 });
 
-$route->add('pokemon/order/.+', function ($number) {
+$route->add('pokemon/full/order/.+', function ($number) {
     $request = new Pokemon();
     $request->pokemonOrder($number);
 });
 
-$route->add('pokemon/name/.+/.+', function ($intl, $name) {
+$route->add('pokemon/full/name/.+/.+', function ($intl, $name) {
     $request = new Pokemon();
     $request->pokemonName($intl, $name);
 });
 
-$route->add('pokemon/type/.+', function ($number) {
+$route->add('pokemon/full/type/.+', function ($number) {
     $request = new Pokemon();
+    $request->pokemonType($number);
+});
+
+/*
+ * pokemon-tiny
+ */
+$route->add('pokemon/tiny/all', function () {
+    $request = new PokemonTiny();
+    $request->pokemonAll();
+});
+
+$route->add('pokemon/tiny/id/.+', function ($number) {
+    $request = new PokemonTiny();
+    $request->pokemonId($number);
+});
+
+$route->add('pokemon/tiny/generation/.+', function ($number) {
+    $request = new PokemonTiny();
+    $request->pokemonGen($number);
+});
+
+$route->add('pokemon/tiny/order/.+', function ($number) {
+    $request = new PokemonTiny();
+    $request->pokemonOrder($number);
+});
+
+$route->add('pokemon/tiny/name/.+/.+', function ($intl, $name) {
+    $request = new PokemonTiny();
+    $request->pokemonName($intl, $name);
+});
+
+$route->add('pokemon/tiny/type/.+', function ($number) {
+    $request = new PokemonTiny();
     $request->pokemonType($number);
 });
 

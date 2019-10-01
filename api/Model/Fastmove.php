@@ -9,6 +9,8 @@ class Fastmove
 {
     private $pdo;
     private $sql;
+    private $urlPokemonAttack;
+    private $urlTypeImg;
 
     /*
      * ROUTES
@@ -22,6 +24,9 @@ class Fastmove
     public function __construct()
     {
         include ('Controller/config.php');
+        $this->urlPokemonAttack = $urlPokemonAttack;
+        $this->urlTypeImg = $urlTypeImg;
+
         $this->pdo = new PDO(
             "mysql:dbname=$dbname;host=$host;charset=UTF8",
             $username,
@@ -55,6 +60,8 @@ class Fastmove
     }
 
     private function formatResult($result) {
+
+        $result['sound'] = $this->urlPokemonAttack . $result['sound'];
         // create name array
         $result['fl'] = explode(',', $result['fl']);
         $result['fn'] = explode(',', $result['fn']);
@@ -66,7 +73,7 @@ class Fastmove
 
         // create type array
         $result['type']['id'] = $result['ti'];
-        $result['type']['img'] = $result['typeimg'];
+        $result['type']['img'] = $this->urlTypeImg . $result['typeimg'];
         $result['tl'] = explode(',',$result['tl']);
         $result['tn'] = explode(',',$result['tn']);
         for ($i = 0; $i < count($result['tl']); $i++){

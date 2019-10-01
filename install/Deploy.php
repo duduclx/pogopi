@@ -41,7 +41,7 @@ class Deploy
         foreach ($evolves as $evolve) {
             $sql = '
             INSERT INTO evolve
-            (id,pokemon_id, level, to_id)
+            (id, pokemon_id, level, to_id)
             VALUES 
             (:id, :pokemon_id, :level, :to_id)';
             $data = $this->db->prepare($sql);
@@ -369,17 +369,19 @@ class Deploy
         foreach ($teams as $team) {
             $sql = "
                 INSERT INTO team
-                (id, img, png, svg, player)
+                (id, color, emblem_flat_png, emblem_png, emblem_svg, player, image)
                 VALUES 
-                (:id, :img, :png, :svg, :player)
+                (:id, :color, :emblem_flat_png, :emblem_png, :emblem_svg, :player, :image)
                 ";
             $data = $this->db->prepare($sql);
             $data->execute([
                 ':id' => $team['id'],
-                ':img' => $team['img_player'],
-                ':png' => $team['img_pngXl'],
-                ':svg' => $team['img_svg'],
-                ':player' => $team['player_en']
+                ':color' => $team['color'],
+                ':emblem_flat_png' => $team['emblem_flat_png'],
+                ':emblem_png' => $team['emblem_png'],
+                ':emblem_svg' => $team['emblem_svg'],
+                ':player' => $team['player'],
+                ':image' => $team['image']
             ]);
 
             /*

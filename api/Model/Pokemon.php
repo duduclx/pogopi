@@ -1,25 +1,39 @@
 <?php
 namespace api\Model;
+
 use PDO;
-use Api\Model\Type;
+
 class Pokemon
 {
+    // TODO add 'full' route to swagger !
+
     private $pdo;
     private $sql;
+    private $urlPokemonImg;
+    private $urlPokemonScream;
+    private $urlPokemonAttack;
+    private $urlTypeImg;
+
     /*
      * ROUTES
-     * api/pokemon/all
      * api/pokemon/max
-     * api/pokemon/generation/{id}
-     * api/pokemon/id/{id}
-     * api/pokemon/name/{intl}/{name}
-     * api/pokemon/order/{id}
-     * api/pokemon/type/{id-name}
+     * api/pokemon/full/all
+     * api/pokemon/full/generation/{id}
+     * api/pokemon/full/id/{id}
+     * api/pokemon/full/name/{intl}/{name}
+     * api/pokemon/full/order/{id}
+     * api/pokemon/full/type/{id-name}
      */
 
     public function __construct()
     {
         include ('Controller/config.php');
+        // define url paths
+        $this->urlPokemonImg = $urlPokemonImg;
+        $this->urlPokemonAttack = $urlPokemonAttack;
+        $this->urlPokemonScream = $urlPokemonScream;
+        $this->urlTypeImg = $urlTypeImg;
+
         $this->pdo = new PDO(
             "mysql:dbname=$dbname;host=$host;charset=UTF8",
             $username,
@@ -65,6 +79,10 @@ class Pokemon
     }
     private function formatResult($result)
     {
+        // format image url
+        $result['image'] =  $this->urlPokemonImg . $result['image'];
+        // format scream url
+        $result['scream'] = $this->urlPokemonScream . $result['scream'];
         // create name array
         $result['nameslang'] = explode(',', $result['nameslang']);
         $result['namesname'] = explode(',', $result['namesname']);
@@ -169,6 +187,11 @@ class Pokemon
             ':number' => $number
         ]);
         $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        // format type img url
+        $result['img'] = $this->urlTypeImg . $result['img'];
+
+        // type array
         $result['langs'] = explode(',',$result['langs']);
         $result['names'] = explode(',',$result['names']);
         for ($i = 0; $i < count($result['langs']); $i++){
@@ -209,6 +232,9 @@ class Pokemon
             $this->error();
             exit;
         }
+
+        // format sound url
+        $result['sound'] = $this->urlPokemonAttack . $result['sound'];
         // create name array
         $result['fl'] = explode(',', $result['fl']);
         $result['fn'] = explode(',', $result['fn']);
@@ -219,7 +245,7 @@ class Pokemon
         unset($result['fn']);
         // create type array
         $result['type']['id'] = $result['ti'];
-        $result['type']['img'] = $result['typeimg'];
+        $result['type']['img'] = $this->urlTypeImg . $result['typeimg'];
         $result['tl'] = explode(',',$result['tl']);
         $result['tn'] = explode(',',$result['tn']);
         for ($i = 0; $i < count($result['tl']); $i++){
@@ -262,6 +288,9 @@ class Pokemon
             $this->error();
             exit;
         }
+
+        // format sound url
+        $result['sound'] = $this->urlPokemonAttack . $result['sound'];
         // create name array
         $result['ml'] = explode(',', $result['ml']);
         $result['mn'] = explode(',', $result['mn']);
@@ -272,7 +301,7 @@ class Pokemon
         unset($result['mn']);
         // create type array
         $result['type']['id'] = $result['ti'];
-        $result['type']['img'] = $result['typeimg'];
+        $result['type']['img'] = $this->urlTypeImg . $result['typeimg'];
         $result['tl'] = explode(',',$result['tl']);
         $result['tn'] = explode(',',$result['tn']);
         for ($i = 0; $i < count($result['tl']); $i++){
@@ -335,15 +364,12 @@ class Pokemon
             pkd.name AS pokedex,
             GROUP_CONCAT(DISTINCT pkmn.lang) AS nameslang,
             GROUP_CONCAT(pkmn.name) AS namesname,
-            GROUP_CONCAT(DISTINCT type.id) AS typesid,
-            GROUP_CONCAT(tpnm.lang) AS typeslang,
-            GROUP_CONCAT(tpnm.name) AS typesname
+            GROUP_CONCAT(DISTINCT type.id) AS typesid
             FROM pokemon
             LEFT JOIN pokedex AS pkd ON pokemon.pokedex = pkd.id
             LEFT JOIN pokemon_name AS pkmn on pokemon.id = pkmn.pokemon_id
             LEFT JOIN pokemon_type AS pktp ON pokemon.id = pktp.pokemon_id
             LEFT JOIN type ON type.id = pktp.type_id
-            LEFT JOIN type_name AS tpnm ON type.id = tpnm.type_id
             GROUP BY pokemon.id';
 
         $query = $this->pdo->prepare($sql);
@@ -374,18 +400,12 @@ class Pokemon
             ];
             unset($result['pokedexId']);
             // create type array
+
             $result['typesid'] = explode(',', $result['typesid']);
-            $result['typeslang'] = explode(',',$result['typeslang']);
-            $result['typesname'] = explode(',',$result['typesname']);
-            for ($i = 0; $i < count($result['typesid']); $i++){
-                $result['type'][$i]['id'] = $result['typesid'][$i];
-                for ($j = 0; $j < count($result['typeslang']); $j++) {
-                    $result['type'][$i][$result['typeslang'][$j]] = $result['typesname'][$j];
-                }
+            foreach ($result['typesid'] as $type) {
+                $result['type'][] = $this->getType($type);
             }
             unset($result['typesid']);
-            unset($result['typeslang']);
-            unset($result['typesname']);
 
             $pokemons[] = $result;
         }
@@ -408,15 +428,12 @@ class Pokemon
             pkd.name AS pokedex,
             GROUP_CONCAT(DISTINCT pkmn.lang) AS nameslang,
             GROUP_CONCAT(pkmn.name) AS namesname,
-            GROUP_CONCAT(DISTINCT type.id) AS typesid,
-            GROUP_CONCAT(tpnm.lang) AS typeslang,
-            GROUP_CONCAT(tpnm.name) AS typesname
+            GROUP_CONCAT(DISTINCT type.id) AS typesid
             FROM pokemon
             LEFT JOIN pokedex AS pkd ON pokemon.pokedex = pkd.id
             LEFT JOIN pokemon_name AS pkmn on pokemon.id = pkmn.pokemon_id
             LEFT JOIN pokemon_type AS pktp ON pokemon.id = pktp.pokemon_id
             LEFT JOIN type ON type.id = pktp.type_id
-            LEFT JOIN type_name AS tpnm ON type.id = tpnm.type_id
             WHERE pokemon.id = :number
             GROUP BY pokemon.id';
 
@@ -450,17 +467,10 @@ class Pokemon
         unset($result['pokedexId']);
         // create type array
         $result['typesid'] = explode(',', $result['typesid']);
-        $result['typeslang'] = explode(',',$result['typeslang']);
-        $result['typesname'] = explode(',',$result['typesname']);
-        for ($i = 0; $i < count($result['typesid']); $i++){
-            $result['type'][$i]['id'] = $result['typesid'][$i];
-            for ($j = 0; $j < count($result['typeslang']); $j++) {
-                $result['type'][$i][$result['typeslang'][$j]] = $result['typesname'][$j];
-            }
+        foreach ($result['typesid'] as $type) {
+            $result['type'][] = $this->getType($type);
         }
         unset($result['typesid']);
-        unset($result['typeslang']);
-        unset($result['typesname']);
 
         header('Content-type: application/json');
         echo json_encode($result, JSON_NUMERIC_CHECK);

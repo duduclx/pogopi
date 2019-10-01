@@ -9,6 +9,7 @@ class Type
 {
     private $pdo;
     private $sql;
+    private $urlTypeImg;
 
     /*
      * ROUTES
@@ -21,6 +22,8 @@ class Type
     public function __construct()
     {
         include ('Controller/config.php');
+        $this->urlTypeImg = $urlTypeImg;
+
         $this->pdo = new PDO(
             "mysql:dbname=$dbname;host=$host;charset=UTF8",
             $username,
@@ -45,6 +48,8 @@ class Type
 
     private function formatResult($result)
     {
+        $result['img'] = $this->urlTypeImg . $result['img'];
+
         $result['langs'] = explode(',',$result['langs']);
         $result['names'] = explode(',',$result['names']);
         for ($i = 0; $i < count($result['langs']); $i++){

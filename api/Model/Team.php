@@ -9,6 +9,7 @@ class Team
 {
     private $pdo;
     private $sql;
+    private $urlTeamImg;
 
     /*
      * ROUTES
@@ -20,6 +21,8 @@ class Team
     public function __construct()
     {
         include ('Controller/config.php');
+        $this->urlTeamImg = $urlTeamImg;
+
         $this->pdo = new PDO(
             "mysql:dbname=$dbname;host=$host;charset=UTF8",
             $username,
@@ -27,10 +30,12 @@ class Team
         $this->sql = '
             SELECT 
             team.id,
-            team.img,
-            team.png,
-            team.svg,
+            team.color,
+            team.emblem_flat_png,
+            team.emblem_png,
+            team.emblem_svg,
             team.player,
+            team.image,
             GROUP_CONCAT(tn.lang) AS langs,
             GROUP_CONCAT(tn.name) AS names
             FROM team
@@ -47,6 +52,11 @@ class Team
 
     private function formatResult($result)
     {
+        // format images url
+        $result['emblem_flat_png'] = $this->urlTeamImg . $result['emblem_flat_png'];
+        $result['emblem_png'] = $this->urlTeamImg . $result['emblem_png'];
+        $result['emblem_svg'] = $this->urlTeamImg . $result['emblem_svg'];
+        $result['image'] = $this->urlTeamImg . $result['image'];
         // create name array
         $result['langs'] = explode(',', $result['langs']);
         $result['names'] = explode(',', $result['names']);

@@ -9,6 +9,7 @@ class Pokeball
 {
     private $pdo;
     private $sql;
+    private $urlPokeballImg;
 
     /*
      * ROUTES
@@ -22,6 +23,8 @@ class Pokeball
     public function __construct()
     {
         include ('Controller/config.php');
+        $this->urlPokeballImg = $urlPokeballImg;
+
         $this->pdo = new PDO(
             "mysql:dbname=$dbname;host=$host;charset=UTF8",
             $username,
@@ -46,6 +49,7 @@ class Pokeball
 
     private function formatResult($result)
     {
+        $result['img'] = $this->urlPokeballImg . $result['img'];
         $result['generation'] = [
             'id' => $result['gen'],
             'name' => $result['name']

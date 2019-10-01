@@ -112,5 +112,3 @@ $types = [
 ];
 
 $result = json_encode($types);
-
-file_put_contents('types.json', $result);
