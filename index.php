@@ -32,7 +32,7 @@ require 'www/utilities/routing.php';
     <div class="header">
         <a href="/pogopi" class="brand-logo">
             <img class="logo" src="www/images/logo.png">
-            <div class="brand-logo-name">Catch'en All !
+            <div class="brand-logo-name">Catch'em All !
                 <br>
                 <span class="version">version <?= $response['version'] ?></span>
             </div>
@@ -40,16 +40,11 @@ require 'www/utilities/routing.php';
         <nav class="navbar">
             <ul>
                 <li>
-                    <a href="/pogopi">Accueil</a>
+                    <a href="/pogopi">Home</a>
                 </li>
                 <li>
                     <a href="/pogopi/index.php?page=pokemon">Pokemon</a>
                 </li>
-                <?php if (!file_exists($installed)) : ?>
-                <li>
-                    <a href="/pogopi/install/index.php">Installation</a>
-                </li>
-                <?php endif; ?>
             </ul>
         </nav>
     </div>

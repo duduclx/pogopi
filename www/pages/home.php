@@ -1,4 +1,10 @@
 <?php
-?>
+/*
+ * logic
+ */
 
-<h1>Ici c'est l'accueil !</h1>
+/*
+ * templates
+ */
+    include 'www/templates/home.html';
+?>
