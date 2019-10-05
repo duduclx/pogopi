@@ -236,22 +236,22 @@ class Deploy
             (:pokemon_id, :abilitie_id)";
             $data = $this->db->prepare($sql);
 
-            if ($pokemon['abilitie_1'] !== null ) {
+            if ($pokemon['talent_1'] !== null ) {
                 $data->execute([
                     ':pokemon_id' => $pokemon['id'],
-                    ':abilitie_id' => $pokemon['abilitie_1']
+                    ':abilitie_id' => $pokemon['talent_1']
                 ]);
             }
-            if ($pokemon['abilitie_2'] !== null ) {
+            if ($pokemon['talent_2'] !== null ) {
                 $data->execute([
                     ':pokemon_id' => $pokemon['id'],
-                    ':abilitie_id' => $pokemon['abilitie_2']
+                    ':abilitie_id' => $pokemon['talent_2']
                 ]);
             }
-            if ($pokemon['abilitie_3'] !== null ) {
+            if ($pokemon['talent_3'] !== null ) {
                 $data->execute([
                     ':pokemon_id' => $pokemon['id'],
-                    ':abilitie_id' => $pokemon['abilitie_3']
+                    ':abilitie_id' => $pokemon['talent_3']
                 ]);
             }
 

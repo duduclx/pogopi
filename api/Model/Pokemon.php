@@ -8,7 +8,7 @@ class Pokemon
     // TODO add 'full' route to swagger !
     //  correct evolve data and enable query
     //  add all pokemons see rawJs/test
-    //  update database schema (team and evolve)
+    //  update database schema (pokemon, team and evolve)
 
     private $pdo;
     private $sql;
@@ -45,14 +45,27 @@ class Pokemon
             SELECT
             pokemon.id,
             pokemon.attack,
+            pokemon.attack_spe,
+            pokemon.base_experience,
+            pokemon.base_happiness,
+            pokemon.buddy_walk,
+            pokemon.capture_rate,
             pokemon.defense,
+            pokemon.defense_spe,
+            pokemon.escape_rate,
             pokemon.evolve,
+            pokemon.go_attack,
+            pokemon.go_defense,
+            pokemon.go_hp,
+            pokemon.go_pc,
+            pokemon.go_stamina,
             pokemon.height,
             pokemon.hp,
             pokemon.image,
             pokemon.order,
             pokemon.pokedex,
             pokemon.scream,
+            pokemon.speed,
             pokemon.weight,
             pokemon.pokedex AS pokedexId,
             pkd.name AS pokedex,
@@ -82,6 +95,54 @@ class Pokemon
     }
     private function formatResult($result)
     {
+        // format stats_go
+        $result['stats_go'] = [
+            'attack' => $result['go_attack'],
+            'defense' => $result['go_defense'],
+            'hp' => $result['go_hp'],
+            'pc' => $result['go_pc'],
+            'stamina' => $result['go_stamina'],
+            'buddy_walk' => $result['buddy_walk'],
+            'capture_rate' => $result['capture_rate'],
+            'escape_rate' => $result['escape_rate']
+        ];
+        unset($result['go_attack']);
+        unset($result['go_defense']);
+        unset($result['go_hp']);
+        unset($result['go_pc']);
+        unset($result['go_stamina']);
+        unset($result['buddy_walk']);
+        unset($result['capture_rate']);
+        unset($result['escape_rate']);
+
+        // format stats_classic
+        $result['stats_classic'] = [
+            'attack' => $result['attack'],
+            'attack_spe' => $result['attack_spe'],
+            'base_experience' => $result['base_experience'],
+            'base_happiness' => $result['base_happiness'],
+            'defense' => $result['defense'],
+            'defense_spe' => $result['defense_spe'],
+            'hp' => $result['hp'],
+            'speed' => $result['speed']
+        ];
+        unset($result['attack']);
+        unset($result['attack_spe']);
+        unset($result['defense']);
+        unset($result['defense_spe']);
+        unset($result['hp']);
+        unset($result['speed']);
+        unset($result['base_experience']);
+        unset($result['base_happiness']);
+
+        // format stats_common
+        $result['stats_common'] = [
+            'height' => $result['height'],
+            'weight' => $result['weight']
+        ];
+        unset($result['height']);
+        unset($result['weight']);
+
         // format image url
         $result['image'] =  $this->urlPokemonImg . $result['image'];
         // format scream url
@@ -130,6 +191,9 @@ class Pokemon
             $result['mainmove'][] = $this->getMainmove($mainmove);
         }
         unset($result['mainmovesid']);
+
+        ksort($result);
+
         return $result;
     }
     private function getEvolve($number)

@@ -83,6 +83,9 @@ class PokemonTiny
             $result['type'][] = $this->getType($type);
         }
         unset($result['typesid']);
+
+        ksort($result);
+
         return $result;
     }
 
@@ -131,9 +134,11 @@ class PokemonTiny
             $this->error();
             exit;
         }
+
         foreach ($results as $result) {
             $pokemon[] = $this->formatResult($result);
         }
+
         header('Content-type: application/json');
         echo json_encode($pokemon, JSON_NUMERIC_CHECK);
     }
