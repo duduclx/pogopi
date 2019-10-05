@@ -6,6 +6,9 @@ use PDO;
 class Pokemon
 {
     // TODO add 'full' route to swagger !
+    //  correct evolve data and enable query
+    //  add all pokemons see rawJs/test
+    //  update database schema (team and evolve)
 
     private $pdo;
     private $sql;

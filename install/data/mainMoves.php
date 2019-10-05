@@ -748,7 +748,7 @@ $mainMoves = [
   [
       "id"=> 63,
     "type"=> 5,
-    "name_fr"=> "Earth Power",
+    "name_fr"=> "Telluriforce",
     "name_en"=> "Earth Power",
     "damage"=> 100,
     "dps"=> 27.8,
@@ -1000,7 +1000,7 @@ $mainMoves = [
   [
       "id"=> 84,
     "type"=> 2,
-    "name_fr"=> "Power Up Punch",
+    "name_fr"=> "Poing Boost",
     "name_en"=> "Power Up Punch",
     "damage"=> 50,
     "dps"=> 25,
@@ -1516,7 +1516,7 @@ $mainMoves = [
   [
       "id"=> 127,
     "type"=> 12,
-    "name_fr"=> "Leaf Tornado",
+    "name_fr"=> "Phytomixeur",
     "name_en"=> "Leaf Tornado",
     "damage"=> 45,
     "dps"=> 14.5,
@@ -1528,7 +1528,7 @@ $mainMoves = [
   [
       "id"=> 128,
     "type"=> 4,
-    "name_fr"=> "Acid Spray",
+    "name_fr"=> "Bombe Acide",
     "name_en"=> "Acid Spray",
     "damage"=> 20,
     "dps"=> 6.7,
@@ -1548,5 +1548,29 @@ $mainMoves = [
     "energy"=> 0,
     "slot"=> 0,
     "sound_fx"=> "morphing.wav"
-  ]
+  ],
+    [
+        "id"=> 130,
+        "type"=> 11,
+        "name_fr"=> "Ocroupi",
+        "name_en"=> "Muddy Water",
+        "damage"=> 50,
+        "dps"=> 22.7,
+        "move_duration"=> 2200,
+        "energy"=> 33,
+        "slot"=> 3,
+        "sound_fx"=> "muddy_water.wav"
+    ],
+    [
+        "id"=> 131,
+        "type"=> 1,
+        "name_fr"=> "Coud'Krâne",
+        "name_en"=> "Skull Bash",
+        "damage"=> 130,
+        "dps"=> 41.9,
+        "move_duration"=> 3100,
+        "energy"=> 100,
+        "slot"=> 1,
+        "sound_fx"=> "skull_bash.wav"
+    ]
 ];

@@ -5,6 +5,7 @@ use pogopiV2;
 CREATE TABLE abilitie
 (
     id             INT(3) UNSIGNED,
+    generation     INT(1) UNSIGNED,
     lang           VARCHAR(3),
     description    VARCHAR(255),
     name           VARCHAR(30)
@@ -74,27 +75,27 @@ CREATE TABLE pokemon
 (
     id              INT(4) UNSIGNED PRIMARY KEY,
     attack          INT(3) UNSIGNED,
-    -- attack_max      INT(3) UNSIGNED,
-    -- attack_spe      INT(3) UNSIGNED,
-    -- base_experience INT(3) UNSIGNED,
-    -- base_happiness  INT(3) UNSIGNED,
-    -- buddy_walk      INT(2) UNSIGNED,
-    -- capture_rate    INT(5) UNSIGNED, -- max 10 000
+    attack_spe      INT(3) UNSIGNED,
+    base_experience INT(3) UNSIGNED,
+    base_happiness  INT(3) UNSIGNED,
+    buddy_walk      INT(2) UNSIGNED,
+    capture_rate    INT(5) UNSIGNED, -- max 10 000
     defense         INT(3) UNSIGNED,
+    defense_spe     INT(3) UNSIGNED,
+    escape_rate     INT(4) UNSIGNED, -- percent
     evolve          INT(4) UNSIGNED,
-    -- defense_max     INT(3) UNSIGNED,
-    -- defense_spe     INT(3) UNSIGNED,
-    -- escape_rate     INT(4) UNSIGNED, -- percent
+    go_attack       INT(3) UNSIGNED,
+    go_defense      INT(3) UNSIGNED,
+    go_hp           INT(4) UNSIGNED,
+    go_pc           INT(4) UNSIGNED,
+    go_stamina      INT(4) UNSIGNED,
     height          DECIMAL(5,2) UNSIGNED,
     hp              INT(4) UNSIGNED,
-    -- hp_max          INT(4) UNSIGNED,
     image           VARCHAR(20),
     `order`         INT(4) UNSIGNED, -- is index
-    -- pc_max          INT(4) UNSIGNED,
     pokedex         INT(2) UNSIGNED, -- fk table pokedex, is index
     scream          VARCHAR(20),
-    -- speed           INT(4) UNSIGNED,
-    -- stamina_max     INT(4) UNSIGNED,
+    speed           INT(4) UNSIGNED,
     weight          DECIMAL(5,2) UNSIGNED
 );
 

@@ -15,20 +15,22 @@ class Deploy
         foreach ($abilities as $abilitie) {
             $sql = "
             INSERT INTO abilitie 
-            (id, lang, description, name)
+            (id, generation, lang, description, name)
             VALUES 
-            (:id, :lang, :description, :name)
+            (:id, :generation, :lang, :description, :name)
             ";
 
             $data = $this->db->prepare($sql);
             $data->execute([
                 ':id' => $abilitie['id'],
+                ':generation' => $abilitie['generation'],
                 ':lang' => 'fr',
                 ':description' => $abilitie['description_fr'],
                 ':name' => $abilitie['name_fr']
             ]);
             $data->execute([
                 ':id' => $abilitie['id'],
+                ':generation' => $abilitie['generation'],
                 ':lang' => 'en',
                 ':description' => $abilitie['description_en'],
                 ':name' => $abilitie['name_en']
@@ -185,24 +187,42 @@ class Deploy
         foreach ($pokemons as $pokemon) {
             $sql = "
             INSERT INTO pokemon 
-            (id, attack, defense, height, hp, image, `order`, pokedex, scream, weight
+            (id, attack, attack_spe, base_experience, base_happiness, buddy_walk,
+             capture_rate, defense, defense_spe, escape_rate,
+             go_attack, go_defense, go_hp, go_pc, go_stamina,
+             height, hp, image, `order`, pokedex, scream, speed, weight
             )
             VALUES 
-            (:id, :attack, :defense, :height, :hp, :image, :order, :pokedex, :scream, :weight
-            )
+            (:id, :attack, :attack_spe, :base_experience, :base_happiness, :buddy_walk,
+             :capture_rate, :defense, :defense_spe, :escape_rate,
+             :go_attack, :go_defense, :go_hp, :go_pc, :go_stamina,
+             :height, :hp, :image, :order, :pokedex, :scream, :speed, :weight)
             ";
             $data = $this->db->prepare($sql);
 
             $data->execute([
                 ':id' => $pokemon['id'],
                 ':attack' => $pokemon['attack'],
+                ':attack_spe' => $pokemon['attack_spe'],
+                ':base_experience' => $pokemon['base_experience'],
+                ':base_happiness' => $pokemon['base_happiness'],
+                ':buddy_walk' => $pokemon['buddy_walk'],
+                ':capture_rate' => $pokemon['capture_rate'],
                 ':defense' => $pokemon['defense'],
+                ':defense_spe' => $pokemon['defense_spe'],
+                ':escape_rate' => $pokemon['escape_rate'],
+                ':go_attack' => $pokemon['go_attack'],
+                ':go_defense' => $pokemon['go_defense'],
+                ':go_hp' => $pokemon['go_hp'],
+                ':go_pc' => $pokemon['go_pc'],
+                ':go_stamina' => $pokemon['go_stamina'],
                 ':height' => $pokemon['height'],
                 ':hp' => $pokemon['hp'],
                 ':image' => $pokemon['image'],
                 ':order' => $pokemon['order'],
                 ':pokedex' => $pokemon['pokedex'],
                 ':scream' => $pokemon['scream'],
+                ':speed' => $pokemon['speed'],
                 ':weight' => $pokemon['weight']
             ]);
 
