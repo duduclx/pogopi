@@ -1,1 +1,39 @@
-<h1>Welcome on the pokemon's website</h1>
+<h1>Bienvenue sur Pogopi</h1>
+<section class="content">
+    <article class="content-left">
+        <h3>Pourquoi cette API :</h3>
+        <div>
+            <p>J'ai voulu avoir une api simple, et me permettant de réaliser un mini-jeu.
+                Jouant parfois à <strong>Pokémon Go</strong>, je me suis dit que ce genre de données se pêtaient aussi bien
+                pour la réalisation d'un site (recherche, tri, CRUD) que d'un mini-jeu.
+                Cependant, je n'ai pas trouvé d'API consommable ni open-source sur ce thème.
+                <span>pokeapi.co</span> est certe consommable mais les données concernent l'ensemble des jeux pokémons
+                depuis leur création, et les données ne sont pas ordonnées de manière à simplifier la récupération
+                de données (tableau de langue dont pour un même index on obtient une langue différente,
+                nécessite plusieurs requètes pour rassembler les données utiles, etc ...).</p>
+            <p>J'ai donc décidé d'utiliser l'api de <span>pokeapi.co</span> ainsi que des sites web sur Pokemon Go,
+                pour construire une <span>API open-source</span>, simple et suffisament complète pour couvrir plusieurs cas d'utilisation.</p>
+        </div>
+    </article>
+    <article class="content-right">
+        <h3>Pourquoi ce site :</h3>
+        <div>
+            <p>Le site n'est qu'un exemple d'usage de l'api, et permet également de plus facilement en voir le contenu.</p>
+            <p>Il permet également de donner plus de lisibilité à la documentation, et de fournir des exemples de codes
+               concrêts.</p>
+            <p>La <span>version <?= $response['version'] ?></span> de l'API, c'est :
+                <ul>
+                    <li>649 Pokémons (jusqu'à la génération 5, comme disponible sur Pokémon Go)</li>
+                    <li>232 Abilités (ou talent)</li>
+                    <li>65 Attaques Rapides</li>
+                    <li>131 Attaques Chargées</li>
+                    <li>18 Types</li>
+                    <li>7 générations</li>
+                    <li>26 Pokéballs</li>
+                    <li>3 équipes disponibles dans Pokémon Go</li>
+                    <li>2 langues (Fr et En)</li>
+                </ul>
+            </p>
+        </div>
+    </article>
+</section>
