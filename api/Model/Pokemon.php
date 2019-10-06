@@ -9,6 +9,7 @@ class Pokemon
     //  correct evolve data and enable query
     //  add all pokemons see rawJs/test
     //  update database schema (pokemon, team and evolve)
+    //  pokemon/all/{id or order} to order by
 
     private $pdo;
     private $sql;

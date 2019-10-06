@@ -1,1 +1,77 @@
 <h1>Documentation</h1>
+<section class="content">
+    <article class="content-full">
+        <h3>Swagger</h3>
+        <p>Il existe déjà une documentation sur les requêtes et les réponses associées.
+           Pour cela il faut se rendre sur la <a href="api" target="_blank">page du swagger</a>.</p>
+        <p>Le swagger ne détaillant pas les valeurs, cela va être fait ici, pour celles qui peuvent préter à confusion.</p>
+    </article>
+    <article class="content-left">
+        <h4>Fastmove :</h4>
+        <p>Il s'agit des attaques rapides. Il n'y a pas de temps de recharge,
+           mais simplement une durée du mouvement.</p>
+        <ul>
+            <li><span>id:</span> l'identifiant de l'attaque dans la base de donnée.</li>
+            <li>damage: la puissance de l'attaque, servant à calculer les dégâts.</li>
+            <li>dps: les dégâts par seconde, permet de savoir si une attaque plus faible mais plus rapide est plus efficace.</li>
+            <li>energy: nombre de points de recharge de l'attaque chargée (100).</li>
+            <li>eps: energie par seconde.</li>
+            <li>duration: la durée du mouvement.</li>
+            <li>sound: l'effet sonore de l'attaque.</li>
+            <li>name: le nom de l'attaque.</li>
+            <li>type: le type de l'attaque.</li>
+        </ul>
+    </article>
+    <article class="content-right">
+        <h4>Mainmove :</h4>
+        <p>Il s'agit de l'attaque chargée. Il faut que la barre d'énergie soit suffisament remplie
+           pour pouvoir lancer l'attaque.</p>
+        <ul>
+            <li>id: l'identifiant de l'attaque dans la base de donnée.</li>
+            <li>damage: la puissance de l'attaque, servant à calculer les dégâts.</li>
+            <li>dps: les dégâts par seconde, permet de savoir si une attaque plus faible mais plus rapide est plus efficace.</li>
+            <li>energy: le coût en énergie de l'attaque.</li>
+            <li>duration: la durée du mouvement.</li>
+            <li>slot: le nombre d'attaque disponible quand la barre d'énergie est à 100.</li>
+            <li>sound: l'effet sonore de l'attaque.</li>
+            <li>name: le nom de l'attaque.</li>
+            <li>type: le type de l'attaque.</li>
+        </ul>
+    </article>
+    <article class="content-left">
+        <h4>Stats_classics :</h4>
+        <p>Ils renseignent les statistiques de bases issus des précédents jeux pokémon (autre que pokémon Go).</p>
+        <ul>
+            <li>attack: coefficient pour calculer les dégâts de l'attaque.</li>
+            <li>attack_spe: coefficient pour calculer les dégâts de l'attaque spéciale.</li>
+            <li>base_expérience: l'expérience minimum du pokémon.</li>
+            <li>base_happiness: le niveau de joie du pokémon lors de son obtention.</li>
+            <li>defense: coefficient pour calculer les dégâts reçu.</li>
+            <li>defense_spe: coefficient pour calculer les dégâts reçu lors d'une attaque spéciale.</li>
+            <li>hp: les points de vie minimum du pokémon.</li>
+            <li>speed: la vitesse minimale du pokémon</li>
+        </ul>
+    </article>
+    <article class="content-right">
+        <h4>Stats_go :</h4>
+        <p>Renseigne les statistiques propres à Pokémon Go.</p>
+        <ul>
+            <li></li>
+        </ul>
+    </article>
+    <article class="content-left">
+        <h4>Stats_common :</h4>
+        <p>Ils renseignent les statistiques communs aux différentes versions des jeux Pokémon.</p>
+        <ul>
+            <li>height: la taille exprimée en mètre.</li>
+            <li>weight: le poids en Kg.</li>
+        </ul>
+    </article>
+    <article class="content-right">
+        <h4>Evolve :</h4>
+        <p>Renseigne les statistiques propres à Pokémon Go.</p>
+        <ul>
+            <li></li>
+        </ul>
+    </article>
+</section>

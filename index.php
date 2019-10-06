@@ -31,7 +31,7 @@ require 'www/utilities/routing.php';
 <body>
 <div class="container">
     <div class="header">
-        <a href="/pogopi" class="brand-logo">
+        <a href="index.php" class="brand-logo">
             <img class="logo" src="www/images/logo.png">
             <div class="brand-logo-name">
                 Catch'em All !
@@ -41,18 +41,18 @@ require 'www/utilities/routing.php';
             <ul>
                 <li class="mobile-nav"><i class="fas fa-bars"></i></li>
                 <li class="desktop-nav">
-                    <a href="/pogopi/index.php?page=documentation">Documentation</a>
+                    <a href="index.php?page=documentation">Documentation</a>
                 </li>
                 <li class="desktop-nav">
-                    <a href="/pogopi/index.php?page=pokemon">Pokemon</a>
+                    <a href="index.php?page=pokemon">Pokemon</a>
                 </li>
             </ul>
         </nav>
     </div>
     <div class="mobile-menu hide">
         <ul>
-            <li><a href="/pogopi/index.php?page=documentation">Documentation</a></li>
-            <li><a href="/pogopi/index.php?page=pokemon">Pokemon</a></li>
+            <li><a href="index.php?page=documentation">Documentation</a></li>
+            <li><a href="index.php?page=pokemon">Pokemon</a></li>
         </ul>
     </div>
     <div class="mobile-arrow">
