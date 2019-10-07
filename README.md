@@ -17,10 +17,6 @@ but honestly, i haven't copy it all ^^
 
 there's more than needed for the original project !
 
-## Where to find images, sound and more ?
-
-[resources](https://drive.google.com/open?id=1yUNuqhACrMinaOeew9dz4uegWW-sYgwg)
-
 ## License
 
 No Licence ... free use !
@@ -30,8 +26,6 @@ No Licence ... free use !
 Many informations aren't needed in my project.
 
 But feel free to fork and contribute !
-
-Missing some abilities, and more ...
 
 ## How to install
 
@@ -47,15 +41,36 @@ Edit the config file in:
  
  `api/Controller/config.php`
  
-And `init.sql` to change the database name. 
+Then, install with script or with sql backup.
+
+### With script
  
-Go to `http://your-server.com/install`
+Edit `init.sql` to change the database name. 
+ 
+Go to `http://your-server.com/`
 and click !
 
-After installation, keep only the api folder and delete other folder and files
+### With sql backup
 
-Or import `pogopi.sql` into your database !
+Import `pogopi.sql` into your database !
 
+### After install process
+
+After installation, delete the install folder.
+ 
+## examples of uses
+
+This project embed :
+ - a tiny website at root of the project.
+ - a tiny js game (coming soon).
+
+## TODO
+ 
+ - member/user and JWT api
+ 
+## database diagram
+
+![database](www/images/Database_Diagram.png)
 
 ## How to use
 
@@ -71,6 +86,11 @@ abilitie:
  - api/abilitie/id/{id}
  - api/abilitie/max
  - api/abilitie/name/{intl}/{name}
+
+evolve:
+ - api/evolve/all
+ - api/evolve/max
+ - api/evolve/id/{id}
 
 fastmove:
  - api/fastmove/all
@@ -100,13 +120,23 @@ pokeball:
  - api/pokeball/name/{name}
  
 pokemon:
- - api/pokemon/all
  - api/pokemon/max
- - api/pokemon/generation/{id}
- - api/pokemon/id/{id}
- - api/pokemon/name/{intl}/{name}
- - api/pokemon/order/{id}
- - api/pokemon/type/{id-name} 
+ 
+pokemon-full:
+ - api/pokemon/full/all/{id-order}
+ - api/pokemon/full/generation/{id}
+ - api/pokemon/full/id/{id}
+ - api/pokemon/full/name/{intl}/{name}
+ - api/pokemon/full/order/{id}
+ - api/pokemon/full/type/{id-name} 
+
+pokemon-tiny:
+ - api/pokemon/tiny/all/{id-order}
+ - api/pokemon/tiny/generation/{id}
+ - api/pokemon/tiny/id/{id}
+ - api/pokemon/tiny/name/{intl}/{name}
+ - api/pokemon/tiny/order/{id}
+ - api/pokemon/tiny/type/{id-name} 
 
 team:
  - api/team/all
@@ -121,24 +151,3 @@ type:
  
 version:
  - api/version
- 
-## database diagram
-
-![database](install/docs/Database_Diagram.png)
- 
-## examples of uses
-
-Using api with js class:
-
-[Pogojs mini game](https://github.com/duduclx/pogojs)
-
-Using database with web php:
-
-[Pogoweb](https://github.com/duduclx/pogoweb)
-
-## TODO
- 
- - add evolve chain
- - add pokemon's from gen 5 to 7
- - fix abilitie (missing some) or drop it
- - member/user and JWT api
