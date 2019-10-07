@@ -16,7 +16,7 @@ class PokemonTiny
 
     /*
      * ROUTES
-     * api/pokemon/tiny/all
+     * api/pokemon/tiny/all/{id or order}
      * api/pokemon/tiny/generation/{id}
      * api/pokemon/tiny/id/{id}
      * api/pokemon/tiny/name/{intl}/{name}
@@ -121,11 +121,22 @@ class PokemonTiny
     }
 
     /*
-     * api/pokemon/tiny/all
+     * api/pokemon/tiny/all/{id or order}
      */
-    public function pokemonAll()
+    public function pokemonAll($string)
     {
-        $sql = $this->sql . ' GROUP BY pokemon.id';
+        switch ($string) {
+            case 'id':
+                $sql = $this->sql . ' GROUP BY pokemon.id ORDER BY pokemon.id ASC';
+                break;
+            case 'order':
+                $sql = $this->sql . ' GROUP BY pokemon.id ORDER BY pokemon.order ASC';
+                break;
+            default:
+                $sql = $this->sql . ' GROUP BY pokemon.id';
+                break;
+        }
+
         $query = $this->pdo->prepare($sql);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC);

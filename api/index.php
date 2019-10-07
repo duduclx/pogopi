@@ -200,9 +200,9 @@ $route->add('pokemon/max', function () {
 /*
  * pokemon-full
  */
-$route->add('pokemon/full/all', function () {
+$route->add('pokemon/full/all/.+', function ($string) {
     $request = new Pokemon();
-    $request->pokemonAll();
+    $request->pokemonAll($string);
 });
 
 $route->add('pokemon/full/id/.+', function ($number) {
@@ -233,9 +233,9 @@ $route->add('pokemon/full/type/.+', function ($number) {
 /*
  * pokemon-tiny
  */
-$route->add('pokemon/tiny/all', function () {
+$route->add('pokemon/tiny/all/.+', function ($string) {
     $request = new PokemonTiny();
-    $request->pokemonAll();
+    $request->pokemonAll($string);
 });
 
 $route->add('pokemon/tiny/id/.+', function ($number) {

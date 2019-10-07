@@ -6,9 +6,7 @@ use PDO;
 class Pokemon
 {
     // TODO add 'full' route to swagger !
-    //  correct evolve data and enable query
-    //  add all pokemons see rawJs/test
-    //  update database schema (pokemon, team and evolve)
+    //  update database schema (pokemon, team, abilities and evolve)
     //  pokemon/all/{id or order} to order by
 
     private $pdo;
@@ -21,7 +19,7 @@ class Pokemon
     /*
      * ROUTES
      * api/pokemon/max
-     * api/pokemon/full/all
+     * api/pokemon/full/all/{id or order}
      * api/pokemon/full/generation/{id}
      * api/pokemon/full/id/{id}
      * api/pokemon/full/name/{intl}/{name}
@@ -189,8 +187,6 @@ class Pokemon
         } else {
             $result['evolve'] = [];
         }
-
-
         // create type array
         $result['typesid'] = explode(',', $result['typesid']);
         foreach ($result['typesid'] as $type) {
@@ -214,6 +210,7 @@ class Pokemon
 
         return $result;
     }
+
     private function getAbilitie($number) {
         $sql = 'SELECT
         abilitie.id,
@@ -249,6 +246,7 @@ class Pokemon
         return $result;
 
     }
+
     private function getEvolve($number)
     {
         $sql = 'SELECT
@@ -429,11 +427,22 @@ class Pokemon
         return $result;
     }
     /*
-     * api/pokemon/all
+     * api/pokemon/all/{id or order}
      */
-    public function pokemonAll()
+    public function pokemonAll($string)
     {
-        $sql = $this->sql . ' GROUP BY pokemon.id';
+        switch ($string) {
+            case 'id':
+                $sql = $this->sql . ' GROUP BY pokemon.id ORDER BY pokemon.id ASC';
+                break;
+            case 'order':
+                $sql = $this->sql . ' GROUP BY pokemon.id ORDER BY pokemon.order ASC';
+                break;
+            default:
+                $sql = $this->sql . ' GROUP BY pokemon.id';
+                break;
+        }
+
         $query = $this->pdo->prepare($sql);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
