@@ -3,6 +3,7 @@
 use api\Controller\RouteController;
 
 use api\Model\Abilitie;
+use api\Model\Evolve;
 use api\Model\Fastmove;
 use api\Model\Generation;
 use api\Model\Mainmove;
@@ -19,6 +20,7 @@ use api\Model\Version;
 require 'Controller/RouteController.php';
 
 require 'Model/Abilitie.php';
+require 'Model/Evolve.php';
 require 'Model/Fastmove.php';
 require 'Model/Generation.php';
 require 'Model/Mainmove.php';
@@ -60,6 +62,24 @@ $route->add('abilitie/name/.+/.+', function($intl, $name) {
 $route->add('abilitie/id/.+', function($number) {
     $request = new Abilitie();
     $request->abilitieId($number);
+});
+
+/*
+ * Evolve
+ */
+$route->add('evolve/all', function () {
+    $request = new Evolve();
+    $request->evolveAll();
+});
+
+$route->add('evolve/max', function () {
+    $request = new Evolve();
+    $request->evolveMax();
+});
+
+$route->add('evolve/id/.+', function ($number) {
+    $request = new Evolve();
+    $request->evolveId($number);
 });
 
 /*

@@ -51,6 +51,7 @@ require 'www/utilities/routing.php';
     </div>
     <div class="mobile-menu hide">
         <ul>
+            <li><a href="index.php">Accueil</a></li>
             <li><a href="index.php?page=documentation">Documentation</a></li>
             <li><a href="index.php?page=pokemon">Pokemon</a></li>
         </ul>

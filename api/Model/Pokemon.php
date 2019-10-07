@@ -70,6 +70,7 @@ class Pokemon
             pokemon.weight,
             pokemon.pokedex AS pokedexId,
             pkd.name AS pokedex,
+            GROUP_CONCAT(DISTINCT abilitie.id) AS abilities,
             GROUP_CONCAT(DISTINCT pkmn.lang) AS nameslang,
             GROUP_CONCAT(pkmn.name) AS namesname,
             GROUP_CONCAT(DISTINCT type.id) AS typesid,
@@ -78,6 +79,8 @@ class Pokemon
             GROUP_CONCAT(DISTINCT fastmove.id) AS fastmovesid,
             GROUP_CONCAT(DISTINCT mainmove.id) AS mainmovesid
             FROM pokemon
+            LEFT JOIN pokemon_abilitie AS pkab ON pokemon.id = pkab.pokemon_id
+            LEFT JOIN abilitie ON abilitie.id = pkab.abilitie_id
             LEFT JOIN pokedex AS pkd ON pokemon.pokedex = pkd.id
             LEFT JOIN pokemon_name AS pkmn on pokemon.id = pkmn.pokemon_id
             LEFT JOIN pokemon_type AS pktp ON pokemon.id = pktp.pokemon_id
@@ -170,9 +173,23 @@ class Pokemon
         }
         unset($result['spelangs']);
         unset($result['spenames']);
+        // create abilitie array
+        if ($result['abilities'] !== null) {
+            $result['abilities'] = explode(',', $result['abilities']);
+            foreach ($result['abilities'] as $ability) {
+                $result['abilitie'][] = $this->getAbilitie($ability);
+            }
+        } elseif ($result['abilities'] === null) {
+            $result['abilitie'] = [];
+        }
+        unset($result['abilities']);
         // create evolve array
-        //  TODO fix missing pokemon.evolve
-        //$result['evolve'] = $this->getEvolve($result['evolve']);
+        if ($result['evolve'] !== null) {
+            $result['evolve'] = $this->getEvolve($result['evolve']);
+        } else {
+            $result['evolve'] = [];
+        }
+
 
         // create type array
         $result['typesid'] = explode(',', $result['typesid']);
@@ -197,6 +214,41 @@ class Pokemon
 
         return $result;
     }
+    private function getAbilitie($number) {
+        $sql = 'SELECT
+        abilitie.id,
+        abilitie.generation,
+        GROUP_CONCAT(abilitie.lang) AS langs,
+        GROUP_CONCAT(abilitie.description) AS descriptions,
+        GROUP_CONCAT(abilitie.name) AS names
+        FROM abilitie
+        WHERE abilitie.id = :number
+        GROUP BY abilitie.id, abilitie.generation';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+            ':number' => $number
+        ]);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        $result['langs'] = explode(',', $result['langs']);
+        $result['descriptions'] = explode(',', $result['descriptions']);
+        $result['names'] = explode(',', $result['names']);
+
+        for ($i = 0; $i < count($result['langs']); $i++) {
+            $result[$result['langs'][$i]] = [
+                'description' => $result['descriptions'][$i],
+                'name' => $result['names'][$i]
+            ];
+        }
+        unset($result['langs']);
+        unset($result['descriptions']);
+        unset($result['names']);
+
+        return $result;
+
+    }
     private function getEvolve($number)
     {
         $sql = 'SELECT
@@ -210,7 +262,7 @@ class Pokemon
 
         $query = $this->pdo->prepare($sql);
         $query->execute([
-           ':number' => $number
+            ':number' => $number
         ]);
 
         $result = $query->fetch(PDO::FETCH_ASSOC);
@@ -220,15 +272,10 @@ class Pokemon
         $result['levels'] = explode(',', $result['levels']);
         $result['to_ids'] = explode(',', $result['to_ids']);
 
-
         for ($i = 0; $i < count($result['ids']); $i++) {
-            if ($result['to_ids'][$i] != 0) {
-                $result[$result['levels'][$i]][] = [
-                    'id' => $result['ids'][$i],
-                    'to' => [
-                        'id' => $result['to_ids'][$i],
-                    ],
-                ];
+            if ($result['to_ids'][$i] != "0") {
+                $result['level'][$result['levels'][$i]]['from'] = $result['ids'][$i];
+                $result['level'][$result['levels'][$i]]['to'][] = $result['to_ids'][$i];
             }
         }
 

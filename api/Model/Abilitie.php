@@ -28,6 +28,7 @@ class Abilitie
         $this->sql = '
             SELECT 
             id,
+            generation,
             GROUP_CONCAT(lang) AS langs,
             GROUP_CONCAT(description) AS descriptions,
             GROUP_CONCAT(name) AS names
@@ -48,6 +49,7 @@ class Abilitie
             $result['names'] = explode(',',$result['names']);
             for ($i=0; $i < count($result['langs']); $i++) {
                 $abilitie['id'] = $result['id'];
+                $abilitie['generation'] = $result['generation'];
                 $abilitie['description'][$result['langs'][$i]] = $result['descriptions'][$i];
                 $abilitie['name'][$result['langs'][$i]] = $result['names'][$i];
             }
@@ -61,7 +63,7 @@ class Abilitie
      */
     public function abilitieAll()
     {
-        $sql = $this->sql . ' GROUP BY id';
+        $sql = $this->sql . ' GROUP BY id, generation';
         $query = $this->pdo->prepare($sql);
 
         $query->execute();
@@ -84,17 +86,19 @@ class Abilitie
      */
     public function abilitieMax()
     {
-        $sql = 'SELECT count(id) AS maxAbilitie FROM abilitie';
+        $sql = 'SELECT GROUP_CONCAT(DISTINCT id) AS maxAbilitie FROM abilitie GROUP BY id';
 
         $query = $this->pdo->prepare($sql);
         $query->execute();
 
-        $result = $query->fetch(PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
         if (empty($result)) {
             $this->error();
             exit;
         }
+
+        $result = ['maxAbilitie' => count($result)];
 
         header('Content-Type: application/json');
         echo json_encode($result, JSON_NUMERIC_CHECK);
@@ -105,7 +109,7 @@ class Abilitie
      */
     public function abilitieId($number)
     {
-        $sql = $this->sql . ' WHERE id = :number';
+        $sql = $this->sql . ' WHERE id = :number GROUP BY id, generation';
 
         $query = $this->pdo->prepare($sql);
         $query->execute([
@@ -132,6 +136,7 @@ class Abilitie
     {
         $sql = 'SELECT 
                 id,
+                generation,
                 description,
                 name
                 FROM abilitie

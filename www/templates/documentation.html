@@ -11,15 +11,15 @@
         <p>Il s'agit des attaques rapides. Il n'y a pas de temps de recharge,
            mais simplement une durée du mouvement.</p>
         <ul>
-            <li><span>id:</span> l'identifiant de l'attaque dans la base de donnée.</li>
-            <li>damage: la puissance de l'attaque, servant à calculer les dégâts.</li>
-            <li>dps: les dégâts par seconde, permet de savoir si une attaque plus faible mais plus rapide est plus efficace.</li>
-            <li>energy: nombre de points de recharge de l'attaque chargée (100).</li>
-            <li>eps: energie par seconde.</li>
-            <li>duration: la durée du mouvement.</li>
-            <li>sound: l'effet sonore de l'attaque.</li>
-            <li>name: le nom de l'attaque.</li>
-            <li>type: le type de l'attaque.</li>
+            <li><span>id</span> : l'identifiant de l'attaque dans la base de donnée.</li>
+            <li><span>damage</span> : la puissance de l'attaque, servant à calculer les dégâts.</li>
+            <li><span>dps</span> : les dégâts par seconde, permet de savoir si une attaque plus faible mais plus rapide est plus efficace.</li>
+            <li><span>energy</span> : nombre de points de recharge de l'attaque chargée (100).</li>
+            <li><span>eps</span> : energie par seconde.</li>
+            <li><span>duration</span> : la durée du mouvement.</li>
+            <li><span>sound</span> : l'effet sonore de l'attaque.</li>
+            <li><span>name</span> : le nom de l'attaque.</li>
+            <li><span>type</span> : le type de l'attaque.</li>
         </ul>
     </article>
     <article class="content-right">
@@ -27,51 +27,99 @@
         <p>Il s'agit de l'attaque chargée. Il faut que la barre d'énergie soit suffisament remplie
            pour pouvoir lancer l'attaque.</p>
         <ul>
-            <li>id: l'identifiant de l'attaque dans la base de donnée.</li>
-            <li>damage: la puissance de l'attaque, servant à calculer les dégâts.</li>
-            <li>dps: les dégâts par seconde, permet de savoir si une attaque plus faible mais plus rapide est plus efficace.</li>
-            <li>energy: le coût en énergie de l'attaque.</li>
-            <li>duration: la durée du mouvement.</li>
-            <li>slot: le nombre d'attaque disponible quand la barre d'énergie est à 100.</li>
-            <li>sound: l'effet sonore de l'attaque.</li>
-            <li>name: le nom de l'attaque.</li>
-            <li>type: le type de l'attaque.</li>
+            <li><span>id</span> : l'identifiant de l'attaque dans la base de donnée.</li>
+            <li><span>damage</span> : la puissance de l'attaque, servant à calculer les dégâts.</li>
+            <li><span>dps</span> : les dégâts par seconde, permet de savoir si une attaque plus faible mais plus rapide est plus efficace.</li>
+            <li><span>energy</span> : le coût en énergie de l'attaque.</li>
+            <li><span>duration</span> : la durée du mouvement.</li>
+            <li><span>slot</span> : le nombre d'attaque disponible quand la barre d'énergie est à 100.</li>
+            <li><span>sound</span> : l'effet sonore de l'attaque.</li>
+            <li><span>name</span> : le nom de l'attaque.</li>
+            <li><span>type</span> : le type de l'attaque.</li>
         </ul>
     </article>
     <article class="content-left">
         <h4>Stats_classics :</h4>
         <p>Ils renseignent les statistiques de bases issus des précédents jeux pokémon (autre que pokémon Go).</p>
         <ul>
-            <li>attack: coefficient pour calculer les dégâts de l'attaque.</li>
-            <li>attack_spe: coefficient pour calculer les dégâts de l'attaque spéciale.</li>
-            <li>base_expérience: l'expérience minimum du pokémon.</li>
-            <li>base_happiness: le niveau de joie du pokémon lors de son obtention.</li>
-            <li>defense: coefficient pour calculer les dégâts reçu.</li>
-            <li>defense_spe: coefficient pour calculer les dégâts reçu lors d'une attaque spéciale.</li>
-            <li>hp: les points de vie minimum du pokémon.</li>
-            <li>speed: la vitesse minimale du pokémon</li>
+            <li><span>attack</span> : coefficient pour calculer les dégâts de l'attaque.</li>
+            <li><span>attack_spe</span> : coefficient pour calculer les dégâts de l'attaque spéciale.</li>
+            <li><span>base_expérience</span> : l'expérience minimum du pokémon.</li>
+            <li><span>base_happiness</span> : le niveau de joie du pokémon lors de son obtention.</li>
+            <li><span>defense</span> : coefficient pour calculer les dégâts reçu.</li>
+            <li><span>defense_spe</span> : coefficient pour calculer les dégâts reçu lors d'une attaque spéciale.</li>
+            <li><span>hp</span> : les points de vie minimum du pokémon.</li>
+            <li><span>speed</span> : la vitesse minimale du pokémon</li>
         </ul>
     </article>
     <article class="content-right">
         <h4>Stats_go :</h4>
         <p>Renseigne les statistiques propres à Pokémon Go.</p>
         <ul>
-            <li></li>
+            <li><span>attack</span> : coefficient pour calculer la puissance des attaques du pokémon.</li>
+            <li><span>defense</span> : coefficient pour calculer les dégâts reçu.</li>
+            <li><span>hp</span> : les points de vie minimum du pokémon.</li>
+            <li><span>pc</span> : les points de combat maximum du pokémon.</li>
+            <li><span>stamina</span> : les points d'endurance du pokémon.</li>
+            <li><span>buddy_walk</span> : la distance à parcourir avec le pokémon pour obtenir un bonbon.</li>
+            <li><span>capture_rate</span> : le taux de capture du pokémon.</li>
+            <li><span>escapre_rate</span> : le taux de fuite du pokémon.</li>
         </ul>
     </article>
     <article class="content-left">
         <h4>Stats_common :</h4>
         <p>Ils renseignent les statistiques communs aux différentes versions des jeux Pokémon.</p>
         <ul>
-            <li>height: la taille exprimée en mètre.</li>
-            <li>weight: le poids en Kg.</li>
+            <li><span>height</span> : la taille exprimée en mètre.</li>
+            <li><span>weight</span> : le poids en Kg.</li>
+        </ul>
+    </article>
+    <article class="content-right">
+        <h4>Pokemon :</h4>
+        <p>Renseigne les statistiques propres à Pokémon Go.</p>
+        <ul>
+            <li><span>id</span> : l'identifiant du pokémon sur le pokédex national.</li>
+            <li><span>image</span> : lien vers l'image du pokémon.</li>
+            <li><span>order</span> : l'ordre d'affichage respectant les évolutions des pokémons.</li>
+            <li><span>scream</span> : lien vers le cri du pokémon.</li>
+            <li><span>specie</span> : indique l'espèce du pokémon.</li>
+        </ul>
+    </article>
+    <article class="content-left">
+        <h4>Type :</h4>
+        <p>Renseigne les types du pokémon.</p>
+        <ul>
+            <li><span>id</span> : l'identifiant du type.</li>
+            <li><span>img</span> : lien vers l'image du type.</li>
+            <li><span>name</span> : le nom du type.</li>
         </ul>
     </article>
     <article class="content-right">
         <h4>Evolve :</h4>
-        <p>Renseigne les statistiques propres à Pokémon Go.</p>
+        <p>Renseigne les évolutions possibles du pokémon.</p>
         <ul>
-            <li></li>
+            <li><span>id</span> : l'identifiant de la chaine d'évolution.</li>
+            <li><span>level</span> : le stade de l'évolution.</li>
+            <li><span>from</span> : l'identifiant du pokémon avant l'évolution.</li>
+            <li><span>to</span> : l'identifiant du pokémon après l'évolution.</li>
+        </ul>
+    </article>
+    <article class="content-left">
+        <h4>Abilitie :</h4>
+        <p>Renseigne les talents du pokémon. Attention, certains pokémon n'ont pas de talents !</p>
+        <ul>
+            <li><span>id</span> : l'identifiant du talent.</li>
+            <li><span>generation</span> : la génération du talent.</li>
+            <li><span>description</span> : la description du talent.</li>
+            <li><span>name</span> : le nom du talent.</li>
+        </ul>
+    </article>
+    <article class="content-right">
+        <h4>Pokedex :</h4>
+        <p>Renseigne la génération (pokedex) du pokémon.</p>
+        <ul>
+            <li><span>id</span> : l'identifiant du pokédex.</li>
+            <li><span>name</span> : le nom du pokédex.</li>
         </ul>
     </article>
 </section>

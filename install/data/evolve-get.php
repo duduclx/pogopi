@@ -546,12 +546,6 @@ $evolves = [
         "to_id" => 0,
     ],
     [
-        "id" => 35,
-        "pokemon_id" => 83,
-        "level" => 0,
-        "to_id" => 0,
-    ],
-    [
         "id" => 36,
         "pokemon_id" => 81,
         "level" => 0,
@@ -4112,22 +4106,14 @@ $evolves = [
 ];
 
 foreach ($evolves as $evolve) {
-    if ($evolve['id'] > 24) {
+    if ($evolve['id'] > 34) {
         $evolve['id'] = $evolve['id'] - 1;
     }
 
     $evo[] = $evolve;
 }
 
-foreach ($evolves as $evolve) {
-    if ($evolve['id'] > 62) {
-        $evolve['id'] = $evolve['id'] + 2;
-    }
-
-    $evol[] = $evolve;
-}
-
 //var_export($evo);
-$result = json_encode($evol);
+$result = json_encode($evo);
 
 file_put_contents('evo.json', $result);
