@@ -203,6 +203,26 @@ PAGES
 .content a:hover {
     color: #49cc90;
 }
+.btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: inherit;
+    border: none;
+    background-color: #1f69c0;
+}
+.btn:hover {
+    background-color: #61affe;
+}
+.center {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+}
+.right {
+    text-align: right;
+}
 /*
 FOOTER
  */
@@ -216,6 +236,5 @@ FOOTER
     color: inherit;
 }
 .footer .fab {
-    font-size: 1rem;
     margin-top: 5px;
 }

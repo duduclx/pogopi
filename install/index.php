@@ -1,113 +1,68 @@
 <?php
-
 // mysql credentials
 require '../api/Controller/config.php';
 // deploy script
 require 'Deploy.php';
-
-$message = '';
-
-if (isset($_GET['step']) && $_GET['step'] === '1') {
-    try {
-        //create from init.sql
-        $db = new PDO("mysql:host=$host", $username, $password, $options);
-        $sql = file_get_contents("init.sql");
-        $db->exec($sql);
-
-        $message = "First Step is OK !";
-
-    } catch (PDOException $error) {
-        $fail = $error->getMessage();
-    }
-}
-
-if (isset($_GET['step']) && $_GET['step'] === '2') {
-    try {
-        // load datas
-        require 'datas.php';
-        // populate from deploy class
-        $deploy = new Deploy($host,$dbname,$username,$password);
-        // type needed first
-        $deploy->insertTypes($types);
-        $deploy->insertAbilities($abilities);
-        $deploy->insertTeam($teams);
-        $deploy->insertPokeballs($pokeballs);
-        $deploy->insertPokedex($pokedexes);
-        $deploy->insertFastMoves($fastMoves);
-        $deploy->insertMainMoves($mainMoves);
-        $deploy->insertPokemons($pokemons);
-        $deploy->insertEvolves($evolves);
-        $deploy->version(2.1);
-
-        $message = "Tables populated successfully. <br>
-                    Please check api/Controller/config.php and delete mysql root user/password ! <br>
-                    Then delete the complete install folder <br>
-                    You can have a look to <br>
-                    -> <a href='http://github.com/duduclx/pogojs'>js minigame</a>
-                    <br>
-                    -> <a href='http://github.com/duduclx/pogoweb'>symfony website</a>";
-
-    } catch (PDOException $error) {
-        $fail = $error->getMessage();
-    }
-}
-
+// routing
+require 'pages/routing.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>pogopi</title>
-    <link rel="stylesheet" href="css/pogopi.css">
-    <link rel="stylesheet" href="css/ui-form.css">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../www/css/main.css">
+    <link rel="icon" href="../www/images/favicon.ico" />
+    <script src="https://kit.fontawesome.com/d3fd741f35.js" crossorigin="anonymous"></script>
+    <title><?= $title ?></title>
 </head>
 <body>
 <div class="container">
-    <header class="navbar">
-        <img src="data/img/logo.png" alt="pogopi" title="pogopi" width="840" height="560">
-    </header>
-<!-- first step -->
-    <?php if(empty($_GET)) : ?>
-    <div class="box welcome">
-        <h1>Pogopi installer</h1>
-        <p>Wellcome trainer !
-        here is the time to setup the database.
-        You need:</p>
+    <div class="header">
+        <a href="index.php" class="brand-logo">
+            <img class="logo" src="../www/images/logo.png" alt="pogopi" title="pogopi">
+            <div class="brand-logo-name">
+                Catch'em All !
+            </div>
+        </a>
+        <nav class="navbar">
+            <ul>
+                <li class="mobile-nav"><i class="fas fa-bars"></i></li>
+                <li class="desktop-nav">
+                    <a href="index.php?page=documentation">Documentation</a>
+                </li>
+                <li class="desktop-nav">
+                    <a href="index.php">Installation</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="mobile-menu hide">
         <ul>
-            <li>PHP 7.1 or more</li>
-            <li>Mysql 5.7 or more</li>
-            <li><strong>Edit first the config file</strong> with your credentials</li>
-            <li>config is located at /api/Controller/config.php</li>
-            <li>5 minutes or less</li>
-
-            <li>and maybe have a look at <a href="<?php $_SERVER['PHP_SELF'] ?>../api/">the documentation</a></li>
+            <li><a href="index.php">Installation</a></li>
+            <li><a href="index.php?page=documentation">Documentation</a></li>
         </ul>
-        <form class="generic-form" method="get">
-            <input type="hidden" name="step" value="1">
-            <button type="submit" class="next" id="createDB">Create it !</button>
-        </form>
     </div>
-    <?php endif ?>
-<!-- second step -->
-    <?php if(isset($_GET['step']) && $_GET['step'] === '1') : ?>
-    <div class="box">
-        <?php if (isset($fail)) : ?>
-        <p><?= $fail ?></p>
-        <p>Please, check the install/config.php file !</p>
-        <?php else : ?>
-        <p><?= $message ?></p>
-        <p>Let's populate it !!</p>
-            <form class="generic-form" method="get">
-                <input type="hidden" name="step" value="2">
-                <button type="submit" class="next" id="createDB">Populate it !</button>
-            </form>
-        <?php endif ?>
+    <div class="mobile-arrow">
+        <i class="fas fa-arrow-circle-up"></i>
     </div>
-    <?php endif ?>
-<!-- third step -->
-    <?php if (isset($_GET['step']) && $_GET['step'] === '2') : ?>
-    <div class="box">
-        <p><?= $message ?></p>
-    </div>
-    <?php endif ?>
+</div>
+<main class="container">
+    <?php
+    include 'pages/' . $page;
+    ?>
+</main>
+<div class="container">
+    <footer class="footer">
+    <span><a href="https://github.com/duduclx/pogopi" target="_blank">
+            Made by Julien Dutilleul <br>
+            <i class="fab fa-github-square fa-2x"></i>
+        </a></span>
+    </footer>
+</div>
+<script src="../www/js/main.js"></script>
+</body>
+</html>

@@ -1,23 +1,14 @@
 <?php
-/*
- * check api's installation
- */
+// check api's installation
 $installed = '/install/index.php';
-
-/*
- * check api's version
- */
+// check api's version
 require 'www/utilities/check-api-version.php';
-
-/*
- * fake routing
- */
+// fake routing
 require 'www/utilities/routing.php';
-
 ?>
 
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -32,7 +23,7 @@ require 'www/utilities/routing.php';
 <div class="container">
     <div class="header">
         <a href="index.php" class="brand-logo">
-            <img class="logo" src="www/images/logo.png">
+            <img class="logo" src="www/images/logo.png" alt="pogopi" title="pogopi">
             <div class="brand-logo-name">
                 Catch'em All !
             </div>
@@ -40,6 +31,11 @@ require 'www/utilities/routing.php';
         <nav class="navbar">
             <ul>
                 <li class="mobile-nav"><i class="fas fa-bars"></i></li>
+                <?php if (!isset($response['version'])) : ?>
+                <li>
+                    <a href="install/index.php">Installation</a>
+                </li>
+                <?php endif ?>
                 <li class="desktop-nav">
                     <a href="index.php?page=documentation">Documentation</a>
                 </li>
@@ -52,6 +48,11 @@ require 'www/utilities/routing.php';
     <div class="mobile-menu hide">
         <ul>
             <li><a href="index.php">Accueil</a></li>
+            <?php if (!isset($response['version'])) : ?>
+                <li>
+                    <a href="install/index.php">Installation</a>
+                </li>
+            <?php endif ?>
             <li><a href="index.php?page=documentation">Documentation</a></li>
             <li><a href="index.php?page=pokemon">Pokemon</a></li>
         </ul>
@@ -59,14 +60,21 @@ require 'www/utilities/routing.php';
     <div class="mobile-arrow">
         <i class="fas fa-arrow-circle-up"></i>
     </div>
+
+    <?php if (isset($response['version'])) : ?>
     <div class="version">
         <span>version <?= $response['version'] ?></span>
     </div>
-    <?php if (!file_exists($installed)) : ?>
+        <?php if (!file_exists($installed)) : ?>
+            <div class="install-warning">
+                <p>Attention ! <br>N'oubliez pas d'effacer le dossier d'installation !</p>
+            </div>
+        <?php endif; ?>
+    <?php elseif (!isset($response['version'])) : ?>
     <div class="install-warning">
-        <p>Attention ! <br>N'oubliez pas d'effacer le dossier d'installation !</p>
+        <p>Pour <span>installer l'API</span> <a href="install/index.php">CLIQUEZ ICI</a>.</p>
     </div>
-    <?php endif; ?>
+    <?php endif ?>
 </div>
 
 <main class="container">
@@ -76,9 +84,9 @@ require 'www/utilities/routing.php';
 </main>
 <div class="container">
     <footer class="footer">
-    <span><a href="https://github.com/duduclx/pogopi">
+    <span><a href="https://github.com/duduclx/pogopi" target="_blank">
             Made by Julien Dutilleul <br>
-            <i class="fab fa-github-square"></i>
+            <i class="fab fa-github-square fa-2x"></i>
         </a></span>
     </footer>
 </div>

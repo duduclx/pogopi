@@ -52,7 +52,7 @@ and click !
 
 ### With sql backup
 
-Import `pogopi.sql` into your database !
+Import `install/backup/pogopi.sql` into your database !
 
 ### After install process
 

@@ -10,7 +10,6 @@ class Evolve
     // TODO pokemon id 265 / evolve id 110
     //  should return two evolve chain
     //  see https://pokemondb.net/pokedex/wurmple#dex-evolution
-    //  fix if pokemon have no evolution ?
     private $pdo;
     private $sql;
 
@@ -30,10 +29,10 @@ class Evolve
             $password);
         $this->sql = '
             SELECT 
-            id,
-            pokemon_id,
-            level,
-            to_id
+            evolve.id,
+            evolve.pokemon_id,
+            evolve.level,
+            evolve.to_id
             FROM evolve';
     }
 
@@ -81,12 +80,14 @@ class Evolve
         $query = $this->pdo->prepare($sql);
         $query->execute();
 
-        $result = $query->fetch(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        $result = $this->formatResult($result);
+        foreach ($results as $result) {
+            $evolves[] = $this->formatResult($result);
+        }
 
         header('Content-type: application/json');
-        echo json_encode($result, JSON_NUMERIC_CHECK);
+        echo json_encode($evolves, JSON_NUMERIC_CHECK);
     }
 
     /*

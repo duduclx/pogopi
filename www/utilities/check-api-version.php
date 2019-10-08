@@ -19,7 +19,3 @@ function callAPI($method, $url, $data){
 
 $get_data = callAPI('GET', 'http://localhost/pogopi/api/version', false);
 $response = json_decode($get_data, true);
-
-if (!isset($response['version'])) {
-    header('Location: /pogopi/install/index.php');
-}

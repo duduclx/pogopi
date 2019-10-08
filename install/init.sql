@@ -1,6 +1,6 @@
-CREATE DATABASE pogopiV2 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE pogopi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-use pogopiV2;
+use pogopi;
 
 CREATE TABLE abilitie
 (
