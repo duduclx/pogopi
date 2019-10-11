@@ -1,6 +1,10 @@
 <?php
 // check if installed, then ask to delete db before reinstall
-require '../www/utilities/check-api-version.php';
+require '../www/utilities/callApi.php';
+// check api's version
+$get_data = callAPI('GET', 'http://localhost/pogopi/api/version', false);
+$version = json_decode($get_data, true);
+
 // populated DB from data files
 try {
     // load datas
@@ -29,14 +33,14 @@ try {
 <h1>Installation de Pogopi terminée</h1>
 <div class="content">
     <div class="content-full">
-        <?php if (isset($response['version'])): ?>
+        <?php if (isset($version['version'])): ?>
         <div class="install-warning">
             <p>La base de donnée existe déjà !</p>
             <p>Ce script ne met pas à jour la base de donnée, mais la créée.</p>
             <p>Donc, il faut effacer la base de donnée avant de pouvoir continuer l'installation.</p>
         </div>
         <?php endif ?>
-        <?php if (!isset($response['version'])): ?>
+        <?php if (!isset($version['version'])): ?>
             <?php if (isset($fail)) : ?>
             <div class="install-warning">
                 <p><?= $fail ?></p>

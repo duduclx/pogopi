@@ -16,6 +16,3 @@ function callAPI($method, $url, $data){
     curl_close($curl);
     return $result;
 }
-
-$get_data = callAPI('GET', 'http://localhost/pogopi/api/version', false);
-$response = json_decode($get_data, true);

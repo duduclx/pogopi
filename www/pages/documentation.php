@@ -7,4 +7,4 @@
  * templates
  */
 include 'www/templates/documentation.html';
-?>
+

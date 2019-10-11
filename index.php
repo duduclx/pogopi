@@ -1,8 +1,11 @@
 <?php
 // check api's installation
 $installed = '/install/index.php';
+// import callApi function
+require 'www/utilities/callApi.php';
 // check api's version
-require 'www/utilities/check-api-version.php';
+$get_data = callAPI('GET', 'http://localhost/pogopi/api/version', false);
+$version = json_decode($get_data, true);
 // fake routing
 require 'www/utilities/routing.php';
 ?>
@@ -31,7 +34,7 @@ require 'www/utilities/routing.php';
         <nav class="navbar">
             <ul>
                 <li class="mobile-nav"><i class="fas fa-bars"></i></li>
-                <?php if (!isset($response['version'])) : ?>
+                <?php if (!isset($version['version'])) : ?>
                 <li>
                     <a href="install/index.php">Installation</a>
                 </li>
@@ -48,7 +51,7 @@ require 'www/utilities/routing.php';
     <div class="mobile-menu hide">
         <ul>
             <li><a href="index.php">Accueil</a></li>
-            <?php if (!isset($response['version'])) : ?>
+            <?php if (!isset($version['version'])) : ?>
                 <li>
                     <a href="install/index.php">Installation</a>
                 </li>
@@ -61,16 +64,16 @@ require 'www/utilities/routing.php';
         <i class="fas fa-arrow-circle-up"></i>
     </div>
 
-    <?php if (isset($response['version'])) : ?>
+    <?php if (isset($version['version'])) : ?>
     <div class="version">
-        <span>version <?= $response['version'] ?></span>
+        <span>version <?= $version['version'] ?></span>
     </div>
         <?php if (!file_exists($installed)) : ?>
             <div class="install-warning">
                 <p>Attention ! <br>N'oubliez pas d'effacer le dossier d'installation !</p>
             </div>
         <?php endif; ?>
-    <?php elseif (!isset($response['version'])) : ?>
+    <?php elseif (!isset($version['version'])) : ?>
     <div class="install-warning">
         <p>Pour <span>installer l'API</span> <a href="install/index.php">CLIQUEZ ICI</a>.</p>
     </div>

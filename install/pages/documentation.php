@@ -8,14 +8,29 @@
     </div>
     <div class="content-full">
         <h3>Le fichier de configuration</h3>
-        <p></p>
-        // if needed, change values
-        $host       = "localhost"; // enter your database hostname
-        $dbname     = "pogopi"; // you can change the database name, then change it in init.sql too !
-        $username   = "root"; // put correct database username
-        $password   = "cochon"; // put correct database password
-
-        $url = 'http://localhost/pogopi/api/'; // put correct url
+        <p>Avant d'installer l'API, il faut renseigner vos identifiants. Voilà comment le faire.</p>
+        <p>
+            <code>$host       = "localhost"; // enter your database hostname</code>
+            <br>Comme décrit ici, il faudra renseigné le nom de la <span>base de donnée</span>.
+        </p>
+        <p>
+            <code>$dbname     = "pogopi"; // you can change the database name, then change it in init.sql too !</code>
+            <br>Ici, c'est le nom de la base de donnée, vous pouvez laisser le nom par défaut. Si vous le modifier,
+            il faudra également modifier le fichier init.sql, comme décrit dans le paragraphe 'installation depuis l'interface web'.
+        </p>
+        <p>
+            <code>$username   = "root"; // put correct database username</code>
+            <br>Indiquer le nom d'utilisateur de votre base de donnée.
+        </p>
+        <p>
+            <code>$password   = "cochon"; // put correct database password</code>
+            <br>Indiquer le mot de passe de l'utilisateur de votre base de donnée.
+        </p>
+        <p>
+            <code>$url = 'http://localhost/pogopi/api/'; // put correct url</code>
+            <br>Indiquer le nom de domaine final, <span>exemple: https://monsite.fr/api/</span>
+            <br>Attention, l'url doit bien finir par 'api/'. cela sert à générer le lien vers les ressources (images, sound, etc).
+        </p>
     </div>
     <div class="content-left">
         <h3>Installation depuis l'interface web</h3>

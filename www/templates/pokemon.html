@@ -1,1 +1,13 @@
 <h1>Pokémon list</h1>
+<section class="content">
+    <id class="types">
+        <?php foreach($types as $type): ?>
+        <img src="<?= $type['img'] ?>" alt="<?= $type['name']['fr'] ?>" title="<?= $type['name']['fr'] ?>">
+        <div class="center"><?= $type['name']['fr'] ?></div>
+        <?php endforeach ?>
+    </id>
+    <id class="pokemons">
+        <span><?php var_dump($pokemons) ?></span>
+    </id>
+</section>
+
