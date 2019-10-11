@@ -1,25 +1,171 @@
-<h1>Pokémon list</h1>
+<h1>Liste des Pokémons</h1>
 <section class="content">
-    <id class="types">
+    <div class="types">
+        <h3 class="types-title">Types</h3>
+        <hr>
         <?php foreach($types as $type): ?>
-        <img src="<?= $type['img'] ?>" alt="<?= $type['name']['fr'] ?>" title="<?= $type['name']['fr'] ?>">
-        <div class="center"><?= $type['name']['fr'] ?></div>
+        <a href="index.php?page=pokemon&type=<?= $type['id'] ?>">
+            <img class="types-img" src="<?= $type['img'] ?>" alt="<?= $type['name']['fr'] ?>" title="<?= $type['name']['fr'] ?>">
+        </a>
         <?php endforeach ?>
-    </id>
-    <id class="pokemons">
+        <h3>Pokedex</h3>
+        <hr>
+        <?php foreach($pokedexes as $pokedex): ?>
+            <?php if($pokedex['id'] <= 5) : ?>
+            <a href="index.php?page=pokemon&pokedex=<?= $pokedex['id'] ?>">
+                <p><?= $pokedex['name'] ?></p>
+            </a>
+            <?php endif ?>
+        <?php endforeach ?>
+    </div>
+    <?php if(!isset($_GET['pokemon'])) : ?>
+    <div class="pokemons">
         <?php foreach($pokemons as $pokemon): ?>
-        <div class="pokemon">
-            <img style="width: 45px; height: auto" src="<?= $pokemon['image'] ?>" alt="<?= $pokemon['name']['fr'] ?>" title="<?= $pokemon['name']['fr'] ?>">
-            <div class=""><?= $pokemon['name']['fr'] ?></div>
-            <div class="id"><?= $pokemon['id'] ?></div>
-            <div class="pokedex"><?= $pokemon['pokedex']['name'] ?></div>
-            <div class="type">
-                <?php foreach($pokemon['type'] as $pokemonType) : ?>
-                <span><?= $pokemonType['name']['fr'] ?></span>
-                <?php endforeach ?>
+            <div class="pokemon">
+                <a href="index.php?page=pokemon&pokemon=<?= $pokemon['id'] ?>">
+                <img class="avatar" src="<?= $pokemon['image'] ?>" alt="<?= $pokemon['name']['fr'] ?>" title="<?= $pokemon['name']['fr'] ?>">
+                </a>
+                <div class=""><?= $pokemon['name']['fr'] ?></div>
+                <div class="id">#<?= $pokemon['id'] ?></div>
+                <div class="pokedex"><?= $pokemon['pokedex']['name'] ?></div>
+                <div class="type">
+                    <?php foreach($pokemon['type'] as $pokemonType) : ?>
+                    <img class="types-img" src="<?= $pokemonType['img'] ?>" alt="<?= $pokemonType['name']['fr'] ?>" title="<?= $pokemonType['name']['fr'] ?>">
+                    <?php endforeach ?>
+                </div>
+            </div>
+        <?php endforeach ?>
+    </div>
+    <?php endif ?>
+    <?php if(isset($_GET['pokemon'])) : ?>
+    <div class="pokemon-detail">
+        <div class="title"><?= $pokemon['name']['fr'] ?></div>
+        <div class="specie title"><?= $pokemon['specie']['fr'] ?></div>
+        <div class="credential">
+            <div class="id">Id : <?= $pokemon['id'] ?></div>
+            <div class="order">Order : <?= $pokemon['order'] ?></div>
+            <div class="pokedex">Pokedex : <?= $pokemon['pokedex']['name'] ?></div>
+        </div>
+        <div class="type">
+            <?php foreach($pokemon['type'] as $pokemonType) : ?>
+            <img class="types-img" src="<?= $pokemonType['img'] ?>" alt="<?= $pokemonType['name']['fr'] ?>" title="<?= $pokemonType['name']['fr'] ?>">
+            <?php endforeach ?>
+        </div>
+        <img class="avatar" src="<?= $pokemon['image'] ?>" alt="<?= $pokemon['name']['fr'] ?>" title="<?= $pokemon['name']['fr'] ?>">
+        <div class="title">Statistiques :</div>
+        <div class="content-stats">
+            <div class="stats">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>Attaque :</td>
+                        <td><?= $pokemon['stats_go']['attack'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Defense :</td>
+                        <td><?= $pokemon['stats_go']['defense'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Vie :</td>
+                        <td><?= $pokemon['stats_go']['hp'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>endurance :</td>
+                        <td><?= $pokemon['stats_go']['stamina'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>combat :</td>
+                        <td><?= $pokemon['stats_go']['pc'] ?></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="stats">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>taille :</td>
+                        <td><?= $pokemon['stats_common']['height'] ?> m</td>
+                    </tr>
+                    <tr>
+                        <td>poids :</td>
+                        <td><?= $pokemon['stats_common']['weight'] ?> Kg</td>
+                    </tr>
+                    <tr>
+                        <td>bonbon :</td>
+                        <td><?= $pokemon['stats_go']['buddy_walk'] ?> Km</td>
+                    </tr>
+                    <tr>
+                        <td>fuite :</td>
+                        <td><?= $pokemon['stats_go']['escape_rate'] ?> %</td>
+                    </tr>
+                    <tr>
+                        <td>capture :</td>
+                        <td><?= $pokemon['stats_go']['capture_rate'] ?> %</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <?php endforeach ?>
-    </id>
+        <div class="title">Attaques Rapides :</div>
+        <div class="attacks">
+            <table>
+                <thead>
+                <tr>
+                    <th>type</th>
+                    <th>nom</th>
+                    <th>dégât</th>
+                    <th>dégât/s</th>
+                    <th>energy</th>
+                    <th>energy/s</th>
+                    <th>durée</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($pokemon['fastmove'] as $fastmove) : ?>
+                <tr>
+                    <td><img src="<?= $fastmove['type']['img'] ?>" alt="<?= $fastmove['type']['name']['fr'] ?>"></td>
+                    <td><?= $fastmove['name']['fr'] ?></td>
+                    <td><?= $fastmove['damage'] ?></td>
+                    <td><?= $fastmove['dps'] ?></td>
+                    <td><?= $fastmove['energy'] ?></td>
+                    <td><?= $fastmove['eps'] ?></td>
+                    <td><?= $fastmove['duration'] ?></td>
+                </tr>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="title">Attaques Chargées :</div>
+        <div class="attacks">
+            <table>
+                <thead>
+                <tr>
+                    <th>type</th>
+                    <th>nom</th>
+                    <th>dégât</th>
+                    <th>dégât/s</th>
+                    <th>energy</th>
+                    <th>durée</th>
+                    <th>emplacement</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($pokemon['mainmove'] as $mainmove) : ?>
+                <tr>
+                    <td><img src="<?= $mainmove['type']['img'] ?>" alt="<?= $mainmove['type']['name']['fr'] ?>"></td>
+                    <td><?= $mainmove['name']['fr'] ?></td>
+                    <td><?= $mainmove['damage'] ?></td>
+                    <td><?= $mainmove['dps'] ?></td>
+                    <td><?= $mainmove['energy'] ?></td>
+                    <td><?= $mainmove['duration'] ?></td>
+                    <td><?= $mainmove['slot'] ?></td>
+                </tr>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <?php endif ?>
 </section>
 

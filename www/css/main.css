@@ -226,8 +226,24 @@ PAGES
 /*
 PAGE POKEMON
  */
+
 .types {
     width: 20%;
+    text-align: center;
+    border: 2px white solid;
+    border-radius: 10px;
+}
+.types-title {
+    margin: 0;
+}
+.types hr {
+    width: 80%;
+}
+.types-img {
+    width: 30%;
+}
+.types .types-img:hover {
+    transform: scale(1.4);
 }
 .pokemons {
     display: flex;
@@ -235,12 +251,24 @@ PAGE POKEMON
     justify-content: flex-start;
     width: 80%;
 }
+.pokemons .avatar {
+    width: 45px;
+    height: auto;
+}
+.pokemons .types-img {
+    width: 45px;
+    height: auto;
+}
+.pokemons a:hover img{
+    transform: scale(1.4);
+}
 .pokemon {
     position: relative;
     display: block;
-    margin: 4px;
+    margin: 0 4px 4px;
     padding: 10px;
     border: 2px white solid;
+    border-radius: 10px;
     text-align: center;
     flex: 1 0 20%;
 }
@@ -258,13 +286,79 @@ PAGE POKEMON
     padding: 4px;
     font-size: 0.6em;
 }
+.pokemon-detail {
+    position: relative;
+    display: block;
+    margin: 0 4px;
+    padding: 10px;
+    border: 2px white solid;
+    border-radius: 10px;
+    flex: 1 0 auto;
+}
+.pokemon-detail .title {
+    text-align: center;
+    font-size: 1.2em;
+}
+.pokemon-detail .credential {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 4px;
+}
+.pokemon-detail .type {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+}
+.pokemon-detail .avatar {
+    display: block;
+    margin: 0 auto;
+}
+.pokemon-detail .types-img {
+    width: 80px;
+    height: auto;
+}
+.content-stats {
+    display: flex;
+    justify-content: space-between;
+}
+.stats {
+    width: 50%;
+    margin: 4px;
+    text-align: left;
+}
+.stats table {
+    width: 100%;
+    border: 2px white solid;
+    border-radius: 10px;
+}
+.stats td {
+    padding: 4px;
+}
+.attacks {
+    text-align: center;
+}
+.attacks table {
+    width: 100%;
+    /*border-collapse: collapse;*/
+    border: 2px white solid;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.attacks img {
+    width: 30px;
+    height: auto;
+    vertical-align: middle;
+}
 /*
 FOOTER
  */
 .footer {
     text-align: center;
     font-size: 0.6rem;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 .footer a {
     text-decoration: none;
