@@ -4156,8 +4156,8 @@ $pokemons = [
         "talent_1" => null,
         "talent_2" => null,
         "talent_3" => null,
-        "scream" => "pv99.wav",
-        "image" => "99.png"
+        "scream" => "pv099.wav",
+        "image" => "099.png"
     ],
     [
         "id" => 100,

@@ -224,6 +224,41 @@ PAGES
     text-align: right;
 }
 /*
+PAGE POKEMON
+ */
+.types {
+    width: 20%;
+}
+.pokemons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 80%;
+}
+.pokemon {
+    position: relative;
+    display: block;
+    margin: 4px;
+    padding: 10px;
+    border: 2px white solid;
+    text-align: center;
+    flex: 1 0 20%;
+}
+.pokemon .id {
+    padding-right: 6px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.pokemon .pokedex {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-30deg);
+    padding: 4px;
+    font-size: 0.6em;
+}
+/*
 FOOTER
  */
 .footer {
