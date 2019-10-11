@@ -1,19 +1,24 @@
 <h1>Liste des Pokémons</h1>
-<section class="content">
-    <div class="types">
+<section class="content-pokemon">
+    <div class="search">
+        <h3>Recherche</h3>
+        <a href="index.php?page=pokemon">Liste complète</a>
+        <hr>
         <h3 class="types-title">Types</h3>
         <hr>
+        <div class="types-list">
         <?php foreach($types as $type): ?>
-        <a href="index.php?page=pokemon&type=<?= $type['id'] ?>">
-            <img class="types-img" src="<?= $type['img'] ?>" alt="<?= $type['name']['fr'] ?>" title="<?= $type['name']['fr'] ?>">
-        </a>
+            <a class="types-img" href="index.php?page=pokemon&type=<?= $type['id'] ?>">
+                <img src="<?= $type['img'] ?>" alt="<?= $type['name']['fr'] ?>" title="<?= $type['name']['fr'] ?>">
+            </a>
         <?php endforeach ?>
+        </div>
         <h3>Pokedex</h3>
         <hr>
         <?php foreach($pokedexes as $pokedex): ?>
             <?php if($pokedex['id'] <= 5) : ?>
             <a href="index.php?page=pokemon&pokedex=<?= $pokedex['id'] ?>">
-                <p><?= $pokedex['name'] ?></p>
+                <div class="generation"><?= $pokedex['name'] ?></div>
             </a>
             <?php endif ?>
         <?php endforeach ?>
@@ -116,21 +121,21 @@
                     <th>nom</th>
                     <th>dégât</th>
                     <th>dégât/s</th>
-                    <th>energy</th>
-                    <th>energy/s</th>
+                    <th>energie</th>
+                    <th>energie/s</th>
                     <th>durée</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach($pokemon['fastmove'] as $fastmove) : ?>
                 <tr>
-                    <td><img src="<?= $fastmove['type']['img'] ?>" alt="<?= $fastmove['type']['name']['fr'] ?>"></td>
-                    <td><?= $fastmove['name']['fr'] ?></td>
-                    <td><?= $fastmove['damage'] ?></td>
-                    <td><?= $fastmove['dps'] ?></td>
-                    <td><?= $fastmove['energy'] ?></td>
-                    <td><?= $fastmove['eps'] ?></td>
-                    <td><?= $fastmove['duration'] ?></td>
+                    <td data-title="type"><img src="<?= $fastmove['type']['img'] ?>" alt="<?= $fastmove['type']['name']['fr'] ?>"></td>
+                    <td data-title="nom"><?= $fastmove['name']['fr'] ?></td>
+                    <td data-title="dégâts"><?= $fastmove['damage'] ?></td>
+                    <td data-title="dégâts/s"><?= $fastmove['dps'] ?></td>
+                    <td data-title="energie"><?= $fastmove['energy'] ?></td>
+                    <td data-title="energie/s"><?= $fastmove['eps'] ?></td>
+                    <td data-title="durée"><?= $fastmove['duration'] ?></td>
                 </tr>
                 <?php endforeach ?>
                 </tbody>
@@ -145,7 +150,7 @@
                     <th>nom</th>
                     <th>dégât</th>
                     <th>dégât/s</th>
-                    <th>energy</th>
+                    <th>energie</th>
                     <th>durée</th>
                     <th>emplacement</th>
                 </tr>
@@ -153,13 +158,13 @@
                 <tbody>
                 <?php foreach($pokemon['mainmove'] as $mainmove) : ?>
                 <tr>
-                    <td><img src="<?= $mainmove['type']['img'] ?>" alt="<?= $mainmove['type']['name']['fr'] ?>"></td>
-                    <td><?= $mainmove['name']['fr'] ?></td>
-                    <td><?= $mainmove['damage'] ?></td>
-                    <td><?= $mainmove['dps'] ?></td>
-                    <td><?= $mainmove['energy'] ?></td>
-                    <td><?= $mainmove['duration'] ?></td>
-                    <td><?= $mainmove['slot'] ?></td>
+                    <td data-title="type"><img src="<?= $mainmove['type']['img'] ?>" alt="<?= $mainmove['type']['name']['fr'] ?>"></td>
+                    <td data-title="nom"><?= $mainmove['name']['fr'] ?></td>
+                    <td data-title="dégâts"><?= $mainmove['damage'] ?></td>
+                    <td data-title="dégâts/s"><?= $mainmove['dps'] ?></td>
+                    <td data-title="energie"><?= $mainmove['energy'] ?></td>
+                    <td data-title="durée"><?= $mainmove['duration'] ?></td>
+                    <td data-title="emplacement"><?= $mainmove['slot'] ?></td>
                 </tr>
                 <?php endforeach ?>
                 </tbody>
