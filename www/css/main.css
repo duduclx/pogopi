@@ -218,9 +218,29 @@ PAGES
     font-family: inherit;
     border: none;
     background-color: #1f69c0;
+    white-space: nowrap;
 }
 .btn:hover {
     background-color: #61affe;
+}
+.btn-more {
+    padding: 2px 12px;
+    font-size: 0.8rem;
+    background-color: #11a8bf;
+    text-decoration: none;
+    color: inherit;
+    font-weight: normal;
+}
+.btn-battle {
+    padding: 2px 12px;
+    font-size: 0.8rem;
+    background-color: #82c72e;
+    text-decoration: none;
+    color: inherit;
+    font-weight: normal;
+}
+.btn-battle:hover {
+    background-color: #94e334;
 }
 .center {
     display: block;
@@ -229,6 +249,14 @@ PAGES
 }
 .right {
     text-align: right;
+}
+@media (max-width: 796px) {
+    .btn-battle,
+    .btn-more {
+        width: 50%;
+        padding: 8px;
+        margin: 0 1em;
+    }
 }
 /*
 PAGE POKEMON
@@ -239,15 +267,29 @@ PAGE POKEMON
     border: 2px white solid;
     border-radius: 10px;
 }
+.search h3:first-child {
+    margin-top: 8px;
+}
 .search a {
     color: #19a974;
     text-decoration: none;
 }
+.search a:hover {
+    color: #49cc90;
+}
 .search hr {
     width: 80%;
 }
-.search .types-img:hover {
+.search .types-img img:hover {
     transform: scale(1.4);
+}
+.search .generation-list {
+    margin-bottom: 8px;
+}
+.more {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
 }
 .types-title {
     margin: 0;

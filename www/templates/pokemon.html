@@ -15,13 +15,15 @@
         </div>
         <h3>Pokedex</h3>
         <hr>
-        <?php foreach($pokedexes as $pokedex): ?>
+        <div class="generation-list">
+            <?php foreach($pokedexes as $pokedex): ?>
             <?php if($pokedex['id'] <= 5) : ?>
             <a href="index.php?page=pokemon&pokedex=<?= $pokedex['id'] ?>">
                 <div class="generation"><?= $pokedex['name'] ?></div>
             </a>
             <?php endif ?>
-        <?php endforeach ?>
+            <?php endforeach ?>
+        </div>
     </div>
     <?php if(!isset($_GET['pokemon'])) : ?>
     <div class="pokemons">
@@ -37,6 +39,10 @@
                     <?php foreach($pokemon['type'] as $pokemonType) : ?>
                     <img class="types-img" src="<?= $pokemonType['img'] ?>" alt="<?= $pokemonType['name']['fr'] ?>" title="<?= $pokemonType['name']['fr'] ?>">
                     <?php endforeach ?>
+                </div>
+                <div class="more">
+                    <a class="btn btn-more" href="index.php?page=pokemon&pokemon=<?= $pokemon['id'] ?>">Voir plus</a>
+                    <button class="btn btn-battle" type="button">Choisir</button>
                 </div>
             </div>
         <?php endforeach ?>
