@@ -18,6 +18,9 @@ require 'www/utilities/routing.php';
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="www/css/main.css">
+    <?php if (isset($_GET['page']) && $_GET['page'] === 'battle'): ?>
+    <link rel="stylesheet" href="www/css/battle.css">
+    <?php endif ?>
     <link rel="icon" href="www/images/favicon.ico" />
     <script src="https://kit.fontawesome.com/d3fd741f35.js" crossorigin="anonymous"></script>
     <title><?= $title ?></title>

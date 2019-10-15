@@ -3,11 +3,21 @@
 <?php if(!isset($_GET['pokemon'])) : ?>
 <div class="">
     <div class="install-warning mb-8">
-        <p>Il faut Sélectionner un pokémon avant de se battre !
+        <p>Il faut sélectionner un pokémon avant de se battre !
         <br>Vas en attraper-un !!</p>
     </div>
     <div class="more">
         <a class="btn btn-more" href="index.php?page=pokemon">Choisir un Pokémon</a>
     </div>
 </div>
+<?php endif ?>
+
+<div>
+
+</div>
+
+
+<?php if(isset($_GET['pokemon'])) : ?>
+<script src="www/js/battle/utilities.js"></script>
+<script src="www/js/battle/battle.js"></script>
 <?php endif ?>
