@@ -42,7 +42,7 @@
                 </div>
                 <div class="more">
                     <a class="btn btn-more" href="index.php?page=pokemon&pokemon=<?= $pokemon['id'] ?>">Voir plus</a>
-                    <button class="btn btn-battle" type="button">Choisir</button>
+                    <a class="btn btn-battle" href="index.php?page=battle&pokemon=<?= $pokemon['id'] ?>">Choisir</a>
                 </div>
             </div>
         <?php endforeach ?>
@@ -148,7 +148,7 @@
             </table>
         </div>
         <div class="title">Attaques Chargées :</div>
-        <div class="attacks">
+        <div class="attacks mb-8">
             <table>
                 <thead>
                 <tr>
@@ -175,6 +175,10 @@
                 <?php endforeach ?>
                 </tbody>
             </table>
+        </div>
+        <div class="more">
+            <a class="btn btn-more" href="index.php?page=pokemon">Retour</a>
+            <a class="btn btn-battle" href="index.php?page=battle&pokemon=<?= $pokemon['id'] ?>">Choisir</a>
         </div>
     </div>
     <?php endif ?>

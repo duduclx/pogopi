@@ -13,5 +13,8 @@ if (isset($_GET['page'])) {
     } elseif ($_GET['page'] === 'documentation') {
         $title = 'documentation';
         $page = 'documentation.php';
+    } elseif ($_GET['page'] === 'battle') {
+        $title = 'battle';
+        $page = 'battle.php';
     }
 }

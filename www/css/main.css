@@ -25,6 +25,9 @@ h3, h4, h5, h6 {
 .hide {
     visibility: hidden;
 }
+.mb-8 {
+    margin-bottom: 8px;
+}
 /*
 HEADER
  */
@@ -290,6 +293,7 @@ PAGE POKEMON
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-around;
+    text-align: center;
 }
 .types-title {
     margin: 0;

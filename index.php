@@ -45,6 +45,9 @@ require 'www/utilities/routing.php';
                 <li class="desktop-nav">
                     <a href="index.php?page=pokemon">Pokemon</a>
                 </li>
+                <li class="desktop-nav">
+                    <a href="index.php?page=battle">Battle</a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -58,6 +61,7 @@ require 'www/utilities/routing.php';
             <?php endif ?>
             <li><a href="index.php?page=documentation">Documentation</a></li>
             <li><a href="index.php?page=pokemon">Pokemon</a></li>
+            <li><a href="index.php?page=battle">Battle</a></li>
         </ul>
     </div>
     <div class="mobile-arrow">

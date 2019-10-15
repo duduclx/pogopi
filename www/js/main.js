@@ -1,6 +1,8 @@
 'use strict';
 
-
+/*
+mobile menu only
+ */
 
 let mobileNav = document.querySelector('.mobile-nav');
 let mobileNavIcon = document.querySelector('.mobile-nav .fas');
