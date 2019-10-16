@@ -1,2 +1,71 @@
 @charset "UTF-8";
 
+/*
+SCORE
+ */
+.score {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+.action {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 20px;
+    background-color: #82c72e;
+}
+
+/*
+VERSUS
+ */
+.presentation {
+    position: relative;
+}
+.versus {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.versus img {
+    width: 200px;
+    height: auto;
+}
+.player-pokemon {
+    background-color: #0d5aa7;
+    text-align: left;
+}
+.player-pokemon img {
+    width: 200px;
+    height: auto;
+}
+.computer-pokemon {
+    background-color: #ff4136;
+    text-align: right;
+}
+.computer-pokemon img {
+    width: 200px;
+    height: auto;
+}
+.from-left {
+    animation: from-left 1s ease-out forwards;
+}
+@keyframes from-left {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+.from-right {
+    animation: from-right 1s ease-out forwards;
+}
+@keyframes from-right {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}

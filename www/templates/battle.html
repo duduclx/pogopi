@@ -1,3 +1,4 @@
+<input type="hidden" class="url" data-url="<?= $url ?>">
 <h1>Pokémon Battle</h1>
 
 <?php if(!isset($_GET['pokemon'])) : ?>
@@ -12,12 +13,28 @@
 </div>
 <?php endif ?>
 
-<div>
-
+<?php if(isset($_GET['pokemon'])) : ?>
+<div class="score mb-8">
+    <div class="player-score">Joueur : 100</div>
+    <button class="action">GO !</button>
+    <div class="computer-score">Ordinateur : 2</div>
+</div>
+<div class="presentation">
+    <div class="player-pokemon" data-id="<?= $_GET['pokemon'] ?>">
+        <img src="" alt="">
+    </div>
+    <div class="computer-pokemon">
+        <img src="" alt="">
+    </div>
+    <div class="versus">
+        <img src="www/images/versus.png">
+    </div>
 </div>
 
+<?php endif ?>
 
 <?php if(isset($_GET['pokemon'])) : ?>
 <script src="www/js/battle/utilities.js"></script>
 <script src="www/js/battle/battle.js"></script>
+<script src="www/js/battle/main-battle.js"></script>
 <?php endif ?>
