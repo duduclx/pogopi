@@ -54,7 +54,7 @@ require 'www/utilities/routing.php';
             </ul>
         </nav>
     </div>
-    <div class="mobile-menu hide">
+    <div class="mobile-menu invisible">
         <ul>
             <li><a href="index.php">Accueil</a></li>
             <?php if (!isset($version['version'])) : ?>

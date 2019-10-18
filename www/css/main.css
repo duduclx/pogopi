@@ -22,7 +22,7 @@ body {
 h3, h4, h5, h6 {
     margin-top: 0;
 }
-.hide {
+.invisible {
     visibility: hidden;
 }
 .mb-8 {
@@ -72,6 +72,7 @@ HEADER
     position: absolute;
     top: 100px;
     left: 0;
+    z-index: 1;
 }
 .mobile-menu ul {
     list-style: none;

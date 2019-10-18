@@ -20,14 +20,68 @@
     <div class="computer-score">Ordinateur : 2</div>
 </div>
 <div class="presentation">
-    <div class="player-pokemon" data-id="<?= $_GET['pokemon'] ?>">
-        <img src="" alt="">
+    <div class="presentation-player" data-id="<?= $_GET['pokemon'] ?>">
+        <div class="presentation-player-img">
+            <img src="" alt="">
+        </div>
+        <div class="presentation-player-details">
+            <div class="presentation-player-type"></div>
+            <div class="presentation-player-name"></div>
+            <div class="presentation-player-pc"></div>
+        </div>
     </div>
-    <div class="computer-pokemon">
-        <img src="" alt="">
+    <div class="versus-separator"></div>
+    <div class="presentation-computer">
+        <div class="presentation-computer-details">
+            <div class="presentation-computer-type"></div>
+            <div class="presentation-computer-name"></div>
+            <div class="presentation-computer-pc"></div>
+        </div>
+        <div class="presentation-computer-img">
+            <img src="" alt="">
+        </div>
     </div>
     <div class="versus">
         <img src="www/images/versus.png">
+    </div>
+</div>
+<div class="arena">
+    <div class="arena-life">
+        <div class="player-life">
+            <div class="player-details">
+                <div class="player-type"></div>
+                <div class="player-name"></div>
+            </div>
+            <div class="player-bar">
+                <progress class="player-hp" max="" value=""></progress>
+            </div>
+        </div>
+        <div class="computer-life">
+            <div class="computer-details">
+                <div class="computer-name"></div>
+                <div class="computer-type"></div>
+            </div>
+            <div class="computer-bar">
+                <progress class="computer-hp" max="" value=""></progress>
+            </div>
+        </div>
+    </div>
+    <div class="arena-battle">
+        <div class="player-pokemon">
+            <img src="" alt="">
+        </div>
+        <div class="player-attack">
+            <img src="" alt="">
+        </div>
+        <div class="computer-pokemon">
+            <img src="" alt="">
+        </div>
+    </div>
+    <div class="counter hide">
+        <img class="fw-counter-3" src="www/images/battle-counter-3.png">
+        <img class="fw-counter-2" src="www/images/battle-counter-2.png">
+        <img class="fw-counter-1" src="www/images/battle-counter-1.png">
+        <img class="fw-counter-0" src="www/images/battle-counter-go.png">
     </div>
 </div>
 

@@ -13,7 +13,7 @@ mobileNav.addEventListener('click', () => {
     mobileNavIcon.classList.toggle('fa-bars');
     mobileNavIcon.classList.toggle('fa-times');
     mobileNavIcon.classList.toggle('mobile-menu-in');
-    mobileMenu.classList.toggle('hide');
+    mobileMenu.classList.toggle('invisible');
     mobileMenu.classList.toggle('mobile-menu-in');
 });
 
