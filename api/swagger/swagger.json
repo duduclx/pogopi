@@ -39,6 +39,10 @@
       "description": "pokeballs"
     },
     {
+      "name": "pokemon",
+      "description": "total pokemons available"
+    },
+    {
       "name": "pokemon-full",
       "description": "pokemons full informations"
     },

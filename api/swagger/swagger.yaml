@@ -20,6 +20,8 @@ tags:
     description: pokemons charged attacks
   - name: pokeball
     description: pokeballs
+  - name: pokemon
+    description: total pokemons available
   - name: pokemon-full
     description: pokemons full informations
   - name: pokemon-tiny

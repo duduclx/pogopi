@@ -3,8 +3,9 @@
 Yet Another Pokemon Go Api.
 
 Why ??
-well, none is open sourced and/or allow cross-origin, and i need one for
-the pokemon go javascript mini game.
+well, none is open sourced and/or allow cross-origin, 
+and this a good starter for test app
+with SQL, CRUD, Observable and API.
 
 So, I do my own ...
 
@@ -13,14 +14,20 @@ Most of informations comes from:
 - https://pokeapi.co/
 - https://db.pokemongohub.net/
 
-but honestly, i haven't copy it all ^^
+But honestly, i haven't copy it all ^^
 
-there's more than needed for the original project !
+I used js script the most to retrieve data.
+
+There's more than needed for a tiny project or app !
 
 ## How it looks
 
 You can have a look to it at
 [pogo](http://pogo.kenko-shiatsu-grenoble.fr)
+
+This project embed :
+ - a tiny website at root of the project.
+ - a tiny js game.
 
 ## License
 
@@ -62,16 +69,6 @@ Import `install/backup/pogopi.sql` into your database !
 ### After install process
 
 After installation, delete the install folder.
- 
-## examples of uses
-
-This project embed :
- - a tiny website at root of the project.
- - a tiny js game (coming soon).
-
-## TODO
- 
- - member/user and JWT api
  
 ## database diagram
 
@@ -160,11 +157,22 @@ version:
 ## TODO
 
 missing attacks sound file:
-
  - exemple with fire_fang.wav who not exist but required
  - make a list of missing files
  
 fix evolve chain :
-
- - pokemon id 265 / evolve id 110should return two evolve chain
+ - pokemon id 265 / evolve id 110 should return two evolve chain
  - see https://pokemondb.net/pokedex/wurmple#dex-evolution
+
+make it stronger :
+ - thinking about using Symfony framework to rebuild the API.
+ - integrate intl in the website
+ - member/user and JWT api
+ - enable sound in the game (but need cache system to prevent bug)
+ 
+maintain it :
+ - in the futur, add new generation of pokémons ...
+ 
+have a more correct host service :
+ - the used host service is quite slow 
+ - do not use a subdomain anymore
