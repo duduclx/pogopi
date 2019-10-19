@@ -4,7 +4,7 @@
  */
 
 // import config's url ($url)
-require 'api/controller/config.php';
+require 'api/Controller/config.php';
 
 // get types
 $get_data = callAPI('GET', $url . 'type/all', false);

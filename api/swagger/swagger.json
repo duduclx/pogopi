@@ -11,6 +11,9 @@
   },
   "servers": [
     {
+      "url": "http://pogo.kenko-shiatsu-grenoble.fr/api"
+    },
+    {
       "url": "http://localhost/pogopi/api"
     }
   ],

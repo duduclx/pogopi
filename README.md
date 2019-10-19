@@ -17,6 +17,11 @@ but honestly, i haven't copy it all ^^
 
 there's more than needed for the original project !
 
+## How it looks
+
+You can have a look to it at
+[pogo](http://pogo.kenko-shiatsu-grenoble.fr)
+
 ## License
 
 No Licence ... free use !
@@ -156,11 +161,10 @@ version:
 
 missing attacks sound file:
 
-exemple with fire_fang.wav who not exist but required
-
+ - exemple with fire_fang.wav who not exist but required
+ - make a list of missing files
+ 
 fix evolve chain :
 
-pokemon id 265 / evolve id 110
-should return two evolve chain
-
-see https://pokemondb.net/pokedex/wurmple#dex-evolution
+ - pokemon id 265 / evolve id 110should return two evolve chain
+ - see https://pokemondb.net/pokedex/wurmple#dex-evolution

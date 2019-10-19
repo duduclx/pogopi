@@ -7,6 +7,7 @@ externalDocs:
   description: Pogopi source code
   url: http://github.com/duduclx/pogopi
 servers:
+  - url: http://pogo.kenko-shiatsu-grenoble.fr/api
   - url: http://localhost/pogopi/api
 tags:
   - name: abilitie

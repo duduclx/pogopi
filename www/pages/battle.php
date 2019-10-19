@@ -3,7 +3,7 @@
  * logic
  */
 // import config's url ($url)
-require 'api/controller/config.php';
+require 'api/Controller/config.php';
 
 /*
  * template

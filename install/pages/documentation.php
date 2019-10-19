@@ -31,6 +31,10 @@
             <br>Indiquer le nom de domaine final, <span>exemple: https://monsite.fr/api/</span>
             <br>Attention, l'url doit bien finir par 'api/'. cela sert à générer le lien vers les ressources (images, sound, etc).
         </p>
+        <h3>Le fichier swagger</h3>
+        <p>Le fichier swagger utilise un fichier .json, son seul défaut est d'avoir besoin d'une url en dur.</p>
+        <p>Il faudra donc modifier la valeur <span>servers.url</span> du fichier <span>api/swagger/swagger.json</span>
+        afin de pouvoir rendre fonctionnel les tests effectuer sur le swagger.</p>
     </div>
     <div class="content-left">
         <h3>Installation depuis l'interface web</h3>

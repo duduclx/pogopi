@@ -6,7 +6,7 @@ $dbname     = "pogopi"; // you can change the database name, then change it in i
 $username   = "root"; // put correct database username
 $password   = "cochon"; // put correct database password
 
-$url = 'http://192.168.1.11/pogopi/api/'; // put correct url
+$url = 'http://localhost/pogopi/api/'; // put correct url
 
 // do not touch following configuration
 $urlResources = $url . 'resources/';

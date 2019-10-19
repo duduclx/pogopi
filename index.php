@@ -1,10 +1,12 @@
 <?php
+// import config's url ($url)
+require 'api/Controller/config.php';
 // check api's installation
-$installed = '/install/index.php';
+$installed = 'install/index.php';
 // import callApi function
 require 'www/utilities/callApi.php';
 // check api's version
-$get_data = callAPI('GET', 'http://localhost/pogopi/api/version', false);
+$get_data = callAPI('GET', $url . 'version', false);
 $version = json_decode($get_data, true);
 // fake routing
 require 'www/utilities/routing.php';
@@ -75,7 +77,7 @@ require 'www/utilities/routing.php';
     <div class="version">
         <span>version <?= $version['version'] ?></span>
     </div>
-        <?php if (!file_exists($installed)) : ?>
+        <?php if (file_exists($installed)) : ?>
             <div class="install-warning">
                 <p>Attention ! <br>N'oubliez pas d'effacer le dossier d'installation !</p>
             </div>
