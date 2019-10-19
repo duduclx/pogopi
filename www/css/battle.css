@@ -7,7 +7,7 @@ html, body {
     touch-action: manipulation;
 }
 .hide {
-    display: none;
+    display: none !important;
 }
 
 /*
@@ -139,16 +139,13 @@ VERSUS
 ARENA BOX
  */
 .arena {
-    display: none;
+    display: block;
     position: relative;
     height: 480px;
     background: #19a974 url("../images/battle-background.png") center center / cover;
     box-shadow: 0 0 10px 4px black;
     max-width: 800px;
     margin: 0 auto;
-}
-.arena-show {
-    display: block;
 }
 /*
 ARENA TOP
@@ -284,4 +281,57 @@ COUNTER
 .counter-animation {
     width: 100px;
     transform: scale(4);
+}
+/*
+END BATTLE
+ */
+.result {
+    display: block;
+    height: 480px;
+    box-shadow: 0 0 10px 4px black;
+    max-width: 800px;
+    margin: 0 auto;
+    background: linear-gradient(0.1turn, blue, #dadada, red);
+}
+.winner {
+    text-align: center;
+}
+.winner p {
+    padding: 10px;
+    color: #000;
+    font-weight: 900;
+}
+.winner img {
+    margin: 0 auto;
+    display: block;
+    max-height: 300px;
+    padding: 8px;
+}
+.links {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+.replay,
+.change {
+    margin: 30px 0;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: none;
+    color: inherit;
+    font-size: 1rem;
+    box-shadow: 0 0 4px 2px black;
+}
+.replay {
+    background-color: #49cc90;
+}
+.replay:hover {
+    background-color: #19a974;
+}
+.change {
+    background-color: #11a8bf;
+    text-decoration: none;
+}
+.change:hover {
+    background-color: #1f69c0;
 }

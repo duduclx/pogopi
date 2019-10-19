@@ -769,17 +769,16 @@ $fastMoves = [
     "energy" => 15,
     "sound_fx" => "yawn.wav"
   ],
-    [
-        // TODO sound file
-        "id" => 65,
-        "type" => 18,
-        "name_fr" => "Charme Rapide",
-        "name_en" => "Charm Fast",
-        "damage" => 20,
-        "dps" => 13.3,
-        "eps" => 7.3,
-        "move_duration" => 1500,
-        "energy" => 11,
-        "sound_fx" => ""
-    ]
+  [
+    "id" => 65,
+    "type" => 18,
+    "name_fr" => "Charme Rapide",
+    "name_en" => "Charm Fast",
+    "damage" => 20,
+    "dps" => 13.3,
+    "eps" => 7.3,
+    "move_duration" => 1500,
+    "energy" => 11,
+    "sound_fx" => "dazzling_gleam.wav"
+  ]
 ];

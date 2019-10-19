@@ -15,9 +15,9 @@
 
 <?php if(isset($_GET['pokemon'])) : ?>
 <div class="score mb-8">
-    <div class="player-score">Joueur : 100</div>
+    <div class="player-score">Joueur : <span></span></div>
     <button class="action">GO !</button>
-    <div class="computer-score">Ordinateur : 2</div>
+    <div class="computer-score">Ordinateur : <span></span></div>
 </div>
 <div class="presentation">
     <div class="presentation-player" data-id="<?= $_GET['pokemon'] ?>">
@@ -45,7 +45,7 @@
         <img src="www/images/versus.png">
     </div>
 </div>
-<div class="arena">
+<div class="arena hide">
     <div class="arena-life">
         <div class="player-life">
             <div class="player-details">
@@ -82,6 +82,16 @@
         <img class="fw-counter-2" src="www/images/battle-counter-2.png">
         <img class="fw-counter-1" src="www/images/battle-counter-1.png">
         <img class="fw-counter-0" src="www/images/battle-counter-go.png">
+    </div>
+</div>
+<div class="result hide">
+    <div class="winner">
+        <p><span></span> a gagné !</p>
+        <img src="" alt="">
+    </div>
+    <div class="links">
+        <button type="button" class="replay">Rejouer</button>
+        <a href="index.php?page=pokemon" class="change">Changer de pokémon</a>
     </div>
 </div>
 

@@ -5,17 +5,18 @@ class Battle {
         this.computer = null; // the IA's pokemon
         this.player = null; // the player's pokemon
 
-        this.hp = null; // used player hp ??
-
         this.computerAttack = null;
         this.computerDamage = null;
 
         // player properties
+        this.hp = 0; // used player hp
+        this.energy = 0; // used energy for enable mainmove
+
+        // player attacks
         this.fastAttack = this.battlePlayerFastMove.bind(this);
         this.fastMove = document.querySelector('.computer-pokemon img');
         this.fastMoveDelay = null;
 
-        this.energy = 0;
         this.mainAttack = this.battlePlayerMainMove.bind(this);
         this.mainMove = document.querySelector('.player-attack img');
 
@@ -42,31 +43,44 @@ class Battle {
     battleEnd(who) {
         switch (who) {
             case 'computer':
+                // update winner content
+                document.querySelector('.winner img').src = this.computer.image;
+                document.querySelector('.winner span').textContent = this.computer.name['fr'];
                 // update displayed score
                 this.scoreAddToComputer();
-                // save result
-                this.scoreSave(this.playerScore, this.computerScore);
                 // show message
-                //document.querySelector('.loose').classList.remove('hide');
+                this.battleEndNext();
                 break;
             case 'player':
+                // update winner content
+                document.querySelector('.winner img').src = this.player.image;
+                document.querySelector('.winner span').textContent = this.player.name['fr'];
                 // update displayed score
                 this.scoreAddToPlayer();
-                // save result
-                this.scoreSave(this.playerScore, this.computerScore);
                 // show message
-                //document.querySelector('.win').classList.remove('hide');
+                this.battleEndNext();
                 break;
         }
     }
 
+    battleEndNext() {
+        // save result
+        this.scoreSave(this.playerScore, this.computerScore);
+        // hide arena
+        document.querySelector('.arena').classList.add('hide');
+        // show winner
+        document.querySelector('.result').classList.remove('hide');
+        // listen replay button
+        document.querySelector('.replay').addEventListener('click', this.battleReplay.bind(this));
+    }
+
     battleIa() {
         // substract computer attack
-        this.player.stats_go.hp = this.player.stats_go.hp - this.computerDamage;
-        // change player pv
-        document.querySelector('.player-hp').value = this.player.stats_go.hp;
+        this.hp -= this.computerDamage;
+        // change player hp
+        document.querySelector('.player-hp').value = this.hp;
         // check if IA have won
-        if(this.player.stats_go.hp < 0) {
+        if(this.hp < 0) {
             this.destroy();
             this.battleEnd('computer');
         }
@@ -135,9 +149,23 @@ class Battle {
         }
     }
 
+    battleReplay() {
+        // hide result
+        document.querySelector('.result').classList.add('hide');
+        // rebuild presentation screen
+        document.querySelector('.action').classList.remove('invisible');
+        document.querySelector('.presentation').classList.remove('hide');
+        // render pokemons
+        this.renderPlayerArena();
+        this.randomComputer();
+
+        document.querySelector('.versus-separator').classList.add('from-opacity');
+
+    }
+
     counter() {
         // play success sound
-        //let audio = new Audio(RESOURCES + 'soundfx/se_go_trade_demo_line.wav');
+        //let audio = new Audio('soundfx/se_go_trade_demo_line.wav');
         //audio.play();
 
         let counter = document.querySelector('.counter');
@@ -232,13 +260,26 @@ class Battle {
 
         // add battle arena
         document.querySelector('.presentation').classList.add('hide');
-        document.querySelector('.arena').classList.add('arena-show');
+        document.querySelector('.arena').classList.remove('hide');
 
         // hide go button but should change it to stop/new
         document.querySelector('.action').classList.add('invisible');
 
         // start counter, then battle
         this.counter();
+    }
+
+    randomComputer() {
+        let url = document.querySelector('[data-url]');
+        url = url.getAttribute('data-url');
+
+        let pokemonComputer = randomNumber(1, 649);
+        let computerUrl;
+        computerUrl = url + 'pokemon/full/id/' + pokemonComputer;
+
+        this.getPokemonComputer(computerUrl);
+        this.renderComputerPresentation();
+        this.renderComputerArena();
     }
 
     renderComputerArena() {
@@ -259,7 +300,7 @@ class Battle {
     }
 
     renderComputerPresentation() {
-        document.querySelector('.presentation-computer img').src = this.computer.image;
+        document.querySelector('.presentation-computer-img img').src = this.computer.image;
         document.querySelector('.presentation-computer-name').textContent = this.computer.name['fr'].toUpperCase();
         let out = "";
         this.computer.type.forEach( (data) => {
@@ -274,6 +315,10 @@ class Battle {
     }
 
     renderPlayerArena() {
+        // get default value if replay
+        this.hp = this.player.stats_go.hp;
+        this.energy = 0;
+
         let out = "";
         this.player.type.forEach( (data) => {
             out += '<img src="' + data.img
@@ -284,7 +329,7 @@ class Battle {
         document.querySelector('.player-type').innerHTML = out;
 
         document.querySelector('.player-name').textContent = this.player.name['fr'];
-        document.querySelector('.player-hp').value = this.player.stats_go.hp;
+        document.querySelector('.player-hp').value = this.hp;
         document.querySelector('.player-hp').max = this.player.stats_go.hp;
 
         document.querySelector('.player-pokemon img').src = this.player.image;
@@ -310,12 +355,12 @@ class Battle {
 
     scoreAddToComputer() {
         this.computerScore = this.computerScore + 1;
-        document.querySelector('.computer-score').textContent = this.computerScore;
+        document.querySelector('.computer-score span').textContent = this.computerScore;
     }
 
     scoreAddToPlayer() {
         this.playerScore = this.playerScore + 1;
-        document.querySelector('.player-score').textContent = this.playerScore;
+        document.querySelector('.player-score span').textContent = this.playerScore;
     }
 
     scoreLoad() {
@@ -326,7 +371,6 @@ class Battle {
         if(loadDataFromDomStorage('pogo')) {
             data = loadDataFromDomStorage('pogo');
         }
-        console.log(data);
         this.playerScore = data.player;
         this.computerScore = data.computer;
         // update displayed score
@@ -350,8 +394,8 @@ class Battle {
     }
 
     scoreShow() {
-        document.querySelector('.player-score').textContent = this.playerScore;
-        document.querySelector('.computer-score').textContent = this.computerScore;
+        document.querySelector('.player-score span').textContent = this.playerScore;
+        document.querySelector('.computer-score span').textContent = this.computerScore;
     }
 
     /*
@@ -373,13 +417,7 @@ class Battle {
         this.renderPlayerPresentation();
         this.renderPlayerArena();
 
-        let pokemonComputer = randomNumber(1, 649);
-        let computerUrl;
-        computerUrl = url + 'pokemon/full/id/' + pokemonComputer;
-
-        this.getPokemonComputer(computerUrl);
-        this.renderComputerPresentation();
-        this.renderComputerArena();
+        this.randomComputer();
 
         document.querySelector('.versus-separator').classList.add('from-opacity');
 
