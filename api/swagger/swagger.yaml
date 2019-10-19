@@ -19,8 +19,10 @@ tags:
     description: pokemons charged attacks
   - name: pokeball
     description: pokeballs
-  - name: pokemon
-    description: pokemons informations
+  - name: pokemon-full
+    description: pokemons full informations
+  - name: pokemon-tiny
+    description: pokemons minimal informations
   - name: team
     description: team trainers
   - name: type
@@ -496,18 +498,6 @@ paths:
         404:
           description: Pokeball not found
           content: {}
-  /pokemon/all:
-    get:
-      tags:
-        - pokemon
-      summary: get them all
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pokemon'
   /pokemon/max:
     get:
       tags:
@@ -520,10 +510,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Pokemon'
-  /pokemon/id/{id}:
+  /pokemon/full/all/{id-order}:
     get:
       tags:
-        - pokemon
+        - pokemon-full
+      summary: get them all
+      parameters:
+        - name: id-order
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pokemon'
+  /pokemon/full/id/{id}:
+    get:
+      tags:
+        - pokemon-full
       summary: pokemon by id
       parameters:
         - name: id
@@ -541,10 +549,10 @@ paths:
         400:
           description: Invalid ID supplied
           content: {}
-  /pokemon/name/{intl}/{name}:
+  /pokemon/full/name/{intl}/{name}:
     get:
       tags:
-        - pokemon
+        - pokemon-full
       summary: pokemon by Name
       parameters:
         - name: name
@@ -567,10 +575,10 @@ paths:
         400:
           description: Invalid ID supplied
           content: {}
-  /pokemon/generation/{id}:
+  /pokemon/full/generation/{id}:
     get:
       tags:
-        - pokemon
+        - pokemon-full
       summary: pokemons by generation number
       parameters:
         - name: id
@@ -588,10 +596,10 @@ paths:
         400:
           description: Invalid ID supplied
           content: {}
-  /pokemon/order/{id}:
+  /pokemon/full/order/{id}:
     get:
       tags:
-        - pokemon
+        - pokemon-full
       summary: pokemon by order number
       parameters:
         - name: id
@@ -612,10 +620,10 @@ paths:
         404:
           description: Pokemon not found
           content: {}
-  /pokemon/type/{id-name}:
+  /pokemon/full/type/{id-name}:
     get:
       tags:
-        - pokemon
+        - pokemon-full
       summary: pokemon by type's id or name
       parameters:
         - name: id-name
@@ -630,6 +638,137 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Pokemon'
+        400:
+          description: Invalid ID supplied
+          content: {}
+  /pokemon/tiny/all/{id-order}:
+    get:
+      tags:
+        - pokemon-tiny
+      summary: get them all
+      parameters:
+        - name: id-order
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PokemonTiny'
+  /pokemon/tiny/id/{id}:
+    get:
+      tags:
+        - pokemon-tiny
+      summary: pokemon by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PokemonTiny'
+        400:
+          description: Invalid ID supplied
+          content: {}
+  /pokemon/tiny/name/{intl}/{name}:
+    get:
+      tags:
+        - pokemon-tiny
+      summary: pokemon by Name
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: intl
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PokemonTiny'
+        400:
+          description: Invalid ID supplied
+          content: {}
+  /pokemon/tiny/generation/{id}:
+    get:
+      tags:
+        - pokemon-tiny
+      summary: pokemons by generation number
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PokemonTiny'
+        400:
+          description: Invalid ID supplied
+          content: {}
+  /pokemon/tiny/order/{id}:
+    get:
+      tags:
+        - pokemon-tiny
+      summary: pokemon by order number
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PokemonTiny'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Pokemon not found
+          content: {}
+  /pokemon/tiny/type/{id-name}:
+    get:
+      tags:
+        - pokemon-tiny
+      summary: pokemon by type's id or name
+      parameters:
+        - name: id-name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PokemonTiny'
         400:
           description: Invalid ID supplied
           content: {}
@@ -961,17 +1100,97 @@ components:
     Pokemon:
       type: object
       properties:
+        abilities:
+          type: array
+          items:
+            properties:
+              id:
+                type: integer
+              generation:
+                type: integer
+              fr:
+                type: array
+                items:
+                  properties:
+                    description:
+                      type: string
+                    name:
+                      type: string
+              en:
+                type: array
+                items:
+                  properties:
+                    description:
+                      type: string
+                    name:
+                      type: string
+        evolve:
+          type: array
+          items:
+            properties:
+              id:
+                type: integer
+              level:
+                type: array
+                items:
+                  properties:
+                    from:
+                      type: integer
+                    to:
+                      type: array
+                      items:
+                        type: integer
         id:
           type: integer
           format: int64
-        attack:
-          type: integer
-        defense:
-          type: integer
-        height:
-          type: number
-        hp:
-          type: integer
+        stats_classic:
+          type: array
+          items:
+            properties:
+              attack:
+                type: integer
+              attack_spe:
+                type: integer
+              base_experience:
+                type: integer
+              base_happiness:
+                type: integer
+              defense:
+                type: integer
+              defense_spe:
+                type: integer
+              hp:
+                type: integer
+              speed:
+                type: integer
+        stats_common:
+          type: array
+          items:
+            properties:
+              height:
+                type: number
+              weight:
+                type: number
+        stats_go:
+          type: array
+          items:
+            properties:
+              attack:
+                type: integer
+              defense:
+                type: integer
+              hp:
+                type: integer
+              pc:
+                type: integer
+              stamina:
+                type: integer
+              buddy_walk:
+                type: integer
+              capture_rate:
+                type: integer
+              escape_rate:
+                type: integer
         image:
           type: string
         name:
@@ -1002,8 +1221,6 @@ components:
                 type: string
               en:
                 type: string
-        weight:
-          type: number
         fastmove:
           type: array
           items:
@@ -1012,6 +1229,38 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Mainmove'
+        type:
+          type: array
+          items:
+            $ref: '#/components/schemas/Type'
+      xml:
+        name: Pokemon
+    PokemonTiny:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        image:
+          type: string
+        name:
+          type: array
+          items:
+            properties:
+              fr:
+                type: string
+              en:
+                type: string
+        order:
+          type: integer
+        pokedex:
+          type: array
+          items:
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
         type:
           type: array
           items:

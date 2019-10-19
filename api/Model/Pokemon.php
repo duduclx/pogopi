@@ -5,9 +5,8 @@ use PDO;
 
 class Pokemon
 {
-    // TODO add 'full' route to swagger !
+    // TODO
     //  update database schema (pokemon, team, abilities and evolve)
-    //  pokemon/all/{id or order} to order by
 
     private $pdo;
     private $sql;

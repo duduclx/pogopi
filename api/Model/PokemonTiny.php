@@ -5,7 +5,6 @@ use PDO;
 
 class PokemonTiny
 {
-    // TODO add 'tiny' route to swagger !
 
     private $pdo;
     private $sql;

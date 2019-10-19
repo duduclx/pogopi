@@ -1,4 +1,4 @@
-## POGOPI V2
+## POGOPI V2.1
 
 Yet Another Pokemon Go Api.
 
@@ -154,4 +154,5 @@ version:
 
 ## TODO
 
-missing fire_fang.wav in attacks
+missing attacks sound file
+exemple with fire_fang.wav who not exist but required
