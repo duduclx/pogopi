@@ -5,8 +5,6 @@ use PDO;
 
 class Pokemon
 {
-    // TODO
-    //  update database schema (pokemon, team, abilities and evolve)
 
     private $pdo;
     private $sql;

@@ -154,5 +154,13 @@ version:
 
 ## TODO
 
-missing attacks sound file
+missing attacks sound file:
+
 exemple with fire_fang.wav who not exist but required
+
+fix evolve chain :
+
+pokemon id 265 / evolve id 110
+should return two evolve chain
+
+see https://pokemondb.net/pokedex/wurmple#dex-evolution

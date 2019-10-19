@@ -7,9 +7,6 @@ use PDO;
 
 class Evolve
 {
-    // TODO pokemon id 265 / evolve id 110
-    //  should return two evolve chain
-    //  see https://pokemondb.net/pokedex/wurmple#dex-evolution
     private $pdo;
     private $sql;
 
