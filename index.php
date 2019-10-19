@@ -38,7 +38,7 @@ require 'www/utilities/routing.php';
             <ul>
                 <li class="mobile-nav"><i class="fas fa-bars"></i></li>
                 <?php if (!isset($version['version'])) : ?>
-                <li>
+                <li class="desktop-nav">
                     <a href="install/index.php">Installation</a>
                 </li>
                 <?php endif ?>
@@ -82,7 +82,7 @@ require 'www/utilities/routing.php';
         <?php endif; ?>
     <?php elseif (!isset($version['version'])) : ?>
     <div class="install-warning">
-        <p>Pour <span>installer l'API</span> <a href="install/index.php">CLIQUEZ ICI</a>.</p>
+        <p>Pour <span>installer l'API</span> <a class="install-link" href="install/index.php">CLIQUEZ ICI</a>.</p>
     </div>
     <?php endif ?>
 </div>

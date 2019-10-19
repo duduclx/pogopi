@@ -37,13 +37,17 @@ require 'pages/routing.php';
                 <li class="desktop-nav">
                     <a href="index.php">Installation</a>
                 </li>
+                <li class="desktop-nav">
+                    <a href="../index.php">site de démo</a>
+                </li>
             </ul>
         </nav>
     </div>
-    <div class="mobile-menu hide">
+    <div class="mobile-menu invisible">
         <ul>
-            <li><a href="index.php">Installation</a></li>
             <li><a href="index.php?page=documentation">Documentation</a></li>
+            <li><a href="index.php">Installation</a></li>
+            <li><a href="../index.php">site de démo</a></li>
         </ul>
     </div>
     <div class="mobile-arrow">

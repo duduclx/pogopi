@@ -22,6 +22,9 @@ body {
 h3, h4, h5, h6 {
     margin-top: 0;
 }
+.hide {
+    display: none;
+}
 .invisible {
     visibility: hidden;
 }
@@ -83,7 +86,7 @@ HEADER
 }
 .mobile-menu a {
     display: block;
-    padding: 40px;
+    padding: 30px;
     color: inherit;
     text-decoration: none;
 }
@@ -125,6 +128,13 @@ HEADER
     border: 2px #d9534f solid;
     background-color: #d9534f;
     border-radius: 5px;
+}
+.install-link {
+    color: #000000;
+    font-weight: 900;
+}
+.install-link:hover {
+    color: #f0f0f0;
 }
 @media (max-width: 796px) {
     .brand-logo-name {

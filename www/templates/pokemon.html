@@ -1,4 +1,12 @@
 <h1>Liste des Pokémons</h1>
+
+<?php if(!isset($version['version'])) : ?>
+<div class="install-warning">
+    <p>Pour voir cette page, il est obligatoire d'installer l'API !</p>
+</div>
+<?php endif ?>
+
+<?php if(isset($version['version'])) : ?>
 <section class="content-pokemon">
     <div class="search">
         <h3>Recherche</h3>
@@ -184,3 +192,4 @@
     <?php endif ?>
 </section>
 
+<?php endif ?>

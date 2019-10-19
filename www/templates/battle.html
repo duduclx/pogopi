@@ -12,8 +12,22 @@
     </div>
 </div>
 <?php endif ?>
-
 <?php if(isset($_GET['pokemon'])) : ?>
+<div class="howto">
+    <button type="button" class="howto-button mb-8">Comment jouer</button>
+    <div class="content-full howto-content hide">
+        <p>Pour jouer, il faut cliquer/appuyer:</p>
+        <ul>
+            <li>Avoir choisi un pokémon.</li>
+            <li>Appuyer sur le bouton <span>GO</span></li>
+            <li>Cliquer sur l'image du pokémon adverse pour l'attaquer.</li>
+        </ul>
+        <p>Cela recharge également la barre d'énergie qui permet d'activer l'attaque chargée.
+            Celle-ci deviendra opaque une fois chargée.</p>
+        <p>Il suffira de cliquer sur l'image de l'attaque chargée
+            (qui se trouve entre les deux pokémons) pour lancer l'attaque.</p>
+    </div>
+</div>
 <div class="score mb-8">
     <div class="player-score">Joueur : <span></span></div>
     <button class="action">GO !</button>

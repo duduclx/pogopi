@@ -18,11 +18,15 @@ SCORE
     flex-wrap: nowrap;
     justify-content: space-around;
 }
-.action {
+.action,
+.howto-button {
     border: none;
     border-radius: 8px;
     padding: 8px 20px;
     background-color: #82c72e;
+    color: inherit;
+    font-weight: 900;
+    font-size: 1rem;
 }
 
 /*

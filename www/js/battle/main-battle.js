@@ -1,11 +1,23 @@
 'use strict';
 
+/*
+Initialize battle game
+ */
 document.addEventListener('DOMContentLoaded', () => {
+    // listen howto button
+    document.querySelector('.howto-button').addEventListener('click', onClickHowto);
     // init the battle
     let battle = new Battle();
     // run battle
     battle.run();
 });
+
+/*
+HOWTO BUTTON
+ */
+function onClickHowto() {
+    document.querySelector('.howto-content').classList.toggle('hide');
+}
 
 /*
 prevent double-touch zoom in ios safari

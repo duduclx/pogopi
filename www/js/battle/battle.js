@@ -96,8 +96,8 @@ class Battle {
         this.fastMoveDelay = window.setTimeout(this.battlePlayerEnableFastMove.bind(this), this.player.fastmove[0].duration);
 
         // play sounds attack on click
-        let audio = new Audio(this.player.fastmove[0].sound);
-        audio.play();
+        //let audio = new Audio(this.player.fastmove[0].sound);
+        //audio.play();
 
         // damage
         let damage = (this.player.fastmove[0].damage / 2) * (this.player.stats_go.attack / this.computer.stats_go.defense) + 1;
@@ -126,8 +126,8 @@ class Battle {
         this.fastMove.removeEventListener('click', this.fastAttack);
         this.fastMoveDelay = window.setTimeout(this.battlePlayerEnableFastMove.bind(this), this.player.mainmove[0].duration);
 
-        let audio = new Audio(this.player.mainmove[0].sound);
-        audio.play();
+        //let audio = new Audio(this.player.mainmove[0].sound);
+        //audio.play();
 
         // damage = player.main_move_1_damage / 2 * player.attack / computer.defense + 1
         let damage = (this.player.mainmove[0].damage / 2) * (this.player.stats_go.attack / this.computer.stats_go.defense) + 1;

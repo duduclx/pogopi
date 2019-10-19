@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  mar. 15 oct. 2019 à 14:54
+-- Généré le :  sam. 19 oct. 2019 à 16:30
 -- Version du serveur :  5.7.9
 -- Version de PHP :  7.2.19
 
@@ -1296,7 +1296,7 @@ INSERT INTO `fastmove` (`id`, `damage`, `dps`, `energy`, `eps`, `move_duration`,
 (62, 0, '0.0', 20, '11.6', 1730, 'splash.wav', 11),
 (63, 0, '0.0', 0, '0.0', 2230, 'transform.wav', 1),
 (64, 0, '0.0', 15, '8.8', 1700, 'yawn.wav', 1),
-(65, 20, '13.3', 11, '7.3', 1500, '', 18);
+(65, 20, '13.3', 11, '7.3', 1500, 'dazzling_gleam.wav', 18);
 
 -- --------------------------------------------------------
 
