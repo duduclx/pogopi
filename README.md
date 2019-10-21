@@ -156,6 +156,11 @@ version:
 
 ## TODO
 
+add more request
+ - find pokemon by buddy_walk
+ - list fastmove/mainmove owners
+ - ...
+
 missing attacks sound file:
  - exemple with fire_fang.wav who not exist but required
  - make a list of missing files
