@@ -48,6 +48,9 @@ require 'www/utilities/routing.php';
                     <a href="index.php?page=documentation">Documentation</a>
                 </li>
                 <li class="desktop-nav">
+                    <a href="api/swagger/index.html" target="_blank">Swagger</a>
+                </li>
+                <li class="desktop-nav">
                     <a href="index.php?page=pokemon">Pokemon</a>
                 </li>
                 <li class="desktop-nav">
@@ -65,6 +68,7 @@ require 'www/utilities/routing.php';
                 </li>
             <?php endif ?>
             <li><a href="index.php?page=documentation">Documentation</a></li>
+            <li><a href="api/swagger/index.html" target="_blank">Swagger</a></li>
             <li><a href="index.php?page=pokemon">Pokemon</a></li>
             <li><a href="index.php?page=battle">Battle</a></li>
         </ul>
