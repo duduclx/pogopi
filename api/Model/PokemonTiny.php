@@ -43,12 +43,9 @@ class PokemonTiny
             pokemon.pokedex,
             pokemon.pokedex AS pokedexId,
             pkd.name AS pokedex,
-            GROUP_CONCAT(DISTINCT pkmn.lang) AS nameslang,
-            GROUP_CONCAT(pkmn.name) AS namesname,
             GROUP_CONCAT(DISTINCT type.id) AS typesid
             FROM pokemon
             LEFT JOIN pokedex AS pkd ON pokemon.pokedex = pkd.id
-            LEFT JOIN pokemon_name AS pkmn on pokemon.id = pkmn.pokemon_id
             LEFT JOIN pokemon_type AS pktp ON pokemon.id = pktp.pokemon_id
             LEFT JOIN type ON type.id = pktp.type_id';
     }
@@ -60,16 +57,12 @@ class PokemonTiny
     }
     private function formatResult($result)
     {
+        // format name
+        $result['name'] = $this->getName($result['id']);
+
         // format image url
         $result['image'] =  $this->urlPokemonImg . $result['image'];
-        // create name array
-        $result['nameslang'] = explode(',', $result['nameslang']);
-        $result['namesname'] = explode(',', $result['namesname']);
-        for ($i = 0; $i < count($result['nameslang']); $i++) {
-            $result['name'][$result['nameslang'][$i]] = $result['namesname'][$i];
-        }
-        unset($result['namesname']);
-        unset($result['nameslang']);
+
         // create pokedex array
         $result['pokedex'] = [
             'id' => $result['pokedexId'],
@@ -84,6 +77,37 @@ class PokemonTiny
         unset($result['typesid']);
 
         ksort($result);
+
+        return $result;
+    }
+
+    private function getName($number) {
+        $sql = 'SELECT
+        lang as langs,
+        name as names
+        FROM pokemon_name
+        WHERE pokemon_id = :number
+        GROUP BY pokemon_id, langs, names';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+            ':number' => $number
+        ]);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        // create name array
+        for ($i = 0; $i < count($results); $i++) {
+            $result[$results[$i]['langs']] = $results[$i]['names'];
+        }
+        /*
+        $results['langs'] = explode(',', $results['langs']);
+        $results['names'] = explode(',', $results['names']);
+        for ($i = 0; $i< count($results['langs']); $i++) {
+            [$results['langs'][$i]] = $results['names'][$i];
+        }
+        */
+        //unset($result['langs']);
+        //unset($result['names']);
 
         return $result;
     }

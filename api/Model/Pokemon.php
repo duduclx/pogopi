@@ -66,8 +66,6 @@ class Pokemon
             pokemon.pokedex AS pokedexId,
             pkd.name AS pokedex,
             GROUP_CONCAT(DISTINCT abilitie.id) AS abilities,
-            GROUP_CONCAT(DISTINCT pkmn.lang) AS nameslang,
-            GROUP_CONCAT(pkmn.name) AS namesname,
             GROUP_CONCAT(DISTINCT type.id) AS typesid,
             GROUP_CONCAT(DISTINCT pksp.lang) AS spelangs,
             GROUP_CONCAT(DISTINCT pksp.specie) AS spenames,
@@ -77,7 +75,6 @@ class Pokemon
             LEFT JOIN pokemon_abilitie AS pkab ON pokemon.id = pkab.pokemon_id
             LEFT JOIN abilitie ON abilitie.id = pkab.abilitie_id
             LEFT JOIN pokedex AS pkd ON pokemon.pokedex = pkd.id
-            LEFT JOIN pokemon_name AS pkmn on pokemon.id = pkmn.pokemon_id
             LEFT JOIN pokemon_type AS pktp ON pokemon.id = pktp.pokemon_id
             LEFT JOIN type ON type.id = pktp.type_id
             LEFT JOIN pokemon_specie AS pksp ON pokemon.id = pksp.pokemon_id
@@ -94,6 +91,9 @@ class Pokemon
     }
     private function formatResult($result)
     {
+        // format name
+        $result['name'] = $this->getName($result['id']);
+
         // format stats_go
         $result['stats_go'] = [
             'attack' => $result['go_attack'],
@@ -146,14 +146,7 @@ class Pokemon
         $result['image'] =  $this->urlPokemonImg . $result['image'];
         // format scream url
         $result['scream'] = $this->urlPokemonScream . $result['scream'];
-        // create name array
-        $result['nameslang'] = explode(',', $result['nameslang']);
-        $result['namesname'] = explode(',', $result['namesname']);
-        for ($i = 0; $i< count($result['nameslang']); $i++) {
-            $result['name'][$result['nameslang'][$i]] = $result['namesname'][$i];
-        }
-        unset($result['nameslang']);
-        unset($result['namesname']);
+
         // create pokedex array
         $result['pokedex'] = [
             'id' => $result['pokedexId'],
@@ -277,6 +270,28 @@ class Pokemon
         unset($result['ids']);
         unset($result['levels']);
         unset($result['to_ids']);
+
+        return $result;
+    }
+
+    private function getName($number) {
+        $sql = 'SELECT
+        lang as langs,
+        name as names
+        FROM pokemon_name
+        WHERE pokemon_id = :number
+        GROUP BY pokemon_id, langs, names';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute([
+            ':number' => $number
+        ]);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        // create name array
+        for ($i = 0; $i < count($results); $i++) {
+            $result[$results[$i]['langs']] = $results[$i]['names'];
+        }
 
         return $result;
     }
