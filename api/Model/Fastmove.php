@@ -7,6 +7,8 @@ use PDO;
 
 class Fastmove
 {
+    // TODO add pokemons owners
+
     private $pdo;
     private $sql;
     private $urlPokemonAttack;

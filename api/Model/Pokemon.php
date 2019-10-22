@@ -5,6 +5,7 @@ use PDO;
 
 class Pokemon
 {
+    // TODO add getby buddywalk
 
     private $pdo;
     private $sql;

@@ -1,4 +1,4 @@
-## POGOPI V2.1
+## POGOPI V2.2
 
 Yet Another Pokemon Go Api.
 
@@ -156,10 +156,8 @@ version:
 
 ## TODO
 
-add more request
- - find pokemon by buddy_walk
- - list fastmove/mainmove owners
- - ...
+add more request :
+ - ... ??
 
 missing attacks sound file:
  - exemple with fire_fang.wav who not exist but required
